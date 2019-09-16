@@ -1,0 +1,90 @@
+{
+    parserClass = "com.github.voml.awsl_intellij.language.parser.AwslParser"
+    parserUtilClass = "com.github.voml.awsl_intellij.psi.AwslParserUtil"
+
+    extends = "com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix = "Awsl"
+    psiImplClassSuffix = "Impl"
+    psiPackage = "com.github.voml.awsl_intellij.language.psi"
+    psiImplPackage = "com.github.voml.awsl_intellij.language.psi.impl"
+
+    elementTypeHolderClass = "com.github.voml.awsl_intellij.language.psi.AwslTypes"
+    elementTypeClass = "com.github.voml.awsl_intellij.psi.AwslElementType"
+    tokenTypeClass = "com.github.voml.awsl_intellij.psi.AwslTokenType"
+
+    psiImplUtilClass = "com.github.voml.awsl_intellij.language.psi.impl.AwslPsiImplUtil"
+    // Lexer Token from JFlex
+    tokens = []
+}
+
+Awsl ::= statement*;
+
+private statement ::=
+    schema_statement
+  | properties_statement
+  | def_statement
+  | COMMENT_DOCUMENT
+  | object
+  | ignore;
+private ignore ::= SEMICOLON | COMMA;
+// ---------------------------------------------------------------------------------------------------------------------
+// schema <ID>: <TYPE> { }
+schema_statement ::= "schema" SYMBOL [type_hint] <<brace_block properties_inner ignore>>;
+// ---------------------------------------------------------------------------------------------------------------------
+// properties <ID>: <TYPE> { }
+properties_statement ::= ("properties" | "property" | "prop"| "field" | DOT) properties_key [type_hint] [properties_block];
+// used in formatter
+properties_mark ::= DOT;
+properties_block ::= <<brace_block properties_inner ignore>>;
+properties_key ::= STRING | SYMBOL;
+private properties_inner ::=
+    idiom_statement
+  | properties_statement
+  | anno_statement
+  | COMMENT_DOCUMENT
+  | kv_pair // consider as anno
+  ;
+// ---------------------------------------------------------------------------------------------------------------------
+def_statement ::= ("def"|"define"|"definition") properties_key [type_hint] [properties_block];
+// ---------------------------------------------------------------------------------------------------------------------
+// $schema: https://json-schema.org/draft/2020-12/schema
+idiom_statement ::= idiom_mark idiom_symbol [COLON] value;
+idiom_mark ::= DOLLAR;
+idiom_symbol ::= SYMBOL;
+// ---------------------------------------------------------------------------------------------------------------------
+// <KEY>: <VALUE>
+anno_statement ::= anno_key set value;
+private set ::= COLON;
+private anno_key ::= STRING | SYMBOL;
+// ---------------------------------------------------------------------------------------------------------------------
+type_hint ::= COLON type_symbol;
+private type_symbol ::= SYMBOL | STRING;
+// ---------------------------------------------------------------------------------------------------------------------
+//symbol_path ::= key (DOT key)*;
+//private key ::= string_inline | key_symbol | INTEGER;
+private eq ::= EQ | COLON;
+// ---------------------------------------------------------------------------------------------------------------------
+value ::= null | boolean | num | str | array | object | url_maybe_valid;
+null ::= "null";
+boolean ::= "true" | "false";
+// used in annotation
+url_maybe_valid ::= URL;
+// ---------------------------------------------------------------------------------------------------------------------
+private num ::= [SIGN] (INTEGER | DECIMAL) | [SIGN] BYTE;
+// ---------------------------------------------------------------------------------------------------------------------
+private str ::= (string_inline|string_multi);
+string_inline ::= STRING;
+string_multi ::= STRING;
+// ---------------------------------------------------------------------------------------------------------------------
+array ::= <<bracket_block value ignore>>;
+object ::= <<brace_block kv_pair ignore>>;
+kv_pair ::= (string_inline|SYMBOL) eq value;
+// ---------------------------------------------------------------------------------------------------------------------
+// parenthesis ( )
+private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;
+// bracket [ ]
+meta bracket_block ::= BRACKET_L [<<item>> (<<sp>> <<item>>)* [<<sp>>]] BRACKET_R;
+// brace { }
+meta brace_block ::=BRACE_L (<<item>>|<<sp>>)* BRACE_R;
+
