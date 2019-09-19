@@ -1,5 +1,5 @@
 <idea-plugin>
-	<id>com.github.voml.jss_intellij</id>
+	<id>com.github.voml.awsl_intellij</id>
 	<name>JSS Support</name>
 	<vendor>voml</vendor>
 
@@ -21,80 +21,80 @@ Intellij plugin for [VOML](https://github.com/voml), support all IDEs.
 			name="JSS"
 			language="JSS"
 			extensions="jss"
-			implementationClass="com.github.voml.jss_intellij.ide.file_view.JssFileType"
+			implementationClass="com.github.voml.awsl_intellij.ide.file_view.JssFileType"
 			fieldName="INSTANCE"
 		/>
 		<lang.parserDefinition
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.JssParserDefinition"
+			implementationClass="com.github.voml.awsl_intellij.JssParserDefinition"
 		/>
-		<projectViewNestingRulesProvider implementation="com.github.voml.jss_intellij.ide.file_view.JssFileGroup"/>
+		<projectViewNestingRulesProvider implementation="com.github.voml.awsl_intellij.ide.file_view.JssFileGroup"/>
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/JssDefault.xml"/>
 		<additionalTextAttributes scheme="Darcula" file="colors/JssDarcula.xml"/>
-		<colorSettingsPage implementation="com.github.voml.jss_intellij.ide.highlight.JssColorSettingsPage"/>
-		<highlightVisitor implementation="com.github.voml.jss_intellij.ide.highlight.JssHighlightVisitor"/>
+		<colorSettingsPage implementation="com.github.voml.awsl_intellij.ide.highlight.JssColorSettingsPage"/>
+		<highlightVisitor implementation="com.github.voml.awsl_intellij.ide.highlight.JssHighlightVisitor"/>
 		<lang.syntaxHighlighter
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.highlight.JssSyntaxHighlighter"
+			implementationClass="com.github.voml.awsl_intellij.ide.highlight.JssSyntaxHighlighter"
 		/>
 		<!-- Formatter -->
 		<lang.formatter
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.formatter.JssFormattingModelBuilder"
+			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssFormattingModelBuilder"
 		/>
 		<lang.commenter
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.formatter.JssCommenter"
+			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssCommenter"
 		/>
 		<lang.smartEnterProcessor
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.formatter.JssSmartEnter"
+			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssSmartEnter"
 		/>
 		<!-- Document -->
-		<!--documentationProvider implementation="com.github.voml.jss_intellij.ide.doc.JssDocumentationExtender"-->
+		<!--documentationProvider implementation="com.github.voml.awsl_intellij.ide.doc.JssDocumentationExtender"-->
 		<lang.documentationProvider
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.doc.JssDocumentationProvider"
+			implementationClass="com.github.voml.awsl_intellij.ide.doc.JssDocumentationProvider"
 		/>
 
 		<lang.braceMatcher
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.matcher.JssBraceMatcher"
+			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssBraceMatcher"
 		/>
 		<lang.quoteHandler
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.matcher.JssQuoteHandler"
+			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssQuoteHandler"
 		/>
 		<lang.foldingBuilder
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.matcher.JssFoldingBuilder"
+			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssFoldingBuilder"
 		/>
 		<indexPatternBuilder
-			implementation="com.github.voml.jss_intellij.ide.todo.VomlTodoIndexPatternBuilder"
+			implementation="com.github.voml.awsl_intellij.ide.todo.VomlTodoIndexPatternBuilder"
 		/>
 		<todoIndexer
 			filetype="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.todo.VomlTodoIndexer"
+			implementationClass="com.github.voml.awsl_intellij.ide.todo.VomlTodoIndexer"
 		/>
 		<completion.contributor
 			language="JSS"
-			implementationClass="com.github.voml.jss_intellij.ide.completion.VomlOptionCompletionContributor"
+			implementationClass="com.github.voml.awsl_intellij.ide.completion.VomlOptionCompletionContributor"
 		/>
 
-		<annotator language="JSS" implementationClass="com.github.voml.jss_intellij.ide.annotator.LiteralChecker"/>
+		<annotator language="JSS" implementationClass="com.github.voml.awsl_intellij.ide.annotator.LiteralChecker"/>
 
 		<langCodeStyleSettingsProvider
-			implementation="com.github.voml.jss_intellij.ide.codeStyle.VomlLanguageCodeStyleSettingsProvider"
+			implementation="com.github.voml.awsl_intellij.ide.codeStyle.VomlLanguageCodeStyleSettingsProvider"
 		/>
 
 	</extensions>
 	<actions>
-		<action id="NewJssFile"		        class="com.github.voml.jss_intellij.ide.actions.JssCreateFile">
+		<action id="NewJssFile"		        class="com.github.voml.awsl_intellij.ide.actions.JssCreateFile">
 			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewHtmlFile"/>
 		</action>
 		<action id="jss.JssConvertJson"
-		        class="com.github.voml.jss_intellij.ide.actions.JssConvertJson"/>
+		        class="com.github.voml.awsl_intellij.ide.actions.JssConvertJson"/>
 		<group id="jss.JssGenerator" popup="true" text="JssGenerator">
 			<reference ref="NewJssFile"/>
 			<reference ref="jss.JssConvertJson"/>

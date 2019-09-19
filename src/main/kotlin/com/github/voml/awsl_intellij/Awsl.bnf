@@ -1,0 +1,34 @@
+{
+    parserClass = "com.github.voml.awsl_intellij.language.parser.AwslParser"
+    parserUtilClass = "com.github.voml.awsl_intellij.psi.AwslParserUtil"
+
+    extends = "com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix = "Awsl"
+    psiImplClassSuffix = "Impl"
+    psiPackage = "com.github.voml.awsl_intellij.language.psi"
+    psiImplPackage = "com.github.voml.awsl_intellij.language.psi.impl"
+
+    elementTypeHolderClass = "com.github.voml.awsl_intellij.language.psi.AwslTypes"
+    elementTypeClass = "com.github.voml.awsl_intellij.psi.AwslElementType"
+    tokenTypeClass = "com.github.voml.awsl_intellij.psi.AwslTokenType"
+
+    psiImplUtilClass = "com.github.voml.awsl_intellij.language.psi.impl.AwslPsiImplUtil"
+    // Lexer Token from JFlex
+    tokens = []
+}
+
+Awsl ::= statement*;
+
+private statement ::=
+    COMMENT_DOCUMENT
+  | object
+  | ignore;
+private ignore ::= SEMICOLON | COMMA;
+// parenthesis ( )
+private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;
+// bracket [ ]
+meta bracket_block ::= BRACKET_L [<<item>> (<<sp>> <<item>>)* [<<sp>>]] BRACKET_R;
+// brace { }
+meta brace_block ::=BRACE_L (<<item>>|<<sp>>)* BRACE_R;
+
