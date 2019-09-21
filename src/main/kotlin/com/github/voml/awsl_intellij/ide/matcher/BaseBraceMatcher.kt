@@ -1,7 +1,7 @@
 package com.github.voml.awsl_intellij.ide.matcher
 
-import com.github.voml.awsl_intellij.language.psi.JssTypes
-import com.github.voml.awsl_intellij.psi.JSS_COMMENT
+import com.github.voml.awsl_intellij.AwslParserDefinition
+import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.lang.BracePair
 import com.intellij.lang.PairedBraceMatcher
 import com.intellij.psi.PsiFile
@@ -20,20 +20,20 @@ class BaseBraceMatcher : PairedBraceMatcher {
 
     companion object {
         private val PAIRS = arrayOf(
-            BracePair(JssTypes.BRACE_L, JssTypes.BRACE_R, true),
-            BracePair(JssTypes.BRACKET_L, JssTypes.BRACKET_R, true),
-            BracePair(JssTypes.PARENTHESIS_L, JssTypes.PARENTHESIS_R, true),
+            BracePair(AwslTypes.BRACE_L, AwslTypes.BRACE_R, true),
+            BracePair(AwslTypes.BRACKET_L, AwslTypes.BRACKET_R, true),
+            BracePair(AwslTypes.PARENTHESIS_L, AwslTypes.PARENTHESIS_R, true),
             // BracePair(VomlTypes.EXT_PREFIX, VomlTypes.BRACKETR, false)
         )
 
         private val InsertPairBraceBefore = TokenSet.orSet(
-            JSS_COMMENT,
+            AwslParserDefinition.COMMENTS,
             TokenSet.create(
                 TokenType.WHITE_SPACE,
-                JssTypes.COMMA,
-                JssTypes.PARENTHESIS_R,
-                JssTypes.BRACKET_R,
-                JssTypes.BRACE_R,
+                AwslTypes.COMMA,
+                AwslTypes.PARENTHESIS_R,
+                AwslTypes.BRACKET_R,
+                AwslTypes.BRACE_R,
             )
         )
     }

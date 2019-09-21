@@ -1,7 +1,7 @@
 package com.github.voml.awsl_intellij.ast
 
 import com.github.voml.awsl_intellij.ide.formatter.JssFormatterContext
-import com.github.voml.awsl_intellij.language.psi.JssTypes
+import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
@@ -33,7 +33,7 @@ class JssAstBlock(
 
     override fun getChildAttributes(newChildIndex: Int): ChildAttributes {
         val indent = when (node.elementType) {
-            JssTypes.ARRAY -> Indent.getNormalIndent()
+            // AwslTypes.ARRAY -> Indent.getNormalIndent()
             else -> Indent.getNoneIndent()
         }
         return ChildAttributes(indent, null)

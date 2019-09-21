@@ -26,7 +26,7 @@ Intellij plugin for [VOML](https://github.com/voml), support all IDEs.
 		/>
 		<lang.parserDefinition
 			language="JSS"
-			implementationClass="com.github.voml.awsl_intellij.JssParserDefinition"
+			implementationClass="com.github.voml.awsl_intellij.AwslParserDefinition"
 		/>
 		<projectViewNestingRulesProvider implementation="com.github.voml.awsl_intellij.ide.file_view.JssFileGroup"/>
 		<!-- Highlight -->
@@ -82,7 +82,7 @@ Intellij plugin for [VOML](https://github.com/voml), support all IDEs.
 			implementationClass="com.github.voml.awsl_intellij.ide.completion.VomlOptionCompletionContributor"
 		/>
 
-		<annotator language="JSS" implementationClass="com.github.voml.awsl_intellij.ide.annotator.LiteralChecker"/>
+		<!--annotator language="JSS" implementationClass="com.github.voml.awsl_intellij.ide.annotator.LiteralChecker"-->
 
 		<langCodeStyleSettingsProvider
 			implementation="com.github.voml.awsl_intellij.ide.codeStyle.VomlLanguageCodeStyleSettingsProvider"
@@ -90,7 +90,7 @@ Intellij plugin for [VOML](https://github.com/voml), support all IDEs.
 
 	</extensions>
 	<actions>
-		<action id="NewJssFile"		        class="com.github.voml.awsl_intellij.ide.actions.JssCreateFile">
+		<action id="NewJssFile" class="com.github.voml.awsl_intellij.ide.actions.JssCreateFile">
 			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewHtmlFile"/>
 		</action>
 		<action id="jss.JssConvertJson"

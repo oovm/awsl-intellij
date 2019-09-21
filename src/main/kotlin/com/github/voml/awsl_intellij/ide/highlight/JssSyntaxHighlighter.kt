@@ -1,7 +1,7 @@
 package com.github.voml.awsl_intellij.ide.highlight
 
 import com.github.voml.awsl_intellij.JssLexerAdapter
-import com.github.voml.awsl_intellij.language.psi.JssTypes.*
+import com.github.voml.awsl_intellij.language.psi.AwslTypes.*
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
@@ -26,17 +26,17 @@ class JssSyntaxHighlighter : SyntaxHighlighterBase() {
             PARENTHESIS_L, PARENTHESIS_R -> JssColor.PARENTHESES
             BRACKET_L, BRACKET_R -> JssColor.BRACKETS
             BRACE_L, BRACE_R -> JssColor.BRACES
-            COLON, EQ -> JssColor.SET
+            //COLON, EQ -> JssColor.SET
             COMMA -> JssColor.COMMA
             // atom
-            INTEGER -> JssColor.INTEGER
-            DECIMAL -> JssColor.DECIMAL
-            URL -> JssColor.URL
-            STRING -> JssColor.STRING
-            SYMBOL -> JssColor.IDENTIFIER
+            //INTEGER -> JssColor.INTEGER
+            //DECIMAL -> JssColor.DECIMAL
+            //URL -> JssColor.URL
+            //STRING -> JssColor.STRING
+            //SYMBOL -> JssColor.IDENTIFIER
             // 注释
-            COMMENT -> JssColor.LINE_COMMENT
-            COMMENT_BLOCK -> JssColor.BLOCK_COMMENT
+            //COMMENT -> JssColor.LINE_COMMENT
+            //COMMENT_BLOCK -> JssColor.BLOCK_COMMENT
             COMMENT_DOCUMENT -> JssColor.DOC_COMMENT
             // 错误
             TokenType.BAD_CHARACTER -> JssColor.BAD_CHARACTER

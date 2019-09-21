@@ -2,7 +2,7 @@ package com.github.voml.awsl_intellij.ast
 
 import com.github.voml.awsl_intellij.ide.formatter.JssFormatterContext
 import com.github.voml.awsl_intellij.ide.formatter.JssFormattingModelBuilder
-import com.github.voml.awsl_intellij.language.psi.JssTypes
+import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.formatting.Block
 import com.intellij.formatting.Indent
 import com.intellij.formatting.Spacing
@@ -12,11 +12,11 @@ import com.intellij.psi.TokenType
 private fun JssAstBlock.computeIndent(child: ASTNode): Indent? {
     val isCornerChild = node.firstChildNode == child || node.lastChildNode == child
     return when (node.elementType) {
-        JssTypes.BRACKET_BLOCK -> when {
+        AwslTypes.BRACKET_BLOCK -> when {
             isCornerChild -> Indent.getNoneIndent()
             else -> Indent.getNormalIndent()
         }
-        JssTypes.BRACE_BLOCK -> when {
+        AwslTypes.BRACE_BLOCK -> when {
             isCornerChild -> Indent.getNoneIndent()
             else -> Indent.getNormalIndent()
         }

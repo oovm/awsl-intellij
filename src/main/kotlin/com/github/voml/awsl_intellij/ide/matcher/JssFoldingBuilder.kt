@@ -1,7 +1,7 @@
 package com.github.voml.awsl_intellij.ide.matcher
 
 import com.github.voml.awsl_intellij.ide.file_view.JssFile
-import com.github.voml.awsl_intellij.language.psi.JssTypes
+import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.CustomFoldingBuilder
 import com.intellij.lang.folding.FoldingDescriptor
@@ -28,8 +28,8 @@ class JssFoldingBuilder : CustomFoldingBuilder(), DumbAware {
 
     override fun getLanguagePlaceholderText(node: ASTNode, range: TextRange) =
         when (node.elementType) {
-            JssTypes.BRACKET_BLOCK -> "[...]"
-            JssTypes.BRACE_BLOCK -> "{...}"
+            AwslTypes.BRACKET_BLOCK -> "[...]"
+            AwslTypes.BRACE_BLOCK -> "{...}"
             else -> "..."
         }
 

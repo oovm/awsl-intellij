@@ -1,8 +1,8 @@
 package com.github.voml.awsl_intellij
 
 import com.github.voml.awsl_intellij.ide.file_view.JssFile
-import com.github.voml.awsl_intellij.language.parser.JssParser
-import com.github.voml.awsl_intellij.language.psi.JssTypes
+import com.github.voml.awsl_intellij.language.parser.AwslParser
+import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.lang.PsiParser
@@ -15,10 +15,10 @@ import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
 
-class JssParserDefinition : ParserDefinition {
+class AwslParserDefinition : ParserDefinition {
     override fun createLexer(project: Project): Lexer = JssLexerAdapter()
 
-    override fun createParser(project: Project): PsiParser = JssParser()
+    override fun createParser(project: Project): PsiParser = AwslParser()
 
     override fun getFileNodeType(): IFileElementType = FILE
 
@@ -26,7 +26,7 @@ class JssParserDefinition : ParserDefinition {
 
     override fun getStringLiteralElements(): TokenSet = STRING_LITERALS
 
-    override fun createElement(node: ASTNode): PsiElement = JssTypes.Factory.createElement(node)
+    override fun createElement(node: ASTNode): PsiElement = AwslTypes.Factory.createElement(node)
 
     override fun createFile(viewProvider: FileViewProvider): PsiFile = JssFile(viewProvider)
 
@@ -35,8 +35,8 @@ class JssParserDefinition : ParserDefinition {
     }
 
     companion object {
-        val COMMENTS = TokenSet.create(JssTypes.COMMENT, JssTypes.COMMENT_BLOCK)
-        val STRING_LITERALS = TokenSet.create(JssTypes.STRING_INLINE, JssTypes.STRING_MULTI)
+        val COMMENTS = TokenSet.create()
+        val STRING_LITERALS = TokenSet.create()
         val FILE = IFileElementType(JssLanguage.INSTANCE)
     }
 }

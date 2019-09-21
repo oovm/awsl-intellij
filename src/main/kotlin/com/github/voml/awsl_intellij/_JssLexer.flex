@@ -4,7 +4,7 @@ import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
-import static com.github.voml.awsl_intellij.language.psi.JssTypes.*;
+import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 
 %%
 
@@ -67,7 +67,6 @@ SIGN=[+-]
   {INTEGER}               { return INTEGER; }
   {DECIMAL}               { return DECIMAL; }
   {SIGN}                  { return SIGN; }
-
 }
 
 [^] { return BAD_CHARACTER; }

@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.psi
 
-import com.github.voml.awsl_intellij.language.psi.JssTypes
+import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.extapi.psi.StubBasedPsiElementBase
 import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.util.TextRange
@@ -185,10 +185,3 @@ fun PsiWhiteSpace.isMultiLine(): Boolean = getLineCount() > 1
 @Suppress("UNCHECKED_CAST")
 inline val <T : StubElement<*>> StubBasedPsiElement<T>.greenStub: T?
     get() = (this as? StubBasedPsiElementBase<T>)?.greenStub
-
-
-val JSS_COMMENT = TokenSet.create(
-    JssTypes.COMMENT,
-    JssTypes.COMMENT_BLOCK,
-    JssTypes.COMMENT_DOCUMENT
-)

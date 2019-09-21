@@ -59,42 +59,61 @@ import com.github.voml.awsl_intellij.psi.AwslTypes;
 %eof}
 
 %state STRING_TEMPLATE
+%state HTML_TEMPLATE
 
 WHITE_SPACE=\s+
 LINE_COMMENT=#(\n|[^\n=][^\n]*)
 BLOCK_COMMENT_CONTENT=([^#=]|(=[^#])|(#[^=]))
-
-TRIPLE_QUOTE_SYM=\"\"\"
 
 SHORT_TEMPLATE=\${SIMPLE_SYMBOL}
 LONG_TEMPLATE_START=\$\(
 
 SIMPLE_SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
 
-STRING_UNICODE=\\((u{HEXDIGIT}{4})|(x{HEXDIGIT}{2}))
-CHAR_LITERAL='([^\\\'\x00-\x1F\x7F]|[a-zA-Z_\u0000A0-\u10ffff])+'
-STRING_ESCAPE=\\[^]
+STRING_INLINE=
+    {STRING_ESCAPE_UU}
+  | {STRING_ESCAPE_U}
+  | {STRING_ESCAPE_X}
+  | {STRING_ESCAPE_ANY}
 
-DIGIT=[\d_]
-NUM_PART=\d({DIGIT}*\d)?
+STRING_ESCAPE_UU =\\u\{{HEX}{8}\}
+STRING_ESCAPE_U =\\u{HEX}{4}
+STRING_ESCAPE_X =\\x{HEX}{2}
+STRING_ESCAPE_ANY=\\[^]
 
-NUM_SUFFIX=-?{DIGIT}+
-P_SUFFIX=[pP]{NUM_SUFFIX}
-E_SUFFIX=[eE]{NUM_SUFFIX}
-F_SUFFIX=[fF]{NUM_SUFFIX}
-HEXDIGIT=[a-fA-F0-9]
-HEX_NUM=0[xX]{HEXDIGIT}+({P_SUFFIX}|{E_SUFFIX}|{F_SUFFIX})?
-OCT_NUM=0[oO][0-7]+
-BIN_NUM=0[bB][01]+
-DEC_NUM={NUM_PART}
-INTEGER={HEX_NUM}|{OCT_NUM}|{BIN_NUM}|{DEC_NUM}
-FLOAT=({NUM_PART}|({NUM_PART}+\.{NUM_PART}*)|({NUM_PART}*\.{NUM_PART}+))({E_SUFFIX}|{F_SUFFIX})?|({HEX_NUM}+\.{HEXDIGIT}*p{DEC_NUM})
+HEX=[a-fA-F0-9]
 
 OTHERWISE=[^]
 
 %%
 
-
-
-
-{OTHERWISE} { return TokenType.BAD_CHARACTER; }
+// 初态: YYINITIAL =====================================================================================================
+// 初态: 无视空格
+<YYINITIAL> {WHITE_SPACE} {return WHITE_SPACE;}
+// 先直接找出所有符号
+<YYINITIAL> {
+  "(" { return PARENTHESIS_L; }
+  ")" { return PARENTHESIS_R; }
+  "[" { return BRACKET_L; }
+  "]" { return BRACKET_R; }
+  "{" { return BRACE_L; }
+  "}" { return BRACE_R; }
+  "<" { return ANGLE_L; }
+  ">" { return ANGLE_R; }
+  "^" { return ACCENT; }
+  "=" { return EQ; }
+  ":" { return COLON; }
+  ";" { return SEMICOLON; }
+  "," { return COMMA; }
+  "$" { return DOLLAR; }
+  "." { return DOT; }
+  "*" { return STAR; }
+  "@" { return AT; }
+}
+// 然后找出关键词
+<YYINITIAL> {
+	for { return KEYWORD_FOR; }
+	while { return KEYWORD_WHILE; }
+}
+// 未定义态: BAD_CHARACTER ==============================================================================================
+[^] { return BAD_CHARACTER; }
