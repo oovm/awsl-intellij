@@ -15,7 +15,6 @@ import com.github.voml.awsl_intellij.psi.AwslTypes;
   private static int leftBraceCount = 0;
   private static boolean noInAndUnion = false;
 
-  /** 来, 虎哥化 */
   private void hugify(int state) {
     stateStack.push(yystate());
     leftBracketStack.push(leftBraceCount);
@@ -23,25 +22,24 @@ import com.github.voml.awsl_intellij.psi.AwslTypes;
     yybegin(state);
   }
 
-  /** 艹, 去虎哥化 */
   private void dehugify() {
     leftBraceCount = leftBracketStack.pop();
     yybegin(stateStack.pop());
   }
 
-  /** 日, 那是真的虎 */
   private void rehugify(int state) {
     dehugify();
     hugify(state);
   }
-  /** 开始了, 开始了 */
+
   private static void init() {
     leftBraceCount = 0;
     noInAndUnion = false;
     stateStack.clear();
     leftBracketStack.clear();
+    xmlTag.clear();
   }
-  /** 皮皮虾, 我们走 */
+
   public _AwslLexer() {
     this((java.io.Reader) null);
     init();
@@ -59,7 +57,10 @@ import com.github.voml.awsl_intellij.psi.AwslTypes;
 %eof}
 
 %state STRING_TEMPLATE
-%state HTML_TEMPLATE
+%state HTML_BEGIN_TEXT
+%state HTML_BEGIN_CODE
+%state HTML_INNER
+%state HTML_END
 
 WHITE_SPACE=\s+
 LINE_COMMENT=#(\n|[^\n=][^\n]*)
@@ -112,8 +113,39 @@ OTHERWISE=[^]
 }
 // 然后找出关键词
 <YYINITIAL> {
-	for { return KEYWORD_FOR; }
-	while { return KEYWORD_WHILE; }
+  for { return FOR; }
+  in { return IN; }
+  while { return WHILE; }
+}
+// HTML模板态: HTML_TEMPLATE ============================================================================================
+// 常规转换 <a> </a>
+<YYINITIAL> < {
+    stateStack.push(HTML_BEGIN_TEXT);
+    yybegin(HTML_BEGIN_TEXT);
+}
+<HTML_BEGIN_TEXT> > {
+    yybegin(HTML_INNER);
+}
+<HTML_INNER> <\/ {
+    yybegin(HTML_END);
+}
+<HTML_END> > {
+    yybegin(YYINITIAL);
+}
+// 自闭转换 <a/>
+<HTML_BEGIN_TEXT> \/> {
+    yybegin(HTML_INNER);
+}
+
+// 表达式转化 <\a>  </a>
+<YYINITIAL> <\\ {
+    yybegin(HTML_BEGIN_CODE);
+}
+<HTML_BEGIN_CODE> > {
+    yybegin(YYINITIAL);
+}
+<YYINITIAL> <\/ {
+    yybegin(HTML_END);
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
 [^] { return BAD_CHARACTER; }
