@@ -12,14 +12,14 @@ import com.intellij.psi.TokenType
 private fun JssAstBlock.computeIndent(child: ASTNode): Indent? {
     val isCornerChild = node.firstChildNode == child || node.lastChildNode == child
     return when (node.elementType) {
-        AwslTypes.BRACKET_BLOCK -> when {
-            isCornerChild -> Indent.getNoneIndent()
-            else -> Indent.getNormalIndent()
-        }
-        AwslTypes.BRACE_BLOCK -> when {
-            isCornerChild -> Indent.getNoneIndent()
-            else -> Indent.getNormalIndent()
-        }
+//        AwslTypes.BRACKET_BLOCK -> when {
+//            isCornerChild -> Indent.getNoneIndent()
+//            else -> Indent.getNormalIndent()
+//        }
+//        AwslTypes.BRACE_BLOCK -> when {
+//            isCornerChild -> Indent.getNoneIndent()
+//            else -> Indent.getNormalIndent()
+//        }
         else -> Indent.getNoneIndent()
     }
 }

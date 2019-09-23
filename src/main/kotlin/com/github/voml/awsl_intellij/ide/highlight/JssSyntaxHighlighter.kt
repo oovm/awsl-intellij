@@ -23,9 +23,9 @@ class JssSyntaxHighlighter : SyntaxHighlighterBase() {
             // AS, SCHEMA, PROP -> JssColor.KEYWORD
             // ANNOTATION -> JssColor.ANNOTATION
             //
-            PARENTHESIS_L, PARENTHESIS_R -> JssColor.PARENTHESES
-            BRACKET_L, BRACKET_R -> JssColor.BRACKETS
-            BRACE_L, BRACE_R -> JssColor.BRACES
+//            PARENTHESIS_L, PARENTHESIS_R -> JssColor.PARENTHESES
+//            BRACKET_L, BRACKET_R -> JssColor.BRACKETS
+//            BRACE_L, BRACE_R -> JssColor.BRACES
             //COLON, EQ -> JssColor.SET
             COMMA -> JssColor.COMMA
             // atom

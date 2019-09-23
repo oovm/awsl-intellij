@@ -4,7 +4,7 @@ import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
 import com.intellij.util.containers.*;
-import com.github.voml.awsl_intellij.psi.AwslTypes;
+import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 
 %%
 
@@ -46,6 +46,7 @@ import com.github.voml.awsl_intellij.psi.AwslTypes;
   }
 %}
 
+%public
 %class _AwslLexer
 %implements FlexLexer
 %unicode
@@ -57,14 +58,14 @@ import com.github.voml.awsl_intellij.psi.AwslTypes;
 %eof}
 
 %state STRING_TEMPLATE
-%state HTML_BEGIN_TEXT
-%state HTML_BEGIN_CODE
-%state HTML_INNER
+%state HTML_BEGIN
+%state HTML_CONTEXT
 %state HTML_END
 
 WHITE_SPACE=\s+
-LINE_COMMENT=#(\n|[^\n=][^\n]*)
-BLOCK_COMMENT_CONTENT=([^#=]|(=[^#])|(#[^=]))
+COMMENT_LINE=#(\n|[^\n=][^\n]*)
+COMMENT_BLOCK=([^#=]|(=[^#])|(#[^=]))
+COMMENT_HTML=(<\!-->)
 
 SHORT_TEMPLATE=\${SIMPLE_SYMBOL}
 LONG_TEMPLATE_START=\$\(
@@ -84,13 +85,15 @@ STRING_ESCAPE_ANY=\\[^]
 
 HEX=[a-fA-F0-9]
 
-OTHERWISE=[^]
-
 %%
 
 // 初态: YYINITIAL =====================================================================================================
 // 初态: 无视空格
 <YYINITIAL> {WHITE_SPACE} {return WHITE_SPACE;}
+<YYINITIAL> {COMMENT_LINE} {return COMMENT_LINE;}
+<YYINITIAL> {COMMENT_BLOCK} {return COMMENT_BLOCK;}
+<HTML_CONTEXT> {COMMENT_HTML} {return COMMENT_HTML;}
+
 // 先直接找出所有符号
 <YYINITIAL> {
   "(" { return PARENTHESIS_L; }
@@ -117,35 +120,46 @@ OTHERWISE=[^]
   in { return IN; }
   while { return WHILE; }
 }
+<YYINITIAL> {SIMPLE_SYMBOL} {
+    return SYMBOL;
+}
 // HTML模板态: HTML_TEMPLATE ============================================================================================
-// 常规转换 <a> </a>
+// 表达式转化 <\a>CODE_CONTEXT</a>
+<YYINITIAL> <\\ {
+    stateStack.push(CODE_CONTEXT);
+    yybegin(HTML_BEGIN);
+    return HTML_BEGIN;
+}
+// 常规转换 <a>HTML_CONTEXT</a>
 <YYINITIAL> < {
-    stateStack.push(HTML_BEGIN_TEXT);
-    yybegin(HTML_BEGIN_TEXT);
+    stateStack.push(HTML_CONTEXT);
+    yybegin(HTML_BEGIN);
+    return HTML_BEGIN;
 }
-<HTML_BEGIN_TEXT> > {
-    yybegin(HTML_INNER);
+// 根据上下文进入对应的模式
+<HTML_BEGIN> > {
+    if (stateStack.peek() == CODE_CONTEXT) {
+        yybegin(CODE_CONTEXT);
+    }
+    else {
+        yybegin(HTML_CONTEXT);
+    }
+    return HTML_END;
 }
-<HTML_INNER> <\/ {
+// 准备终止
+<HTML_CONTEXT> <\/ {
     yybegin(HTML_END);
+    return HTML_BEGIN;
 }
+// 终止, 恢复上下文
 <HTML_END> > {
-    yybegin(YYINITIAL);
+    yybegin(stateStack.pop());
+    return HTML_END;
 }
 // 自闭转换 <a/>
-<HTML_BEGIN_TEXT> \/> {
-    yybegin(HTML_INNER);
-}
-
-// 表达式转化 <\a>  </a>
-<YYINITIAL> <\\ {
-    yybegin(HTML_BEGIN_CODE);
-}
-<HTML_BEGIN_CODE> > {
-    yybegin(YYINITIAL);
-}
-<YYINITIAL> <\/ {
-    yybegin(HTML_END);
+<HTML_BEGIN> \/> {
+    yybegin(stateStack.pop());
+    return HTML_END;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
 [^] { return BAD_CHARACTER; }

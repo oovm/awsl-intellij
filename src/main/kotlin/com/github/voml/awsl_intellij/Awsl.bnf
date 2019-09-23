@@ -15,14 +15,20 @@
 
     psiImplUtilClass = "com.github.voml.awsl_intellij.language.psi.impl.AwslPsiImplUtil"
     // Lexer Token from JFlex
-    tokens = []
+    // Here only write names
+    tokens = [
+        WHITE_SPACE = "White Space";
+        // 注释
+        COMMENT_LINE="Comment Line";
+        COMMENT_BLOCK="Comment Block";
+    ]
 }
 
 Awsl ::= statement*;
 
 private statement ::=
     COMMENT_DOCUMENT
-  | object
+  | SYMBOL
   | ignore;
 private ignore ::= SEMICOLON | COMMA;
 // parenthesis ( )
@@ -30,5 +36,5 @@ private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;
 // bracket [ ]
 meta bracket_block ::= BRACKET_L [<<item>> (<<sp>> <<item>>)* [<<sp>>]] BRACKET_R;
 // brace { }
-meta brace_block ::=BRACE_L (<<item>>|<<sp>>)* BRACE_R;
+meta brace_block ::= BRACE_L (<<item>>|<<sp>>)* BRACE_R;
 

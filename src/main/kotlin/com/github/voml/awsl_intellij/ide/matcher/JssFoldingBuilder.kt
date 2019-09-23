@@ -28,8 +28,8 @@ class JssFoldingBuilder : CustomFoldingBuilder(), DumbAware {
 
     override fun getLanguagePlaceholderText(node: ASTNode, range: TextRange) =
         when (node.elementType) {
-            AwslTypes.BRACKET_BLOCK -> "[...]"
-            AwslTypes.BRACE_BLOCK -> "{...}"
+//            AwslTypes.BRACKET_BLOCK -> "[...]"
+//            AwslTypes.BRACE_BLOCK -> "{...}"
             else -> "..."
         }
 

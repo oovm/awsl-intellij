@@ -21,8 +21,8 @@ class BaseBraceMatcher : PairedBraceMatcher {
     companion object {
         private val PAIRS = arrayOf(
             BracePair(AwslTypes.BRACE_L, AwslTypes.BRACE_R, true),
-            BracePair(AwslTypes.BRACKET_L, AwslTypes.BRACKET_R, true),
-            BracePair(AwslTypes.PARENTHESIS_L, AwslTypes.PARENTHESIS_R, true),
+//            BracePair(AwslTypes.BRACKET_L, AwslTypes.BRACKET_R, true),
+//            BracePair(AwslTypes.PARENTHESIS_L, AwslTypes.PARENTHESIS_R, true),
             // BracePair(VomlTypes.EXT_PREFIX, VomlTypes.BRACKETR, false)
         )
 
@@ -31,9 +31,9 @@ class BaseBraceMatcher : PairedBraceMatcher {
             TokenSet.create(
                 TokenType.WHITE_SPACE,
                 AwslTypes.COMMA,
-                AwslTypes.PARENTHESIS_R,
-                AwslTypes.BRACKET_R,
-                AwslTypes.BRACE_R,
+//                AwslTypes.PARENTHESIS_R,
+//                AwslTypes.BRACKET_R,
+//                AwslTypes.BRACE_R,
             )
         )
     }
