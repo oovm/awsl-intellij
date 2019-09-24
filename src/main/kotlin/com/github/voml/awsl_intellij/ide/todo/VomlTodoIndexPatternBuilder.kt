@@ -1,7 +1,7 @@
 package com.github.voml.awsl_intellij.ide.todo
 
 import com.github.voml.awsl_intellij.AwslParserDefinition
-import com.github.voml.awsl_intellij.JssLexerAdapter
+import com.github.voml.awsl_intellij.AwslLexerAdapter
 import com.github.voml.awsl_intellij.ide.file_view.JssFile
 
 import com.intellij.lexer.Lexer
@@ -12,7 +12,7 @@ import com.intellij.psi.tree.TokenSet
 
 class VomlTodoIndexPatternBuilder : IndexPatternBuilder {
     override fun getIndexingLexer(file: PsiFile): Lexer? {
-        return if (file is JssFile) JssLexerAdapter() else null
+        return if (file is JssFile) AwslLexerAdapter() else null
     }
 
     override fun getCommentTokenSet(file: PsiFile): TokenSet? {

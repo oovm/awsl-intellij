@@ -16,13 +16,22 @@ import com.intellij.psi.tree.TokenSet
 
 
 class AwslParserDefinition : ParserDefinition {
-    override fun createLexer(project: Project): Lexer = JssLexerAdapter()
+    companion object {
+        val COMMENTS = TokenSet.create(AwslTypes.COMMENT_LINE, AwslTypes.COMMENT_BLOCK, AwslTypes.COMMENT_HTML)
+        val STRING_LITERALS = TokenSet.create(AwslTypes.STRING)
+        val WHITE_SPACE = TokenSet.create(AwslTypes.WHITE_SPACE)
+        val FILE = IFileElementType(JssLanguage.INSTANCE)
+    }
+
+    override fun createLexer(project: Project): Lexer = AwslLexerAdapter()
 
     override fun createParser(project: Project): PsiParser = AwslParser()
 
     override fun getFileNodeType(): IFileElementType = FILE
 
     override fun getCommentTokens(): TokenSet = COMMENTS
+
+    override fun getWhitespaceTokens(): TokenSet = WHITE_SPACE
 
     override fun getStringLiteralElements(): TokenSet = STRING_LITERALS
 
@@ -34,9 +43,5 @@ class AwslParserDefinition : ParserDefinition {
         return ParserDefinition.SpaceRequirements.MAY
     }
 
-    companion object {
-        val COMMENTS = TokenSet.create()
-        val STRING_LITERALS = TokenSet.create()
-        val FILE = IFileElementType(JssLanguage.INSTANCE)
-    }
+
 }

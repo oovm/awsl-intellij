@@ -21,6 +21,24 @@
         // 注释
         COMMENT_LINE="Comment Line";
         COMMENT_BLOCK="Comment Block";
+        COMMENT_HTML="Comment in HTML";
+        COMMENT_DOCUMENT="Comment Document";
+        IN="Keyword in";
+        FOR="Keyword for";
+        WHILE="Keyword while";
+        COMMA=","
+        EQ="="
+        SEMICOLON=";"
+        PARENTHESIS_L="("
+        PARENTHESIS_R=")"
+        BRACKET_L="["
+        BRACKET_R="]"
+        BRACE_L="{"
+        BRACE_R="}"
+        HTML_BEGIN_TOKEN="HTML_BEGIN_TOKEN"
+        HTML_END_TOKEN="HTML_END_TOKEN"
+        BAD_CHARACTER="BAD_CHARACTER"
+        SYMBOL="Symbol"
     ]
 }
 
@@ -29,8 +47,13 @@ Awsl ::= statement*;
 private statement ::=
     COMMENT_DOCUMENT
   | SYMBOL
-  | ignore;
-private ignore ::= SEMICOLON | COMMA;
+  | STRING
+ // | html_element
+ // | ignore
+  ;
+
+html_element ::= HTML_BEGIN_TOKEN SYMBOL HTML_END_TOKEN;
+private ignore ::= WHITE_SPACE | COMMENT_LINE | COMMENT_BLOCK;
 // parenthesis ( )
 private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;
 // bracket [ ]

@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.ide.highlight
 
-import com.github.voml.awsl_intellij.JssLexerAdapter
+import com.github.voml.awsl_intellij.AwslLexerAdapter
 import com.github.voml.awsl_intellij.language.psi.AwslTypes.*
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -10,7 +10,7 @@ import com.intellij.psi.tree.IElementType
 
 class JssSyntaxHighlighter : SyntaxHighlighterBase() {
     override fun getHighlightingLexer(): Lexer {
-        return JssLexerAdapter()
+        return AwslLexerAdapter()
     }
 
     override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> {

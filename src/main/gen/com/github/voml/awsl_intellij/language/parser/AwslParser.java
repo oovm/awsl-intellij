@@ -146,13 +146,25 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SEMICOLON | COMMA
+  // HTML_BEGIN_TOKEN SYMBOL HTML_END_TOKEN
+  public static boolean html_element(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_element")) return false;
+    if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, HTML_BEGIN_TOKEN, SYMBOL, HTML_END_TOKEN);
+    exit_section_(b, m, HTML_ELEMENT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // WHITE_SPACE | COMMENT_LINE | COMMENT_BLOCK
   static boolean ignore(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ignore")) return false;
-    if (!nextTokenIs(b, "", COMMA, SEMICOLON)) return false;
     boolean r;
-    r = consumeToken(b, SEMICOLON);
-    if (!r) r = consumeToken(b, COMMA);
+    r = consumeToken(b, WHITE_SPACE);
+    if (!r) r = consumeToken(b, COMMENT_LINE);
+    if (!r) r = consumeToken(b, COMMENT_BLOCK);
     return r;
   }
 
@@ -173,13 +185,13 @@ public class AwslParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // COMMENT_DOCUMENT
   //   | SYMBOL
-  //   | ignore
+  //   | STRING
   static boolean statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement")) return false;
     boolean r;
     r = consumeToken(b, COMMENT_DOCUMENT);
     if (!r) r = consumeToken(b, SYMBOL);
-    if (!r) r = ignore(b, l + 1);
+    if (!r) r = consumeToken(b, STRING);
     return r;
   }
 
