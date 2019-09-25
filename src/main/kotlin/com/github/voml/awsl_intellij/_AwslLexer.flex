@@ -84,7 +84,6 @@ STRING_ESCAPE_U =\\u{HEX}{4}
 STRING_ESCAPE_X =\\x{HEX}{2}
 STRING_ESCAPE_ANY=\\[^]
 STRING_NON_ESCAPE=[^\\]
-ANGLE_L = <
 
 HEX=[a-fA-F0-9]
 
@@ -92,25 +91,24 @@ HEX=[a-fA-F0-9]
 
 // 初态: YYINITIAL =====================================================================================================
 // 初态: 无视空格
-<YYINITIAL, HTML_BEGIN, HTML_END> {WHITE_SPACE} {return WHITE_SPACE;}
-<YYINITIAL> {
+<YYINITIAL,CODE_CONTEXT, HTML_BEGIN, HTML_END> {WHITE_SPACE} {return WHITE_SPACE;}
+<YYINITIAL,CODE_CONTEXT> {
   {COMMENT_LINE} {return COMMENT_LINE;}
   {COMMENT_BLOCK} {return COMMENT_BLOCK;}
   {COMMENT_DOCUMENT} {return COMMENT_DOCUMENT;}
 }
-<YYINITIAL>
 <HTML_CONTEXT> {COMMENT_HTML} {return COMMENT_HTML;}
 
 // 先直接找出所有符号
-<YYINITIAL> {
+<YYINITIAL, CODE_CONTEXT> {
   "(" { return PARENTHESIS_L; }
   ")" { return PARENTHESIS_R; }
   "[" { return BRACKET_L; }
   "]" { return BRACKET_R; }
   "{" { return BRACE_L; }
   "}" { return BRACE_R; }
-  "<" { return ANGLE_L; }
-  ">" { return ANGLE_R; }
+//  "<" { return ANGLE_L; }
+//  ">" { return ANGLE_R; }
   "^" { return ACCENT; }
   "=" { return EQ; }
   ":" { return COLON; }
@@ -122,40 +120,40 @@ HEX=[a-fA-F0-9]
   "@" { return AT; }
 }
 // 然后找出关键词
-<YYINITIAL> {
+<YYINITIAL, CODE_CONTEXT> {
   for { return FOR; }
   in { return IN; }
   while { return WHILE; }
 }
-<YYINITIAL>  {
+// 编程环境允许的字面量
+<YYINITIAL, CODE_CONTEXT, HTML_BEGIN, HTML_END>  {
     {SYMBOL} {return SYMBOL;}
     {STRING} {return STRING;}
 }
+// 字符环境允许的字面量
+<HTML_CONTEXT> [^<>{}]* {
+    return STRING;
+}
 // HTML模板态: HTML_TEMPLATE ============================================================================================
 // 表达式转化 <\a>CODE_CONTEXT</a>
-<YYINITIAL> <\\ {
+<YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\\ {
     stateStack.push(YYINITIAL);
     yybegin(HTML_BEGIN);
     return HTML_BEGIN_TOKEN;
 }
 // 常规转换 <a>HTML_CONTEXT</a>
-<YYINITIAL> < {
+<YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> < {
     stateStack.push(HTML_CONTEXT);
     yybegin(HTML_BEGIN);
     return HTML_BEGIN_TOKEN;
 }
 // 根据上下文进入对应的模式
 <HTML_BEGIN> > {
-    if (stateStack.peek() == HTML_CONTEXT) {
-        yybegin(HTML_CONTEXT);
-    }
-    else {
-        yybegin(YYINITIAL);
-    }
+    yybegin(stateStack.peek());
     return HTML_END_TOKEN;
 }
 // 准备终止
-<HTML_CONTEXT> <\/ {
+<YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
     yybegin(HTML_END);
     return HTML_BEGIN_TOKEN;
 }

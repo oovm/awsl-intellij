@@ -26,15 +26,25 @@
         IN="Keyword in";
         FOR="Keyword for";
         WHILE="Keyword while";
+        // 符号
         COMMA=","
+        STAR="*"
+        ACCENT="^"
+        DOLLAR="$"
+        DOT="."
+        AT="@"
         EQ="="
+        COLON=":"
         SEMICOLON=";"
+        // 括号
         PARENTHESIS_L="("
         PARENTHESIS_R=")"
         BRACKET_L="["
         BRACKET_R="]"
         BRACE_L="{"
         BRACE_R="}"
+        ANGLE_L="<"
+        ANGLE_R=">"
         HTML_BEGIN_TOKEN="HTML_BEGIN_TOKEN"
         HTML_END_TOKEN="HTML_END_TOKEN"
         BAD_CHARACTER="BAD_CHARACTER"
@@ -48,7 +58,7 @@ private statement ::=
     COMMENT_DOCUMENT
   | SYMBOL
   | STRING
- // | html_element
+  | html_element
  // | ignore
   ;
 

@@ -186,12 +186,14 @@ public class AwslParser implements PsiParser, LightPsiParser {
   // COMMENT_DOCUMENT
   //   | SYMBOL
   //   | STRING
+  //   | html_element
   static boolean statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement")) return false;
     boolean r;
     r = consumeToken(b, COMMENT_DOCUMENT);
     if (!r) r = consumeToken(b, SYMBOL);
     if (!r) r = consumeToken(b, STRING);
+    if (!r) r = html_element(b, l + 1);
     return r;
   }
 
