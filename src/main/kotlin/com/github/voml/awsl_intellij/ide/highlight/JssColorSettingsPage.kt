@@ -6,11 +6,11 @@ import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 
 class JssColorSettingsPage : ColorSettingsPage {
-    private val annotatorTags = JssColor
+    private val annotatorTags = AwslColor
         .values()
         .associateBy({ it.name }, { it.textAttributesKey })
 
-    override fun getAttributeDescriptors() = JssColor
+    override fun getAttributeDescriptors() = AwslColor
         .values()
         .map { it.attributesDescriptor }
         .toTypedArray()

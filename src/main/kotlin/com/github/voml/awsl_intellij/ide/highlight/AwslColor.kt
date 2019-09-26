@@ -12,7 +12,7 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as Default
 
 
 // TODO: 分类
-enum class JssColor(humanName: Supplier<@NlsContexts.AttributeDescriptor String>, default: TextAttributesKey? = null) {
+enum class AwslColor(humanName: Supplier<@NlsContexts.AttributeDescriptor String>, default: TextAttributesKey? = null) {
     // 特殊关键词
     KEYWORD(OptionsBundle.messagePointer("options.language.defaults.keyword"), Default.KEYWORD),
     IDIOM_SYMBOL(JssBundle.messagePointer("color.token.symbol.idiom"), Default.METADATA),

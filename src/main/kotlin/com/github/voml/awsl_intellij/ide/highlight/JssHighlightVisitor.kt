@@ -8,13 +8,11 @@ import com.intellij.codeInsight.daemon.impl.HighlightVisitor
 import com.intellij.codeInsight.daemon.impl.analysis.HighlightInfoHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.util.elementType
-import com.intellij.psi.util.nextLeaf
 
 class JssHighlightVisitor : AwslVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
-    private fun highlight(element: PsiElement, color: JssColor) {
+    private fun highlight(element: PsiElement, color: AwslColor) {
         val builder = HighlightInfo.newHighlightInfo(HighlightInfoType.INFORMATION)
         builder.textAttributes(color.textAttributesKey)
         builder.range(element)

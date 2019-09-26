@@ -137,8 +137,13 @@ HEX=[a-fA-F0-9]
 // HTML模板态: HTML_TEMPLATE ============================================================================================
 // 表达式转化 <\a>CODE_CONTEXT</a>
 <YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\\ {
-    stateStack.push(YYINITIAL);
+    stateStack.push(CODE_CONTEXT);
     yybegin(HTML_BEGIN);
+    return HTML_BEGIN_TOKEN;
+}
+// 准备终止
+<YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
+    yybegin(HTML_END);
     return HTML_BEGIN_TOKEN;
 }
 // 常规转换 <a>HTML_CONTEXT</a>
@@ -148,23 +153,32 @@ HEX=[a-fA-F0-9]
     return HTML_BEGIN_TOKEN;
 }
 // 根据上下文进入对应的模式
+// 如果是空栈, 那么就进入顶级上下文
 <HTML_BEGIN> > {
-    yybegin(stateStack.peek());
+    if (stateStack.empty()) {
+        yybegin(YYINITIAL);
+    }
+    else {
+        yybegin(stateStack.peek());
+    }
     return HTML_END_TOKEN;
 }
-// 准备终止
-<YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
-    yybegin(HTML_END);
-    return HTML_BEGIN_TOKEN;
-}
 // 终止, 恢复上下文
+// pop 时确保至少有一个上下文
+// 如果是空栈, 那么就恢复顶级上下文
 <HTML_END> > {
-    yybegin(stateStack.pop());
+    stateStack.pop();
+    if (stateStack.empty()) {
+        yybegin(YYINITIAL);
+    }
+    else {
+        yybegin(stateStack.peek());
+    }
     return HTML_END_TOKEN;
 }
 // 自闭转换 <a/>
 <HTML_BEGIN> \/> {
-    yybegin(stateStack.pop());
+    stateStack.pop();
     return HTML_END_TOKEN;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================

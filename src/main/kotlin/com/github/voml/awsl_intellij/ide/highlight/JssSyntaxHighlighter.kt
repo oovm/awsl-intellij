@@ -17,7 +17,7 @@ class JssSyntaxHighlighter : SyntaxHighlighterBase() {
         return pack(getTokenColor(tokenType)?.textAttributesKey)
     }
 
-    private fun getTokenColor(tokenType: IElementType): JssColor? {
+    private fun getTokenColor(tokenType: IElementType): AwslColor? {
         return when (tokenType) {
             //
             // AS, SCHEMA, PROP -> JssColor.KEYWORD
@@ -27,19 +27,19 @@ class JssSyntaxHighlighter : SyntaxHighlighterBase() {
 //            BRACKET_L, BRACKET_R -> JssColor.BRACKETS
 //            BRACE_L, BRACE_R -> JssColor.BRACES
             //COLON, EQ -> JssColor.SET
-            COMMA -> JssColor.COMMA
+            COMMA -> AwslColor.COMMA
             // atom
             //INTEGER -> JssColor.INTEGER
             //DECIMAL -> JssColor.DECIMAL
             //URL -> JssColor.URL
-            //STRING -> JssColor.STRING
-            //SYMBOL -> JssColor.IDENTIFIER
+            STRING -> AwslColor.STRING
+            SYMBOL -> AwslColor.IDENTIFIER
             // 注释
-            //COMMENT -> JssColor.LINE_COMMENT
-            //COMMENT_BLOCK -> JssColor.BLOCK_COMMENT
-            COMMENT_DOCUMENT -> JssColor.DOC_COMMENT
+            COMMENT_LINE -> AwslColor.LINE_COMMENT
+            COMMENT_BLOCK -> AwslColor.BLOCK_COMMENT
+            COMMENT_DOCUMENT -> AwslColor.DOC_COMMENT
             // 错误
-            TokenType.BAD_CHARACTER -> JssColor.BAD_CHARACTER
+            TokenType.BAD_CHARACTER -> AwslColor.BAD_CHARACTER
             else -> null
         }
     }
