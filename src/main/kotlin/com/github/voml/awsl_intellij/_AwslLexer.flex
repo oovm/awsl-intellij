@@ -13,7 +13,7 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
   private static final IntStack leftBracketStack = new IntStack();
   private static final Stack<String> xmlTag = new Stack();
   private static int leftBraceCount = 0;
-  private static boolean noInAndUnion = false;
+  private static boolean canBeBadEnd = false;
 
   private void hugify(int state) {
     stateStack.push(yystate());
@@ -36,6 +36,7 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
     leftBraceCount = 0;
     noInAndUnion = false;
     stateStack.clear();
+    stateStack.push(YYINITIAL);
     leftBracketStack.clear();
     xmlTag.clear();
   }
@@ -58,12 +59,14 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 %eof}
 
 %state STRING_TEMPLATE
-%state HTML_BEGIN
+%state HTML_TAG_CONTEXT
+%state HTML_BEGIN_BAD
 %state HTML_CONTEXT
 %state HTML_END
 %state CODE_CONTEXT
 
 WHITE_SPACE=\s+
+TEXT_SPACE=\s+
 COMMENT_DOCUMENT=\/\/\/[^\n\r]*
 COMMENT_LINE=\/\/[^\n\r]*
 COMMENT_BLOCK=(\/\*\*\/])
@@ -87,6 +90,25 @@ STRING_NON_ESCAPE=[^\\]
 
 HEX=[a-fA-F0-9]
 
+HTML_CODE_START = <\
+HTML_TEXT_START = <
+HTML_TEXT_BAD_START = <{WHITE_SPACE}*{HTML_BAD_TAG}
+HTML_BAD_TAG = "hr"
+  | "br"
+  | "img"
+  | "input"
+  | "meta"
+  | "link"
+  | "area"
+  | "base"
+  | "col"
+  | "command"
+  | "embed"
+  | "keygen"
+  | "param"
+  | "source"
+  | "track"
+  | "wbr"
 %%
 
 // 初态: YYINITIAL =====================================================================================================
