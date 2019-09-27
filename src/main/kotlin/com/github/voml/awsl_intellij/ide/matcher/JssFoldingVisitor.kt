@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.ide.matcher
 
-import com.github.voml.awsl_intellij.psi.AwslRecursiveVisitor
+import com.github.voml.awsl_intellij.language.psi.AwslRecursiveVisitor
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.psi.PsiElement
 

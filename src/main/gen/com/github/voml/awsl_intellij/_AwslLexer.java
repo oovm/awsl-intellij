@@ -25,10 +25,12 @@ public class _AwslLexer implements FlexLexer {
   /** lexical states */
   public static final int YYINITIAL = 0;
   public static final int STRING_TEMPLATE = 2;
-  public static final int HTML_BEGIN = 4;
-  public static final int HTML_CONTEXT = 6;
-  public static final int HTML_END = 8;
-  public static final int CODE_CONTEXT = 10;
+  public static final int HTML_TAG_CONTEXT = 4;
+  public static final int HTML_BEGIN_BAD = 6;
+  public static final int HTML_BEGIN = 8;
+  public static final int HTML_CONTEXT = 10;
+  public static final int HTML_END = 12;
+  public static final int CODE_CONTEXT = 14;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -37,7 +39,7 @@ public class _AwslLexer implements FlexLexer {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = { 
-     0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  0, 0
+     0,  0,  1,  1,  1,  1,  1,  1,  2,  2,  3,  3,  4,  4,  0, 0
   };
 
   /** 
@@ -146,10 +148,10 @@ public class _AwslLexer implements FlexLexer {
 
   /* The ZZ_CMAP_A table has 1808 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\1\1\3\2\1\1\3\2\0\1\1\1\7\1\14\1\0\1\30\3\0\1\20\1\21\1\4\1\0\1\27"+
-    "\1\10\1\31\1\2\12\13\1\25\1\26\1\6\1\24\1\11\1\0\1\32\22\12\1\22\1\15\1\5"+
-    "\1\23\1\12\1\0\4\12\1\43\1\33\1\12\1\41\1\36\2\12\1\42\1\12\1\37\1\34\2\12"+
-    "\1\35\4\12\1\40\3\12\1\16\1\0\1\17\7\0\1\1\2\0\1\1\11\0\1\12\12\0\1\12\1\0"+
+    "\11\0\1\1\1\3\2\1\1\3\2\0\1\1\1\7\1\14\1\0\1\40\3\0\1\30\1\31\1\4\1\0\1\37"+
+    "\1\10\1\41\1\2\12\13\1\35\1\36\1\6\1\34\1\11\1\0\1\42\22\12\1\32\1\15\1\5"+
+    "\1\33\1\12\1\0\4\12\1\24\1\43\1\12\1\20\1\22\2\12\1\25\1\12\1\23\1\26\2\12"+
+    "\1\21\4\12\1\27\3\12\1\16\1\0\1\17\7\0\1\1\2\0\1\1\11\0\1\12\12\0\1\12\1\0"+
     "\1\13\7\12\1\0\2\12\4\0\4\12\6\0\5\12\7\0\1\12\1\0\1\12\1\0\5\12\1\0\2\12"+
     "\3\0\3\12\1\0\1\12\6\0\1\12\1\13\3\12\1\0\1\12\1\0\4\12\1\0\13\12\1\0\3\12"+
     "\1\0\5\13\2\0\6\12\1\0\7\12\1\0\1\12\7\0\15\13\1\0\1\13\1\0\2\13\1\0\2\13"+
@@ -197,11 +199,11 @@ public class _AwslLexer implements FlexLexer {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\3\0\1\1\1\0\1\2\1\3\1\2\1\4\1\5"+
-    "\1\6\1\7\1\2\1\10\1\11\1\12\1\13\1\14"+
-    "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24"+
-    "\3\7\1\2\1\25\1\1\1\6\1\26\1\27\1\0"+
-    "\1\30\1\31\1\0\1\1\1\0\1\7\1\32\1\7"+
-    "\1\33\2\0\1\34\1\7\2\0\1\7\1\0\1\35"+
+    "\1\6\1\7\1\2\1\10\1\11\2\7\1\12\1\13"+
+    "\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23"+
+    "\1\24\1\7\1\2\1\25\1\1\1\6\1\26\1\27"+
+    "\1\0\1\30\1\31\1\0\1\1\1\0\1\32\2\7"+
+    "\1\33\2\0\1\7\1\34\2\0\1\7\1\0\1\35"+
     "\1\36\1\37";
 
   private static int [] zzUnpackAction() {
@@ -231,12 +233,12 @@ public class _AwslLexer implements FlexLexer {
 
   private static final String ZZ_ROWMAP_PACKED_0 =
     "\0\0\0\44\0\110\0\154\0\220\0\264\0\330\0\374"+
-    "\0\264\0\264\0\u0120\0\u0144\0\u0168\0\264\0\264\0\264"+
-    "\0\264\0\264\0\264\0\264\0\264\0\264\0\264\0\264"+
-    "\0\264\0\264\0\u018c\0\u01b0\0\u01d4\0\u01f8\0\264\0\u021c"+
+    "\0\264\0\264\0\u0120\0\u0144\0\u0168\0\264\0\264\0\u018c"+
+    "\0\u01b0\0\264\0\264\0\264\0\264\0\264\0\264\0\264"+
+    "\0\264\0\264\0\264\0\264\0\u01d4\0\u01f8\0\264\0\u021c"+
     "\0\u0240\0\264\0\u0264\0\u0288\0\264\0\264\0\u0168\0\u0168"+
-    "\0\u02ac\0\u02d0\0\u0144\0\u02f4\0\264\0\u0318\0\u033c\0\u0144"+
-    "\0\u0360\0\u0384\0\u03a8\0\u03cc\0\u03f0\0\264\0\u0144\0\264";
+    "\0\u02ac\0\u0144\0\u02d0\0\u02f4\0\264\0\u0318\0\u033c\0\u0360"+
+    "\0\u0144\0\u0384\0\u03a8\0\u03cc\0\u03f0\0\264\0\u0144\0\264";
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[56];
@@ -263,25 +265,27 @@ public class _AwslLexer implements FlexLexer {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\6\1\7\1\10\1\7\1\11\1\12\1\13\3\6"+
-    "\1\14\1\6\1\15\1\6\1\16\1\17\1\20\1\21"+
-    "\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31"+
-    "\1\32\1\33\2\14\1\34\1\14\1\35\3\14\45\6"+
-    "\1\7\1\36\1\7\5\6\1\37\1\14\1\6\1\15"+
-    "\16\6\11\14\6\40\1\41\2\40\1\6\4\40\2\6"+
-    "\24\40\1\6\1\7\1\6\1\7\5\6\1\42\1\14"+
-    "\1\6\1\15\16\6\11\14\45\0\1\7\1\0\1\7"+
-    "\42\0\1\43\1\0\1\44\41\0\1\45\12\0\1\46"+
-    "\40\0\2\14\17\0\11\14\14\47\1\50\1\51\26\47"+
-    "\12\0\2\14\17\0\1\14\1\52\7\14\12\0\2\14"+
-    "\17\0\4\14\1\53\4\14\12\0\2\14\17\0\6\14"+
-    "\1\54\2\14\11\0\1\55\32\0\6\40\1\0\2\40"+
-    "\1\0\4\40\2\0\24\40\2\0\1\45\4\0\1\56"+
-    "\5\0\1\46\26\0\3\43\1\0\40\43\4\0\1\57"+
-    "\37\0\44\47\12\0\2\14\17\0\2\14\1\60\6\14"+
-    "\12\0\2\14\17\0\3\14\1\61\5\14\10\0\1\62"+
-    "\35\0\1\63\53\0\2\14\17\0\7\14\1\64\1\14"+
-    "\10\0\1\65\40\0\1\66\50\0\2\14\17\0\10\14"+
-    "\1\67\11\0\1\70\32\0";
+    "\1\14\1\6\1\15\1\6\1\16\1\17\2\14\1\20"+
+    "\4\14\1\21\1\22\1\23\1\24\1\25\1\26\1\27"+
+    "\1\30\1\31\1\32\1\33\1\34\1\35\45\6\1\7"+
+    "\1\36\1\7\5\6\1\37\1\14\1\6\1\15\3\6"+
+    "\10\14\13\6\1\14\6\40\1\41\2\40\1\6\4\40"+
+    "\2\6\24\40\1\6\1\7\1\6\1\7\5\6\1\42"+
+    "\1\14\1\6\1\15\3\6\10\14\13\6\1\14\45\0"+
+    "\1\7\1\0\1\7\42\0\1\43\1\0\1\44\41\0"+
+    "\1\45\12\0\1\46\40\0\2\14\4\0\10\14\13\0"+
+    "\1\14\14\47\1\50\1\51\26\47\12\0\2\14\4\0"+
+    "\3\14\1\52\4\14\13\0\1\14\12\0\2\14\4\0"+
+    "\1\53\7\14\13\0\1\14\12\0\2\14\4\0\6\14"+
+    "\1\54\1\14\13\0\1\14\11\0\1\55\32\0\6\40"+
+    "\1\0\2\40\1\0\4\40\2\0\24\40\2\0\1\45"+
+    "\4\0\1\56\5\0\1\46\26\0\3\43\1\0\40\43"+
+    "\4\0\1\57\37\0\44\47\12\0\2\14\4\0\2\14"+
+    "\1\60\5\14\13\0\1\14\12\0\2\14\4\0\1\14"+
+    "\1\61\6\14\13\0\1\14\10\0\1\62\35\0\1\63"+
+    "\53\0\2\14\4\0\5\14\1\64\2\14\13\0\1\14"+
+    "\10\0\1\65\40\0\1\66\50\0\2\14\4\0\4\14"+
+    "\1\67\3\14\13\0\1\14\11\0\1\70\32\0";
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[1044];
@@ -322,10 +326,10 @@ public class _AwslLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\3\0\1\1\1\0\1\11\2\1\2\11\3\1\15\11"+
-    "\4\1\1\11\2\1\1\11\1\1\1\0\2\11\1\0"+
-    "\1\1\1\0\3\1\1\11\2\0\2\1\2\0\1\1"+
-    "\1\0\1\11\1\1\1\11";
+    "\3\0\1\1\1\0\1\11\2\1\2\11\3\1\2\11"+
+    "\2\1\13\11\2\1\1\11\2\1\1\11\1\1\1\0"+
+    "\2\11\1\0\1\1\1\0\3\1\1\11\2\0\2\1"+
+    "\2\0\1\1\1\0\1\11\1\1\1\11";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[56];
@@ -384,42 +388,26 @@ public class _AwslLexer implements FlexLexer {
   private boolean zzEOFDone;
 
   /* user code: */
-  private static final IntStack stateStack = new IntStack();
-  private static final IntStack leftBracketStack = new IntStack();
-  private static final Stack<String> xmlTag = new Stack();
-  private static int leftBraceCount = 0;
-  private static boolean noInAndUnion = false;
+    private static final IntStack stateStack = new IntStack();
+    private static final IntStack leftBracketStack = new IntStack();
+    private static final Stack<String> xmlTag = new Stack();
+    private static int leftBraceCount = 0;
+    private static boolean canBeBadEnd = false;
 
-  private void hugify(int state) {
-    stateStack.push(yystate());
-    leftBracketStack.push(leftBraceCount);
-    leftBraceCount = 0;
-    yybegin(state);
-  }
 
-  private void dehugify() {
-    leftBraceCount = leftBracketStack.pop();
-    yybegin(stateStack.pop());
-  }
+    private static void init() {
+        leftBraceCount = 0;
+        noInAndUnion = false;
+        stateStack.clear();
+        stateStack.push(YYINITIAL);
+        leftBracketStack.clear();
+        xmlTag.clear();
+    }
 
-  private void rehugify(int state) {
-    dehugify();
-    hugify(state);
-  }
-
-  private static void init() {
-    leftBraceCount = 0;
-    noInAndUnion = false;
-    stateStack.clear();
-    stateStack.push(YYINITIAL);
-    leftBracketStack.clear();
-    xmlTag.clear();
-  }
-
-  public _AwslLexer() {
-    this((java.io.Reader) null);
-    init();
-  }
+    public _AwslLexer() {
+        this((java.io.Reader) null);
+        init();
+    }
 
 
   /**
@@ -583,7 +571,7 @@ public class _AwslLexer implements FlexLexer {
   private void zzDoEOF() {
     if (!zzEOFDone) {
       zzEOFDone = true;
-      init();
+        init();
 
     }
   }
@@ -783,14 +771,24 @@ public class _AwslLexer implements FlexLexer {
             // fall through
           case 51: break;
           case 21: 
-            { yybegin(stateStack.peek());
+            { if (stateStack.empty()) {
+        yybegin(YYINITIAL);
+    }
+    else {
+        yybegin(stateStack.peek());
+    }
     return HTML_END_TOKEN;
             } 
             // fall through
           case 52: break;
           case 22: 
             { stateStack.pop();
-    yybegin(stateStack.peek());
+    if (stateStack.empty()) {
+        yybegin(YYINITIAL);
+    }
+    else {
+        yybegin(stateStack.peek());
+    }
     return HTML_END_TOKEN;
             } 
             // fall through

@@ -1,9 +1,9 @@
 package com.github.voml.awsl_intellij.ide.formatter
 
-import com.github.voml.awsl_intellij.psi.endOffset
-import com.github.voml.awsl_intellij.psi.getNextNonCommentSibling
-import com.github.voml.awsl_intellij.psi.getPrevNonCommentSibling
-import com.github.voml.awsl_intellij.psi.getPrevNonWhitespaceSibling
+import com.github.voml.awsl_intellij.language.psi.endOffset
+import com.github.voml.awsl_intellij.language.psi.getNextNonCommentSibling
+import com.github.voml.awsl_intellij.language.psi.getPrevNonCommentSibling
+import com.github.voml.awsl_intellij.language.psi.getPrevNonWhitespaceSibling
 import com.intellij.lang.SmartEnterProcessorWithFixers
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiElement

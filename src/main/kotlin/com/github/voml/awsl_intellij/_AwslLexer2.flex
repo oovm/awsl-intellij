@@ -1,84 +1,86 @@
-package org.jetbrains.vuejs.lang.html.lexer;
+package com.github.voml.awsl_intellij;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTokenType;
 import kotlin.Pair;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.vuejs.lang.html.lexer.VueTokenTypes;
+import static org.jetbrains.vuejs.lang.html.lexer.AwslTypes.*;
 %%
 
 %unicode
 
 %{
-  private String interpolationStart;
-  private String interpolationEnd;
+    private String interpolationStart;
+    private String interpolationEnd;
 
-  private int interpolationStartPos;
+    private int interpolationStartPos;
 
-  public _VueLexer(@Nullable Pair<String, String> interpolationConfig) {
-    this((java.io.Reader)null);
-    if (interpolationConfig == null) {
-      interpolationStart = null;
-      interpolationEnd = null;
-    } else {
-      interpolationStart = interpolationConfig.getFirst();
-      interpolationEnd = interpolationConfig.getSecond();
+    public _AwslLexer(@Nullable Pair<String, String> interpolationConfig) {
+        this((java.io.Reader)null);
+        if (interpolationConfig == null) {
+            interpolationStart = null;
+            interpolationEnd = null;
+        }
+        else {
+            interpolationStart = interpolationConfig.getFirst();
+            interpolationEnd = interpolationConfig.getSecond();
+        }
     }
-  }
 
-  private boolean tryConsumeInterpolationBoundary(@Nullable String boundary) {
-    if (inBuffer(boundary, 0)) {
-      zzMarkedPos += boundary.length() - 1;
-      interpolationStartPos = -1;
-      return true;
-    }
-    return false;
-  }
-
-  private boolean inBuffer(@Nullable String text, int offset) {
-    if (text == null) {
-      return false;
-    }
-    int curPos = zzMarkedPos - 1 + offset;
-    if (text.length() > zzBuffer.length() - curPos) {
-      return false;
-    }
-    for (int i = 0; i < text.length(); i++) {
-      if (zzBuffer.charAt(i + curPos) != text.charAt(i)) {
+    private boolean tryConsumeInterpolationBoundary(@Nullable String boundary) {
+        if (inBuffer(boundary, 0)) {
+            zzMarkedPos += boundary.length() - 1;
+            interpolationStartPos = -1;
+            return true;
+        }
         return false;
-      }
     }
-    return true;
-  }
 
-  private boolean tryRollbackInterpolation() {
-    if (yystate() == INTERPOLATION) {
-      rollbackInterpolation();
-      yybegin(UNTERMINATED_INTERPOLATION);
-      return true;
+    private boolean inBuffer(@Nullable String text, int offset) {
+        if (text == null) {
+            return false;
+        }
+        int curPos = zzMarkedPos - 1 + offset;
+        if (text.length() > zzBuffer.length() - curPos) {
+            return false;
+        }
+        for (int i = 0; i < text.length(); i++) {
+            if (zzBuffer.charAt(i + curPos) != text.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
     }
-    return false;
-  }
 
-  private void rollbackInterpolation() {
-    if (interpolationStartPos > 0) {
-      zzStartRead = interpolationStartPos - 1;
-      zzMarkedPos = interpolationStartPos - 1;
-      interpolationStartPos = -1;
-    } else {
-      yypushback(yylength());
+    private boolean tryRollbackInterpolation() {
+        if (yystate() == INTERPOLATION) {
+            rollbackInterpolation();
+            yybegin(UNTERMINATED_INTERPOLATION);
+            return true;
+        }
+        return false;
     }
-  }
 
-  private boolean isWithinInterpolation() {
-    return zzLexicalState == INTERPOLATION
-      || zzLexicalState == INTERPOLATION_DQ
-      || zzLexicalState == INTERPOLATION_SQ;
-  }
+    private void rollbackInterpolation() {
+        if (interpolationStartPos > 0) {
+            zzStartRead = interpolationStartPos - 1;
+            zzMarkedPos = interpolationStartPos - 1;
+            interpolationStartPos = -1;
+        }
+        else {
+            yypushback(yylength());
+        }
+    }
+
+    private boolean isWithinInterpolation() {
+        return zzLexicalState == INTERPOLATION
+            || zzLexicalState == INTERPOLATION_DQ
+            || zzLexicalState == INTERPOLATION_SQ;
+    }
 %}
 
-%class _VueLexer
+%class _AwslLexer
 %public
 %implements FlexLexer
 %function advance
@@ -98,7 +100,7 @@ import org.jetbrains.vuejs.lang.html.lexer.VueTokenTypes;
 %state TAG_CHARACTERS
 %state C_COMMENT_START
 %state C_COMMENT_END
-
+/// SQ = ', DQ = "
 %state INTERPOLATION
 %state UNTERMINATED_INTERPOLATION
 %state INTERPOLATION_END
@@ -124,13 +126,14 @@ END_COMMENT="-->"
 
 CONDITIONAL_COMMENT_CONDITION=({ALPHA})({ALPHA}|{WHITE_SPACE_CHARS}|{DIGIT}|"."|"("|")"|"|"|"!"|"&")*
 %%
-// PROCESSING_INSTRUCTION ==============================================================================================
+// Processing Instruction ==============================================================================================
 <YYINITIAL, INTERPOLATION, UNTERMINATED_INTERPOLATION> "<?" {
-if (!tryRollbackInterpolation()) {
-    yybegin(PROCESSING_INSTRUCTION);
-    return XmlTokenType.XML_PI_START;
+    if (!tryRollbackInterpolation()) {
+        yybegin(PROCESSING_INSTRUCTION);
+        return XmlTokenType.XML_PI_START;
+    }
 }
-}
+// <?PITarget PIContent?>
 <PROCESSING_INSTRUCTION> \??> {
     yybegin(YYINITIAL);
     return XmlTokenType.XML_PI_END;
@@ -139,11 +142,12 @@ if (!tryRollbackInterpolation()) {
     return XmlTokenType.XML_PI_TARGET;
 }
 // DOCTYPE =============================================================================================================
+//<!DOCTYPE root-element PUBLIC "FPI" ["URI"] [<!-- internal subset declarations -->]>
 <YYINITIAL, INTERPOLATION, UNTERMINATED_INTERPOLATION> {DOCTYPE} {
-if (!tryRollbackInterpolation()) {
-    yybegin(DOC_TYPE);
-    return XmlTokenType.XML_DOCTYPE_START;
-}
+    if (!tryRollbackInterpolation()) {
+        yybegin(DOC_TYPE);
+        return XmlTokenType.XML_DOCTYPE_START;
+    }
 }
 <DOC_TYPE> {HTML} {
     return XmlTokenType.XML_NAME;
@@ -164,34 +168,36 @@ if (!tryRollbackInterpolation()) {
 <INTERPOLATION> {WHITE_SPACE_CHARS} {
     // ignores
 }
-<DOC_TYPE,TAG_ATTRIBUTES,ATTRIBUTE_VALUE_START,PROCESSING_INSTRUCTION, START_TAG_NAME, END_TAG_NAME, TAG_CHARACTERS> {WHITE_SPACE_CHARS} { return XmlTokenType.XML_WHITE_SPACE; }
-<YYINITIAL, INTERPOLATION, UNTERMINATED_INTERPOLATION> "<" {TAG_NAME} {
-if (!tryRollbackInterpolation()) {
-    yybegin(START_TAG_NAME);
-    yypushback(yylength());
+<DOC_TYPE,TAG_ATTRIBUTES,ATTRIBUTE_VALUE_START,PROCESSING_INSTRUCTION, START_TAG_NAME, END_TAG_NAME, TAG_CHARACTERS> {WHITE_SPACE_CHARS} {
+    return XmlTokenType.XML_WHITE_SPACE;
 }
+<YYINITIAL, INTERPOLATION, UNTERMINATED_INTERPOLATION> "<" {TAG_NAME} {
+    if (!tryRollbackInterpolation()) {
+        yybegin(START_TAG_NAME);
+        yypushback(yylength());
+    }
 }
 <START_TAG_NAME, TAG_CHARACTERS> "<" {
     return XmlTokenType.XML_START_TAG_START;
 }
 
 <YYINITIAL, INTERPOLATION, UNTERMINATED_INTERPOLATION> "</" {TAG_NAME} {
-if (!tryRollbackInterpolation()) {
-    yybegin(END_TAG_NAME); yypushback(yylength());
-}
+    if (!tryRollbackInterpolation()) {
+        yybegin(END_TAG_NAME); yypushback(yylength());
+    }
 }
 <YYINITIAL, END_TAG_NAME, INTERPOLATION, UNTERMINATED_INTERPOLATION> "</" {
-if (!tryRollbackInterpolation()) {
-    return XmlTokenType.XML_END_TAG_START;
+    if (!tryRollbackInterpolation()) {
+        return XmlTokenType.XML_END_TAG_START;
+    }
 }
-}
-
 <YYINITIAL, INTERPOLATION, UNTERMINATED_INTERPOLATION> "<!--" {
-if (!tryRollbackInterpolation()) {
-    yybegin(COMMENT);
-    return XmlTokenType.XML_COMMENT_START;
+    if (!tryRollbackInterpolation()) {
+        yybegin(COMMENT);
+        return XmlTokenType.XML_COMMENT_START;
+    }
 }
-}
+// COMMENT =============================================================================================================
 <COMMENT> "[" {
     yybegin(C_COMMENT_START);
     return XmlTokenType.XML_CONDITIONAL_COMMENT_START;
@@ -224,7 +230,7 @@ if (!tryRollbackInterpolation()) {
     return XmlTokenType.XML_COMMENT_CHARACTERS;
 }
 <COMMENT> [^] { return XmlTokenType.XML_COMMENT_CHARACTERS; }
-
+// C_COMMENT ===========================================================================================================
 <C_COMMENT_START,C_COMMENT_END> {CONDITIONAL_COMMENT_CONDITION} { return XmlTokenType.XML_COMMENT_CHARACTERS; }
 <C_COMMENT_START> [^] { yybegin(COMMENT); return XmlTokenType.XML_COMMENT_CHARACTERS; }
 <C_COMMENT_START> "]>" { yybegin(COMMENT); return XmlTokenType.XML_CONDITIONAL_COMMENT_START_END; }
@@ -251,41 +257,49 @@ if (!tryRollbackInterpolation()) {
 <ATTRIBUTE_VALUE_START> "'" { yybegin(ATTRIBUTE_VALUE_SQ); return XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER; }
 
 <ATTRIBUTE_VALUE_DQ, UNTERMINATED_INTERPOLATION_DQ> {
-  "\"" { yybegin(TAG_ATTRIBUTES); return XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER; }
-  [^] {
-  if (yystate() == ATTRIBUTE_VALUE_DQ
-      && tryConsumeInterpolationBoundary(interpolationStart)) {
-    if (inBuffer(interpolationEnd, 1)) {
-      yybegin(INTERPOLATION_END_DQ);
-    } else {
-      yybegin(INTERPOLATION_DQ);
+    \" {
+        yybegin(TAG_ATTRIBUTES);
+        return XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER;
     }
-    return VueTokenTypes.INTERPOLATION_START;
-  }
-  return XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN;}
+    [^] {
+        if (yystate() == ATTRIBUTE_VALUE_DQ && tryConsumeInterpolationBoundary(interpolationStart)) {
+            if (inBuffer(interpolationEnd, 1)) {
+                yybegin(INTERPOLATION_END_DQ);
+            }
+            else {
+                yybegin(INTERPOLATION_DQ);
+            }
+            return VueTokenTypes.INTERPOLATION_START;
+        }
+        return XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN;
+    }
 }
 
 <ATTRIBUTE_VALUE_SQ, UNTERMINATED_INTERPOLATION_SQ> {
-  "'" { yybegin(TAG_ATTRIBUTES); return XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER; }
-  [^] {
-  if (yystate() == ATTRIBUTE_VALUE_SQ
-            && tryConsumeInterpolationBoundary(interpolationStart)) {
-    if (inBuffer(interpolationEnd, 1)) {
-      yybegin(INTERPOLATION_END_SQ);
-    } else {
-      yybegin(INTERPOLATION_SQ);
+    ' {
+        yybegin(TAG_ATTRIBUTES);
+        return XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER;
     }
-    return VueTokenTypes.INTERPOLATION_START;
-  }
-  return XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN;}
+    [^] {
+        if (yystate() == ATTRIBUTE_VALUE_SQ && tryConsumeInterpolationBoundary(interpolationStart)) {
+            if (inBuffer(interpolationEnd, 1)) {
+                yybegin(INTERPOLATION_END_SQ);
+            }
+            else {
+                yybegin(INTERPOLATION_SQ);
+            }
+            return AwslTokenTypes.INTERPOLATION_START;
+        }
+        return XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN;
+    }
 }
 
-<INTERPOLATION_DQ> "\"" {
+<INTERPOLATION_DQ> \" {
     rollbackInterpolation();
     yybegin(UNTERMINATED_INTERPOLATION_DQ);
 }
 
-<INTERPOLATION_SQ> "'" {
+<INTERPOLATION_SQ> ' {
     rollbackInterpolation();
     yybegin(UNTERMINATED_INTERPOLATION_SQ);
 }
@@ -294,7 +308,7 @@ if (!tryRollbackInterpolation()) {
     if (inBuffer(interpolationEnd, 0)) {
         yybegin(yystate() == INTERPOLATION_DQ ? INTERPOLATION_END_DQ : INTERPOLATION_END_SQ);
         yypushback(1);
-        return VueTokenTypes.INTERPOLATION_EXPR;
+        return AwslTokenTypes.INTERPOLATION_EXPR;
     }
     if (interpolationStartPos <= 0) {
         interpolationStartPos = zzStartRead;
@@ -302,11 +316,11 @@ if (!tryRollbackInterpolation()) {
 }
 
 <INTERPOLATION_END_DQ, INTERPOLATION_END_SQ> [^] {
-  yybegin(yystate() == INTERPOLATION_END_DQ ? ATTRIBUTE_VALUE_DQ : ATTRIBUTE_VALUE_SQ);
-  if (tryConsumeInterpolationBoundary(interpolationEnd)) {
-    return VueTokenTypes.INTERPOLATION_END;
-  }
-  return XmlTokenType.XML_BAD_CHARACTER;
+    yybegin(yystate() == INTERPOLATION_END_DQ ? ATTRIBUTE_VALUE_DQ : ATTRIBUTE_VALUE_SQ);
+    if (tryConsumeInterpolationBoundary(interpolationEnd)) {
+        return AwslTokenTypes.INTERPOLATION_END;
+    }
+    return XmlTokenType.XML_BAD_CHARACTER;
 }
 
 "&lt;" |"&gt;" |"&apos;" |"&quot;" |"&nbsp;" |"&amp;" |"&#"{DIGIT}+";" |"&#"(x|X)({DIGIT}|[a-fA-F])+";" {
@@ -324,7 +338,7 @@ if (!tryRollbackInterpolation()) {
     if (inBuffer(interpolationEnd, 0)) {
         yybegin(INTERPOLATION_END);
         yypushback(1);
-        return VueTokenTypes.INTERPOLATION_EXPR;
+        return AwslTokenTypes.INTERPOLATION_EXPR;
     }
     if (interpolationStartPos <= 0) {
         interpolationStartPos = zzStartRead;
@@ -333,7 +347,7 @@ if (!tryRollbackInterpolation()) {
 <INTERPOLATION_END> [^] {
     yybegin(YYINITIAL);
     if (tryConsumeInterpolationBoundary(interpolationEnd)) {
-        return VueTokenTypes.INTERPOLATION_END;
+        return AwslTokenTypes.INTERPOLATION_END;
     }
     return XmlTokenType.XML_BAD_CHARACTER;
 }
@@ -348,7 +362,7 @@ if (!tryRollbackInterpolation()) {
         else {
             yybegin(INTERPOLATION);
         }
-        return VueTokenTypes.INTERPOLATION_START;
+        return AwslTokenTypes.INTERPOLATION_START;
     }
     return XmlTokenType.XML_DATA_CHARACTERS;
 }

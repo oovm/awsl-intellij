@@ -1,4 +1,4 @@
-package com.github.voml.awsl_intellij.psi
+package com.github.voml.awsl_intellij.language.psi
 
 import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.extapi.psi.StubBasedPsiElementBase

@@ -1,5 +1,5 @@
 // This is a generated file. Not intended for manual editing.
-package com.github.voml.awsl_intellij.language.psi.impl;
+package com.github.voml.awsl_intellij.language.psi_node;
 
 import java.util.List;
 import org.jetbrains.annotations.*;
@@ -10,15 +10,16 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.voml.awsl_intellij.language.psi.*;
+import com.github.voml.awsl_intellij.language.psi.psi_node.AwslPsiImplUtil;
 
-public class AwslHtmlElementImpl extends ASTWrapperPsiElement implements AwslHtmlElement {
+public class AwslBraceBlockNode extends ASTWrapperPsiElement implements AwslBraceBlock {
 
-  public AwslHtmlElementImpl(@NotNull ASTNode node) {
+  public AwslBraceBlockNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitHtmlElement(this);
+    visitor.visitBraceBlock(this);
   }
 
   @Override

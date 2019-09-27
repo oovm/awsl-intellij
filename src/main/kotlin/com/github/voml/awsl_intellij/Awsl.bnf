@@ -1,17 +1,17 @@
 {
     parserClass = "com.github.voml.awsl_intellij.language.parser.AwslParser"
-    parserUtilClass = "com.github.voml.awsl_intellij.psi.AwslParserUtil"
+    parserUtilClass = "com.github.voml.awsl_intellij.language.psi.AwslParserUtil"
 
     psiClassPrefix = "Awsl"
-    psiImplClassSuffix = "Impl"
+    psiImplClassSuffix = "Node"
     psiPackage = "com.github.voml.awsl_intellij.language.psi"
-    psiImplPackage = "com.github.voml.awsl_intellij.language.psi.impl"
+    psiImplPackage = "com.github.voml.awsl_intellij.language.psi_node"
 
     elementTypeHolderClass = "com.github.voml.awsl_intellij.language.psi.AwslTypes"
-    elementTypeClass = "com.github.voml.awsl_intellij.psi.AwslElementType"
-    tokenTypeClass = "com.github.voml.awsl_intellij.psi.AwslTokenType"
+    elementTypeClass = "com.github.voml.awsl_intellij.language.psi.AwslElementType"
+    tokenTypeClass = "com.github.voml.awsl_intellij.language.psi.AwslTokenType"
 
-    psiImplUtilClass = "com.github.voml.awsl_intellij.language.psi.impl.AwslPsiImplUtil"
+    psiImplUtilClass = "com.github.voml.awsl_intellij.language.psi.psi_node.AwslPsiImplUtil"
     // Lexer Token from JFlex
     // Here only write names
     tokens = [
@@ -48,10 +48,12 @@
         BAD_CHARACTER="BAD_CHARACTER"
         SYMBOL="Symbol"
     ]
+
     extends = "com.intellij.extapi.psi.ASTWrapperPsiElement"
-    extends("(add|mul)_expr")=binary_expr
-    extends(".*_expr")=expr
-    mixin("HTML_END")="com.github.voml.awsl_intellij.psi.impl.AwslHtmlEndMixin"
+//    extends("(add|mul)_expr")=binary_expr
+//    extends(".*_expr")=expr
+//
+//    mixin("HTML_END")="com.github.voml.awsl_intellij.psi.impl.AwslHtmlEndMixin"
 }
 
 Awsl ::= statement*;

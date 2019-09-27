@@ -4,9 +4,7 @@ package com.github.voml.awsl_intellij.language.psi;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
-import com.github.voml.awsl_intellij.psi.AwslElementType;
-import com.github.voml.awsl_intellij.psi.AwslTokenType;
-import com.github.voml.awsl_intellij.language.psi.impl.*;
+import com.github.voml.awsl_intellij.language.psi_node.*;
 
 public interface AwslTypes {
 
@@ -34,7 +32,7 @@ public interface AwslTypes {
   IElementType EQ = new AwslTokenType("=");
   IElementType FOR = new AwslTokenType("Keyword for");
   IElementType HTML_BEGIN_TOKEN = new AwslTokenType("HTML_BEGIN_TOKEN");
-  IElementType HTML_END_TOKEN = new AwslTokenType("HTML_END_TOKEN");
+  IElementType HTML_END = new AwslTokenType("HTML_END_TOKEN");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType PARENTHESIS_L = new AwslTokenType("(");
   IElementType PARENTHESIS_R = new AwslTokenType(")");
@@ -49,13 +47,13 @@ public interface AwslTypes {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
       if (type == BRACE_BLOCK) {
-        return new AwslBraceBlockImpl(node);
+        return new AwslBraceBlockNode(node);
       }
       else if (type == BRACKET_BLOCK) {
-        return new AwslBracketBlockImpl(node);
+        return new AwslBracketBlockNode(node);
       }
       else if (type == HTML_ELEMENT) {
-        return new AwslHtmlElementImpl(node);
+        return new AwslHtmlElementNode(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

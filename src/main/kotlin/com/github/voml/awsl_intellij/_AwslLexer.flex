@@ -9,42 +9,26 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 %%
 
 %{
-  private static final IntStack stateStack = new IntStack();
-  private static final IntStack leftBracketStack = new IntStack();
-  private static final Stack<String> xmlTag = new Stack();
-  private static int leftBraceCount = 0;
-  private static boolean canBeBadEnd = false;
+    private static final IntStack stateStack = new IntStack();
+    private static final IntStack leftBracketStack = new IntStack();
+    private static final Stack<String> xmlTag = new Stack();
+    private static int leftBraceCount = 0;
+    private static boolean canBeBadEnd = false;
 
-  private void hugify(int state) {
-    stateStack.push(yystate());
-    leftBracketStack.push(leftBraceCount);
-    leftBraceCount = 0;
-    yybegin(state);
-  }
 
-  private void dehugify() {
-    leftBraceCount = leftBracketStack.pop();
-    yybegin(stateStack.pop());
-  }
+    private static void init() {
+        leftBraceCount = 0;
+        noInAndUnion = false;
+        stateStack.clear();
+        stateStack.push(YYINITIAL);
+        leftBracketStack.clear();
+        xmlTag.clear();
+    }
 
-  private void rehugify(int state) {
-    dehugify();
-    hugify(state);
-  }
-
-  private static void init() {
-    leftBraceCount = 0;
-    noInAndUnion = false;
-    stateStack.clear();
-    stateStack.push(YYINITIAL);
-    leftBracketStack.clear();
-    xmlTag.clear();
-  }
-
-  public _AwslLexer() {
-    this((java.io.Reader) null);
-    init();
-  }
+    public _AwslLexer() {
+        this((java.io.Reader) null);
+        init();
+    }
 %}
 
 %public
@@ -55,12 +39,13 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 %function advance
 %type IElementType
 %eof{
-  init();
+    init();
 %eof}
 
 %state STRING_TEMPLATE
 %state HTML_TAG_CONTEXT
 %state HTML_BEGIN_BAD
+%state HTML_BEGIN
 %state HTML_CONTEXT
 %state HTML_END
 %state CODE_CONTEXT

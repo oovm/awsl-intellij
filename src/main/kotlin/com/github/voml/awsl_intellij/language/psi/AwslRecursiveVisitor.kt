@@ -1,4 +1,4 @@
-package com.github.voml.awsl_intellij.psi
+package com.github.voml.awsl_intellij.language.psi
 
 import com.github.voml.awsl_intellij.language.psi.AwslVisitor;
 import com.intellij.openapi.progress.ProgressManager

@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class AwslVisitor extends PsiElementVisitor {
 
+  public void visitBinaryExpr(@NotNull AwslBinaryExpr o) {
+    visitPsiElement(o);
+  }
+
   public void visitBraceBlock(@NotNull AwslBraceBlock o) {
     visitPsiElement(o);
   }
