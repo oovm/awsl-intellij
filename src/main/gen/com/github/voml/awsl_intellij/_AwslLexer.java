@@ -6,6 +6,8 @@ import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
 import com.intellij.util.containers.*;
+import static com.intellij.psi.TokenType.WHITE_SPACE;
+import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 
 
@@ -392,12 +394,12 @@ public class _AwslLexer implements FlexLexer {
     private static final IntStack leftBracketStack = new IntStack();
     private static final Stack<String> xmlTag = new Stack();
     private static int leftBraceCount = 0;
+    private static boolean reachTag = false;
     private static boolean canBeBadEnd = false;
 
 
     private static void init() {
         leftBraceCount = 0;
-        noInAndUnion = false;
         stateStack.clear();
         stateStack.push(YYINITIAL);
         leftBracketStack.clear();
@@ -694,7 +696,8 @@ public class _AwslLexer implements FlexLexer {
             // fall through
           case 36: break;
           case 6: 
-            { stateStack.push(HTML_CONTEXT);
+            { reachTag = false;
+    stateStack.push(HTML_CONTEXT);
     yybegin(HTML_BEGIN);
     return HTML_BEGIN_TOKEN;
             } 
@@ -771,8 +774,9 @@ public class _AwslLexer implements FlexLexer {
             // fall through
           case 51: break;
           case 21: 
-            { if (stateStack.empty()) {
-        yybegin(YYINITIAL);
+            { if (canBeBadEnd) {
+        canBeBadEnd = false;
+        stateStack.pop();
     }
     else {
         yybegin(stateStack.peek());
@@ -783,12 +787,7 @@ public class _AwslLexer implements FlexLexer {
           case 52: break;
           case 22: 
             { stateStack.pop();
-    if (stateStack.empty()) {
-        yybegin(YYINITIAL);
-    }
-    else {
-        yybegin(stateStack.peek());
-    }
+    yybegin(stateStack.peek());
     return HTML_END_TOKEN;
             } 
             // fall through
@@ -799,13 +798,15 @@ public class _AwslLexer implements FlexLexer {
             // fall through
           case 54: break;
           case 24: 
-            { yybegin(HTML_END);
+            { reachTag = false;
+    yybegin(HTML_END);
     return HTML_BEGIN_TOKEN;
             } 
             // fall through
           case 55: break;
           case 25: 
-            { stateStack.push(CODE_CONTEXT);
+            { reachTag = false;
+    stateStack.push(CODE_CONTEXT);
     yybegin(HTML_BEGIN);
     return HTML_BEGIN_TOKEN;
             } 

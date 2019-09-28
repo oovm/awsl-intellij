@@ -4,6 +4,8 @@ import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
 import com.intellij.util.containers.*;
+import static com.intellij.psi.TokenType.WHITE_SPACE;
+import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 
 %%
@@ -13,12 +15,12 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
     private static final IntStack leftBracketStack = new IntStack();
     private static final Stack<String> xmlTag = new Stack();
     private static int leftBraceCount = 0;
+    private static boolean reachTag = false;
     private static boolean canBeBadEnd = false;
 
 
     private static void init() {
         leftBraceCount = 0;
-        noInAndUnion = false;
         stateStack.clear();
         stateStack.push(YYINITIAL);
         leftBracketStack.clear();
@@ -77,7 +79,6 @@ HEX=[a-fA-F0-9]
 
 HTML_CODE_START = <\
 HTML_TEXT_START = <
-HTML_TEXT_BAD_START = <{WHITE_SPACE}*{HTML_BAD_TAG}
 HTML_BAD_TAG = "hr"
   | "br"
   | "img"
@@ -144,26 +145,41 @@ HTML_BAD_TAG = "hr"
 // HTML模板态: HTML_TEMPLATE ============================================================================================
 // 表达式转化 <\a>CODE_CONTEXT</a>
 <YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\\ {
+    reachTag = false;
     stateStack.push(CODE_CONTEXT);
     yybegin(HTML_BEGIN);
     return HTML_BEGIN_TOKEN;
 }
 // 准备终止
 <YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
+    reachTag = false;
     yybegin(HTML_END);
     return HTML_BEGIN_TOKEN;
 }
 // 常规转换 <a>HTML_CONTEXT</a>
 <YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> < {
+    reachTag = false;
     stateStack.push(HTML_CONTEXT);
     yybegin(HTML_BEGIN);
     return HTML_BEGIN_TOKEN;
 }
+// HTML 糟粕, 特殊处理一下
+<HTML_BEGIN> {HTML_BAD_TAG} {
+    if (reachTag==false) {
+        reachTag = true;
+        canBeBadEnd = true;
+    }
+}
+<HTML_BEGIN> {SYMBOL} {
+    reachTag = true;
+}
 // 根据上下文进入对应的模式
-// 如果是空栈, 那么就进入顶级上下文
+// 如果是坏的标签, 那么恢复上下文
+// peek 不会是空栈, 栈底是 YYINITIAL
 <HTML_BEGIN> > {
-    if (stateStack.empty()) {
-        yybegin(YYINITIAL);
+    if (canBeBadEnd) {
+        canBeBadEnd = false;
+        stateStack.pop();
     }
     else {
         yybegin(stateStack.peek());
@@ -172,15 +188,10 @@ HTML_BAD_TAG = "hr"
 }
 // 终止, 恢复上下文
 // pop 时确保至少有一个上下文
-// 如果是空栈, 那么就恢复顶级上下文
+// peek 不会是空栈, 栈底是 YYINITIAL
 <HTML_END> > {
     stateStack.pop();
-    if (stateStack.empty()) {
-        yybegin(YYINITIAL);
-    }
-    else {
-        yybegin(stateStack.peek());
-    }
+    yybegin(stateStack.peek());
     return HTML_END_TOKEN;
 }
 // 自闭转换 <a/>

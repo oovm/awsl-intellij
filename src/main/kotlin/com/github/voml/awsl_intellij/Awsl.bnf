@@ -11,11 +11,10 @@
     elementTypeClass = "com.github.voml.awsl_intellij.language.psi.AwslElementType"
     tokenTypeClass = "com.github.voml.awsl_intellij.language.psi.AwslTokenType"
 
-    psiImplUtilClass = "com.github.voml.awsl_intellij.language.psi.psi_node.AwslPsiImplUtil"
+    psiImplUtilClass = "com.github.voml.awsl_intellij.language.psi_node.AwslPsiImplUtil"
     // Lexer Token from JFlex
     // Here only write names
     tokens = [
-        WHITE_SPACE = "White Space";
         // 注释
         COMMENT_LINE="Comment Line";
         COMMENT_BLOCK="Comment Block";
@@ -44,8 +43,7 @@
         ANGLE_L="<"
         ANGLE_R=">"
         HTML_BEGIN_TOKEN="HTML_BEGIN_TOKEN"
-        HTML_END="HTML_END_TOKEN"
-        BAD_CHARACTER="BAD_CHARACTER"
+        HTML_END_TOKEN="HTML_END_TOKEN"
         SYMBOL="Symbol"
     ]
 

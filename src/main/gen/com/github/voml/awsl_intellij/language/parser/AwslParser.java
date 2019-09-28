@@ -4,7 +4,7 @@ package com.github.voml.awsl_intellij.language.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
-import static com.github.voml.awsl_intellij.psi.AwslParserUtil.*;
+import static com.github.voml.awsl_intellij.language.psi.AwslParserUtil.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
@@ -154,17 +154,6 @@ public class AwslParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, HTML_BEGIN_TOKEN, SYMBOL, HTML_END_TOKEN);
     exit_section_(b, m, HTML_ELEMENT, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // WHITE_SPACE | COMMENT_LINE | COMMENT_BLOCK
-  static boolean ignore(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ignore")) return false;
-    boolean r;
-    r = consumeToken(b, WHITE_SPACE);
-    if (!r) r = consumeToken(b, COMMENT_LINE);
-    if (!r) r = consumeToken(b, COMMENT_BLOCK);
     return r;
   }
 

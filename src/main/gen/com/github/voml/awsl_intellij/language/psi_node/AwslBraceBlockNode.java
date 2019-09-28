@@ -10,7 +10,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.voml.awsl_intellij.language.psi.*;
-import com.github.voml.awsl_intellij.language.psi.psi_node.AwslPsiImplUtil;
 
 public class AwslBraceBlockNode extends ASTWrapperPsiElement implements AwslBraceBlock {
 

@@ -19,7 +19,7 @@ class AwslParserDefinition : ParserDefinition {
     companion object {
         val COMMENTS = TokenSet.create(AwslTypes.COMMENT_LINE, AwslTypes.COMMENT_BLOCK, AwslTypes.COMMENT_HTML)
         val STRING_LITERALS = TokenSet.create(AwslTypes.STRING)
-        val WHITE_SPACE = TokenSet.create(AwslTypes.WHITE_SPACE)
+        // val WHITE_SPACE = TokenSet.create(AwslTypes.WHITE_SPACE)
         val FILE = IFileElementType(JssLanguage.INSTANCE)
     }
 
@@ -31,7 +31,7 @@ class AwslParserDefinition : ParserDefinition {
 
     override fun getCommentTokens(): TokenSet = COMMENTS
 
-    override fun getWhitespaceTokens(): TokenSet = WHITE_SPACE
+    // override fun getWhitespaceTokens(): TokenSet = WHITE_SPACE
 
     override fun getStringLiteralElements(): TokenSet = STRING_LITERALS
 

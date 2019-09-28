@@ -16,7 +16,6 @@ public interface AwslTypes {
   IElementType ANGLE_L = new AwslTokenType("<");
   IElementType ANGLE_R = new AwslTokenType(">");
   IElementType AT = new AwslTokenType("@");
-  IElementType BAD_CHARACTER = new AwslTokenType("BAD_CHARACTER");
   IElementType BRACE_L = new AwslTokenType("{");
   IElementType BRACE_R = new AwslTokenType("}");
   IElementType BRACKET_L = new AwslTokenType("[");
@@ -32,7 +31,7 @@ public interface AwslTypes {
   IElementType EQ = new AwslTokenType("=");
   IElementType FOR = new AwslTokenType("Keyword for");
   IElementType HTML_BEGIN_TOKEN = new AwslTokenType("HTML_BEGIN_TOKEN");
-  IElementType HTML_END = new AwslTokenType("HTML_END_TOKEN");
+  IElementType HTML_END_TOKEN = new AwslTokenType("HTML_END_TOKEN");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType PARENTHESIS_L = new AwslTokenType("(");
   IElementType PARENTHESIS_R = new AwslTokenType(")");
@@ -41,7 +40,6 @@ public interface AwslTypes {
   IElementType STRING = new AwslTokenType("STRING");
   IElementType SYMBOL = new AwslTokenType("Symbol");
   IElementType WHILE = new AwslTokenType("Keyword while");
-  IElementType WHITE_SPACE = new AwslTokenType("White Space");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
