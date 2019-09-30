@@ -146,14 +146,26 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // HTML_BEGIN_TOKEN SYMBOL HTML_END_TOKEN
-  public static boolean html_element(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_element")) return false;
+  // [HTML_TAG_SYMBOL]
+  public static boolean html_begin_inner(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_begin_inner")) return false;
+    Marker m = enter_section_(b, l, _NONE_, HTML_BEGIN_INNER, "<html begin inner>");
+    consumeToken(b, HTML_TAG_SYMBOL);
+    exit_section_(b, l, m, true, false, null);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // HTML_BEGIN_TOKEN html_begin_inner HTML_END_TOKEN
+  public static boolean html_element_begin(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_element_begin")) return false;
     if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, HTML_BEGIN_TOKEN, SYMBOL, HTML_END_TOKEN);
-    exit_section_(b, m, HTML_ELEMENT, r);
+    r = consumeToken(b, HTML_BEGIN_TOKEN);
+    r = r && html_begin_inner(b, l + 1);
+    r = r && consumeToken(b, HTML_END_TOKEN);
+    exit_section_(b, m, HTML_ELEMENT_BEGIN, r);
     return r;
   }
 
@@ -175,14 +187,14 @@ public class AwslParser implements PsiParser, LightPsiParser {
   // COMMENT_DOCUMENT
   //   | SYMBOL
   //   | STRING
-  //   | html_element
+  //   | html_element_begin
   static boolean statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement")) return false;
     boolean r;
     r = consumeToken(b, COMMENT_DOCUMENT);
     if (!r) r = consumeToken(b, SYMBOL);
     if (!r) r = consumeToken(b, STRING);
-    if (!r) r = html_element(b, l + 1);
+    if (!r) r = html_element_begin(b, l + 1);
     return r;
   }
 

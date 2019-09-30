@@ -10,7 +10,8 @@ public interface AwslTypes {
 
   IElementType BRACE_BLOCK = new AwslElementType("BRACE_BLOCK");
   IElementType BRACKET_BLOCK = new AwslElementType("BRACKET_BLOCK");
-  IElementType HTML_ELEMENT = new AwslElementType("HTML_ELEMENT");
+  IElementType HTML_BEGIN_INNER = new AwslElementType("HTML_BEGIN_INNER");
+  IElementType HTML_ELEMENT_BEGIN = new AwslElementType("HTML_ELEMENT_BEGIN");
 
   IElementType ACCENT = new AwslTokenType("^");
   IElementType ANGLE_L = new AwslTokenType("<");
@@ -30,8 +31,9 @@ public interface AwslTypes {
   IElementType DOT = new AwslTokenType(".");
   IElementType EQ = new AwslTokenType("=");
   IElementType FOR = new AwslTokenType("Keyword for");
-  IElementType HTML_BEGIN_TOKEN = new AwslTokenType("HTML_BEGIN_TOKEN");
-  IElementType HTML_END_TOKEN = new AwslTokenType("HTML_END_TOKEN");
+  IElementType HTML_BEGIN_TOKEN = new AwslTokenType("Token::HtmlBegin");
+  IElementType HTML_END_TOKEN = new AwslTokenType("Token::HtmlEnd");
+  IElementType HTML_TAG_SYMBOL = new AwslTokenType("Symbol::HtmlTag");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType PARENTHESIS_L = new AwslTokenType("(");
   IElementType PARENTHESIS_R = new AwslTokenType(")");
@@ -50,8 +52,11 @@ public interface AwslTypes {
       else if (type == BRACKET_BLOCK) {
         return new AwslBracketBlockNode(node);
       }
-      else if (type == HTML_ELEMENT) {
-        return new AwslHtmlElementNode(node);
+      else if (type == HTML_BEGIN_INNER) {
+        return new AwslHtmlBeginInnerNode(node);
+      }
+      else if (type == HTML_ELEMENT_BEGIN) {
+        return new AwslHtmlElementBeginNode(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

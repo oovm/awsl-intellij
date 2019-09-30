@@ -18,11 +18,28 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
     private static boolean reachTag = false;
     private static boolean canBeBadEnd = false;
 
+    private static int safe_peek() {
+        if (stateStack.empty()) {
+            return YYINITIAL;
+        }
+        else {
+            return stateStack.peek();
+        }
+    }
+
+    private static int safe_pop() {
+        if (stateStack.empty()) {
+            return YYINITIAL;
+        }
+        else {
+            return stateStack.pop();
+        }
+    }
+
 
     private static void init() {
         leftBraceCount = 0;
         stateStack.clear();
-        stateStack.push(YYINITIAL);
         leftBracketStack.clear();
         xmlTag.clear();
     }
@@ -101,9 +118,10 @@ HTML_BAD_TAG = "hr"
 // 初态: 无视空格
 <YYINITIAL,CODE_CONTEXT, HTML_BEGIN, HTML_END> {WHITE_SPACE} {return WHITE_SPACE;}
 <YYINITIAL,CODE_CONTEXT> {
-  {COMMENT_LINE} {return COMMENT_LINE;}
-  {COMMENT_BLOCK} {return COMMENT_BLOCK;}
-  {COMMENT_DOCUMENT} {return COMMENT_DOCUMENT;}
+    // 放上面防止被覆盖
+    {COMMENT_DOCUMENT} {return COMMENT_DOCUMENT;}
+    {COMMENT_LINE} {return COMMENT_LINE;}
+    {COMMENT_BLOCK} {return COMMENT_BLOCK;}
 }
 <HTML_CONTEXT> {COMMENT_HTML} {return COMMENT_HTML;}
 
@@ -134,12 +152,15 @@ HTML_BAD_TAG = "hr"
   while { return WHILE; }
 }
 // 编程环境允许的字面量
-<YYINITIAL, CODE_CONTEXT, HTML_BEGIN, HTML_END>  {
+<YYINITIAL, CODE_CONTEXT>  {
     {SYMBOL} {return SYMBOL;}
     {STRING} {return STRING;}
 }
+<HTML_BEGIN, HTML_END> {
+    {STRING} {return STRING;}
+}
 // 字符环境允许的字面量
-<HTML_CONTEXT> [^<>{}]* {
+<HTML_CONTEXT> [^<>{}]+ {
     return STRING;
 }
 // HTML模板态: HTML_TEMPLATE ============================================================================================
@@ -148,12 +169,6 @@ HTML_BAD_TAG = "hr"
     reachTag = false;
     stateStack.push(CODE_CONTEXT);
     yybegin(HTML_BEGIN);
-    return HTML_BEGIN_TOKEN;
-}
-// 准备终止
-<YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
-    reachTag = false;
-    yybegin(HTML_END);
     return HTML_BEGIN_TOKEN;
 }
 // 常规转换 <a>HTML_CONTEXT</a>
@@ -169,34 +184,41 @@ HTML_BAD_TAG = "hr"
         reachTag = true;
         canBeBadEnd = true;
     }
+    return HTML_TAG_SYMBOL;
 }
+// 遇到了正常标签
 <HTML_BEGIN> {SYMBOL} {
     reachTag = true;
-}
-// 根据上下文进入对应的模式
-// 如果是坏的标签, 那么恢复上下文
-// peek 不会是空栈, 栈底是 YYINITIAL
-<HTML_BEGIN> > {
-    if (canBeBadEnd) {
-        canBeBadEnd = false;
-        stateStack.pop();
-    }
-    else {
-        yybegin(stateStack.peek());
-    }
-    return HTML_END_TOKEN;
-}
-// 终止, 恢复上下文
-// pop 时确保至少有一个上下文
-// peek 不会是空栈, 栈底是 YYINITIAL
-<HTML_END> > {
-    stateStack.pop();
-    yybegin(stateStack.peek());
-    return HTML_END_TOKEN;
+    return HTML_TAG_SYMBOL;
 }
 // 自闭转换 <a/>
 <HTML_BEGIN> \/> {
-    stateStack.pop();
+    safe_pop();
+    return HTML_END_TOKEN;
+}
+// 根据上下文进入对应的模式
+// 如果是坏标签, 那么直接恢复上下文
+<HTML_BEGIN> > {
+    if (canBeBadEnd) {
+        canBeBadEnd = false;
+        safe_pop();
+    }
+    else {
+        yybegin(safe_pop());
+    }
+    return HTML_END_TOKEN;
+}
+// 准备终止
+<YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
+    reachTag = false;
+    yybegin(HTML_END);
+    return HTML_BEGIN_TOKEN;
+}
+// 立即终止, 恢复上下文
+// pop 时确保至少有一个上下文
+<HTML_END> > {
+    safe_pop();
+    yybegin(safe_peek());
     return HTML_END_TOKEN;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
