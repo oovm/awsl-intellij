@@ -920,11 +920,14 @@ public class _AwslLexer implements FlexLexer {
             // fall through
           case 62: break;
           case 29: 
-            { if (reachTag==false) {
+            { if (reachTag) {
+        return SYMBOL;
+    }
+    else {
         reachTag = true;
         canBeBadEnd = true;
+        return HTML_TAG_SYMBOL;
     }
-    return HTML_TAG_SYMBOL;
             } 
             // fall through
           case 63: break;

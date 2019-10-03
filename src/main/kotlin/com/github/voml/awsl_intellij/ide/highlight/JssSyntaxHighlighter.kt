@@ -23,9 +23,9 @@ class JssSyntaxHighlighter : SyntaxHighlighterBase() {
             // AS, SCHEMA, PROP -> JssColor.KEYWORD
             // ANNOTATION -> JssColor.ANNOTATION
             //
-//            PARENTHESIS_L, PARENTHESIS_R -> JssColor.PARENTHESES
-//            BRACKET_L, BRACKET_R -> JssColor.BRACKETS
-//            BRACE_L, BRACE_R -> JssColor.BRACES
+            PARENTHESIS_L, PARENTHESIS_R -> AwslColor.PARENTHESES
+            BRACKET_L, BRACKET_R -> AwslColor.BRACKETS
+            BRACE_L, BRACE_R -> AwslColor.BRACES
             //COLON, EQ -> JssColor.SET
             COMMA -> AwslColor.COMMA
             // atom
@@ -34,6 +34,12 @@ class JssSyntaxHighlighter : SyntaxHighlighterBase() {
             //URL -> JssColor.URL
             STRING -> AwslColor.STRING
             SYMBOL -> AwslColor.IDENTIFIER
+            // 模板
+            HTML_OPEN_END_TOKEN -> AwslColor.HTML_END
+            HTML_START_END_TOKEN -> AwslColor.HTML_END
+            HTML_SELF_END_TOKEN -> AwslColor.HTML_END
+            HTML_BEGIN_TOKEN -> AwslColor.HTML_BEGIN
+            HTML_TAG_SYMBOL -> AwslColor.HTML_TAG
             // 注释
             COMMENT_LINE -> AwslColor.LINE_COMMENT
             COMMENT_BLOCK -> AwslColor.BLOCK_COMMENT

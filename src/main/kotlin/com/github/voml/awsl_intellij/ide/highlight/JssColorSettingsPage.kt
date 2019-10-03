@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.ide.highlight
 
-import com.github.voml.awsl_intellij.JssBundle
+import com.github.voml.awsl_intellij.AwslBundle
 import com.github.voml.awsl_intellij.ide.file_view.JssIcons
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
@@ -17,7 +17,7 @@ class JssColorSettingsPage : ColorSettingsPage {
 
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
 
-    override fun getDisplayName() = JssBundle.message("filetype.name")
+    override fun getDisplayName() = AwslBundle.message("filetype.name")
 
     override fun getIcon() = JssIcons.FILE
 

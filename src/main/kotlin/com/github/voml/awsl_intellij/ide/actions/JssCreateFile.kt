@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.ide.actions
 
-import com.github.voml.awsl_intellij.JssBundle
+import com.github.voml.awsl_intellij.AwslBundle
 import com.github.voml.awsl_intellij.ide.file_view.JssIcons
 import com.intellij.ide.actions.CreateFileFromTemplateAction
 import com.intellij.ide.actions.CreateFileFromTemplateDialog.*
@@ -10,8 +10,8 @@ import com.intellij.psi.PsiDirectory
 class JssCreateFile :
     CreateFileFromTemplateAction(name, description, JssIcons.FILE) {
     companion object {
-        private val name = JssBundle.message("action.create_file")
-        private val description = JssBundle.message("action.create_file.description")
+        private val name = AwslBundle.message("action.create_file")
+        private val description = AwslBundle.message("action.create_file.description")
     }
 
 

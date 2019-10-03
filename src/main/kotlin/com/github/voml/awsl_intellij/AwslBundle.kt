@@ -7,7 +7,7 @@ import org.jetbrains.annotations.PropertyKey
 import java.util.function.Supplier
 
 
-object JssBundle : DynamicBundle(BUNDLE) {
+object AwslBundle : DynamicBundle(BUNDLE) {
 
     @Suppress("SpreadOperator")
     @JvmStatic

@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.ide.actions
 
-import com.github.voml.awsl_intellij.JssBundle
+import com.github.voml.awsl_intellij.AwslBundle
 import com.github.voml.awsl_intellij.ide.file_view.JssFileType
 import com.github.voml.awsl_intellij.ide.file_view.JssIcons
 import com.intellij.ide.actions.CreateFileAction
@@ -16,8 +16,8 @@ import com.intellij.psi.PsiFileFactory
 
 class JssConvertJson : CreateFileAction(name, description, JssIcons.FILE) {
     companion object {
-        private val name = JssBundle.message("action.convert_json")
-        private val description = JssBundle.message("action.convert_json.description")
+        private val name = AwslBundle.message("action.convert_json")
+        private val description = AwslBundle.message("action.convert_json.description")
 
     }
 
