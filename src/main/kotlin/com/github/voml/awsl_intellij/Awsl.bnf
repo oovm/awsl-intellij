@@ -33,6 +33,7 @@
         EQ="="
         COLON=":"
         SEMICOLON=";"
+        NAME_JOIN="::"
         // 括号
         PARENTHESIS_L="("
         PARENTHESIS_R=")"
@@ -42,10 +43,12 @@
         BRACE_R="}"
         ANGLE_L="<"
         ANGLE_R=">"
-        HTML_BEGIN_TOKEN="Token::HtmlBegin"
-        HTML_START_END_TOKEN="Token::HtmlEnd"
-        HTML_OPEN_END_TOKEN="Token::HtmlEnd"
-        HTML_SELF_END_TOKEN="Token::HtmlEnd"
+        GENERIC_L="<"
+        GENERIC_R=">"
+        HTML_BEGIN_TOKEN="HTML_BEGIN_TOKEN"
+        HTML_START_END_TOKEN="HTML_START_END_TOKEN"
+        HTML_OPEN_END_TOKEN="HTML_OPEN_CLOSE_END_TOKEN"
+        HTML_SELF_END_TOKEN="HTML_SELF_CLOSE_END_TOKEN"
         HTML_TAG_SYMBOL="Symbol::HtmlTag"
         SYMBOL="Symbol"
     ]
@@ -76,14 +79,16 @@ fake binary_expr ::= expr + {
 // =====================================================================================================================
 // <hr>
 // <hr/>
-html_self_end ::= HTML_BEGIN_TOKEN [html_begin_inner] HTML_SELF_END_TOKEN;
-html_begin_inner ::= HTML_TAG_SYMBOL;
+html_self_end ::= HTML_BEGIN_TOKEN [html_begin_inner_head] HTML_SELF_END_TOKEN;
+private html_begin_inner_head ::= HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_begin_inner_rest*;
+private html_begin_inner_rest ::= SYMBOL EQ STRING;
+generic ::= GENERIC_L (SYMBOL [generic]) GENERIC_R;
 // <a>text</a>
 // <\a>code</a>
-html_normal ::= html_start [html_normal_inner] html_open_end;
-html_start ::= HTML_BEGIN_TOKEN html_begin_inner HTML_START_END_TOKEN;
-html_open_end ::= HTML_BEGIN_TOKEN html_begin_inner HTML_OPEN_END_TOKEN;
-private html_normal_inner ::= STRING;
+html_normal ::= html_start html_inner* html_open_end;
+html_start ::= HTML_BEGIN_TOKEN html_begin_inner_head HTML_START_END_TOKEN;
+html_open_end ::= HTML_BEGIN_TOKEN html_begin_inner_head HTML_OPEN_END_TOKEN;
+private html_inner ::= STRING | html_self_end | html_open_end | SYMBOL;
 
 
 

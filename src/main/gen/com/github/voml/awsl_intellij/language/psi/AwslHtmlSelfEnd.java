@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface AwslHtmlSelfEnd extends PsiElement {
 
   @Nullable
-  AwslHtmlBeginInner getHtmlBeginInner();
+  AwslGeneric getGeneric();
 
 }

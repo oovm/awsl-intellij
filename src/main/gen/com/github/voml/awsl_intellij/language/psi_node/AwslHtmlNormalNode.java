@@ -29,8 +29,14 @@ public class AwslHtmlNormalNode extends ASTWrapperPsiElement implements AwslHtml
 
   @Override
   @NotNull
-  public AwslHtmlOpenEnd getHtmlOpenEnd() {
-    return findNotNullChildByClass(AwslHtmlOpenEnd.class);
+  public List<AwslHtmlOpenEnd> getHtmlOpenEndList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlOpenEnd.class);
+  }
+
+  @Override
+  @NotNull
+  public List<AwslHtmlSelfEnd> getHtmlSelfEndList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlSelfEnd.class);
   }
 
   @Override

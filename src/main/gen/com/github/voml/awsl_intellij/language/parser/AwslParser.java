@@ -146,19 +146,115 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // HTML_TAG_SYMBOL
-  public static boolean html_begin_inner(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_begin_inner")) return false;
+  // GENERIC_L (SYMBOL [generic]) GENERIC_R
+  public static boolean generic(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generic")) return false;
+    if (!nextTokenIs(b, GENERIC_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, GENERIC_L);
+    r = r && generic_1(b, l + 1);
+    r = r && consumeToken(b, GENERIC_R);
+    exit_section_(b, m, GENERIC, r);
+    return r;
+  }
+
+  // SYMBOL [generic]
+  private static boolean generic_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generic_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SYMBOL);
+    r = r && generic_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [generic]
+  private static boolean generic_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generic_1_1")) return false;
+    generic(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_begin_inner_rest*
+  static boolean html_begin_inner_head(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_begin_inner_head")) return false;
     if (!nextTokenIs(b, HTML_TAG_SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HTML_TAG_SYMBOL);
-    exit_section_(b, m, HTML_BEGIN_INNER, r);
+    r = r && html_begin_inner_head_1(b, l + 1);
+    r = r && html_begin_inner_head_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [NAME_JOIN (SYMBOL|generic)]
+  private static boolean html_begin_inner_head_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_begin_inner_head_1")) return false;
+    html_begin_inner_head_1_0(b, l + 1);
+    return true;
+  }
+
+  // NAME_JOIN (SYMBOL|generic)
+  private static boolean html_begin_inner_head_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_begin_inner_head_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NAME_JOIN);
+    r = r && html_begin_inner_head_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // SYMBOL|generic
+  private static boolean html_begin_inner_head_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_begin_inner_head_1_0_1")) return false;
+    boolean r;
+    r = consumeToken(b, SYMBOL);
+    if (!r) r = generic(b, l + 1);
+    return r;
+  }
+
+  // html_begin_inner_rest*
+  private static boolean html_begin_inner_head_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_begin_inner_head_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!html_begin_inner_rest(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "html_begin_inner_head_2", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // SYMBOL EQ STRING
+  static boolean html_begin_inner_rest(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_begin_inner_rest")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, SYMBOL, EQ, STRING);
+    exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // html_start [html_normal_inner] html_open_end
+  // STRING | html_self_end | html_open_end | SYMBOL
+  static boolean html_inner(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_inner")) return false;
+    boolean r;
+    r = consumeToken(b, STRING);
+    if (!r) r = html_self_end(b, l + 1);
+    if (!r) r = html_open_end(b, l + 1);
+    if (!r) r = consumeToken(b, SYMBOL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // html_start html_inner* html_open_end
   public static boolean html_normal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_normal")) return false;
     if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
@@ -171,35 +267,33 @@ public class AwslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [html_normal_inner]
+  // html_inner*
   private static boolean html_normal_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_normal_1")) return false;
-    html_normal_inner(b, l + 1);
+    while (true) {
+      int c = current_position_(b);
+      if (!html_inner(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "html_normal_1", c)) break;
+    }
     return true;
   }
 
   /* ********************************************************** */
-  // STRING
-  static boolean html_normal_inner(PsiBuilder b, int l) {
-    return consumeToken(b, STRING);
-  }
-
-  /* ********************************************************** */
-  // HTML_BEGIN_TOKEN html_begin_inner HTML_OPEN_END_TOKEN
+  // HTML_BEGIN_TOKEN html_begin_inner_head HTML_OPEN_END_TOKEN
   public static boolean html_open_end(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_open_end")) return false;
     if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HTML_BEGIN_TOKEN);
-    r = r && html_begin_inner(b, l + 1);
+    r = r && html_begin_inner_head(b, l + 1);
     r = r && consumeToken(b, HTML_OPEN_END_TOKEN);
     exit_section_(b, m, HTML_OPEN_END, r);
     return r;
   }
 
   /* ********************************************************** */
-  // HTML_BEGIN_TOKEN [html_begin_inner] HTML_SELF_END_TOKEN
+  // HTML_BEGIN_TOKEN [html_begin_inner_head] HTML_SELF_END_TOKEN
   public static boolean html_self_end(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_self_end")) return false;
     if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
@@ -212,22 +306,22 @@ public class AwslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [html_begin_inner]
+  // [html_begin_inner_head]
   private static boolean html_self_end_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_self_end_1")) return false;
-    html_begin_inner(b, l + 1);
+    html_begin_inner_head(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // HTML_BEGIN_TOKEN html_begin_inner HTML_START_END_TOKEN
+  // HTML_BEGIN_TOKEN html_begin_inner_head HTML_START_END_TOKEN
   public static boolean html_start(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_start")) return false;
     if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HTML_BEGIN_TOKEN);
-    r = r && html_begin_inner(b, l + 1);
+    r = r && html_begin_inner_head(b, l + 1);
     r = r && consumeToken(b, HTML_START_END_TOKEN);
     exit_section_(b, m, HTML_START, r);
     return r;

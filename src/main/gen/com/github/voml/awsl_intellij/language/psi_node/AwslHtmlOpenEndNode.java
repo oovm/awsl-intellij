@@ -28,9 +28,9 @@ public class AwslHtmlOpenEndNode extends ASTWrapperPsiElement implements AwslHtm
   }
 
   @Override
-  @NotNull
-  public AwslHtmlBeginInner getHtmlBeginInner() {
-    return findNotNullChildByClass(AwslHtmlBeginInner.class);
+  @Nullable
+  public AwslGeneric getGeneric() {
+    return findChildByClass(AwslGeneric.class);
   }
 
 }

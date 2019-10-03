@@ -8,7 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface AwslHtmlNormal extends PsiElement {
 
   @NotNull
-  AwslHtmlOpenEnd getHtmlOpenEnd();
+  List<AwslHtmlOpenEnd> getHtmlOpenEndList();
+
+  @NotNull
+  List<AwslHtmlSelfEnd> getHtmlSelfEndList();
 
   @NotNull
   AwslHtmlStart getHtmlStart();

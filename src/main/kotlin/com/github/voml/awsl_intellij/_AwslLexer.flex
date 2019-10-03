@@ -12,42 +12,46 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 
 %{
     private static final IntStack stateStack = new IntStack();
-    private static final IntStack leftBracketStack = new IntStack();
-    private static final Stack<String> xmlTag = new Stack();
-    private static int leftBraceCount = 0;
-    private static boolean reachTag = false;
-    private static boolean canBeBadEnd = false;
+        private static final IntStack leftBracketStack = new IntStack();
+        private static final Stack<String> xmlTag = new Stack();
+        // { }
+        private static int brace_balance = 0;
+        // < >
+        private static int angle_balance = 0;
+        private static boolean reachTag = false;
+        private static boolean canBeBadEnd = false;
 
-    private static int safe_peek() {
-        if (stateStack.empty()) {
-            return YYINITIAL;
+        private static int safe_peek() {
+            if (stateStack.empty()) {
+                return YYINITIAL;
+            }
+            else {
+                return stateStack.peek();
+            }
         }
-        else {
-            return stateStack.peek();
+
+        private static int safe_pop() {
+            if (stateStack.empty()) {
+                return YYINITIAL;
+            }
+            else {
+                return stateStack.pop();
+            }
         }
-    }
 
-    private static int safe_pop() {
-        if (stateStack.empty()) {
-            return YYINITIAL;
+
+        private static void init() {
+            brace_balance = 0;
+            angle_balance = 0;
+            stateStack.clear();
+            leftBracketStack.clear();
+            xmlTag.clear();
         }
-        else {
-            return stateStack.pop();
+
+        public _AwslLexer() {
+            this((java.io.Reader) null);
+            init();
         }
-    }
-
-
-    private static void init() {
-        leftBraceCount = 0;
-        stateStack.clear();
-        leftBracketStack.clear();
-        xmlTag.clear();
-    }
-
-    public _AwslLexer() {
-        this((java.io.Reader) null);
-        init();
-    }
 %}
 
 %public
@@ -68,6 +72,7 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 %state HTML_CONTEXT
 %state HTML_END
 %state CODE_CONTEXT
+%state Generic
 
 WHITE_SPACE=\s+
 TEXT_SPACE=\s+
@@ -75,6 +80,7 @@ COMMENT_DOCUMENT=\/\/\/[^\n\r]*
 COMMENT_LINE=\/\/[^\n\r]*
 COMMENT_BLOCK=(\/\*\*\/])
 COMMENT_HTML=(<\!-->)
+NAME_JOIN = ::
 
 SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
 STRING=\"{CHARACTER}*\"
@@ -90,7 +96,7 @@ STRING_ESCAPE_UU =\\u\{{HEX}{8}\}
 STRING_ESCAPE_U =\\u{HEX}{4}
 STRING_ESCAPE_X =\\x{HEX}{2}
 STRING_ESCAPE_ANY=\\[^]
-STRING_NON_ESCAPE=[^\\]
+STRING_NON_ESCAPE=[^\\\"]
 
 HEX=[a-fA-F0-9]
 
@@ -152,13 +158,13 @@ HTML_BAD_TAG = "hr"
   while { return WHILE; }
 }
 // 编程环境允许的字面量
-<YYINITIAL, CODE_CONTEXT>  {
-    {SYMBOL} {return SYMBOL;}
+<YYINITIAL, CODE_CONTEXT, HTML_BEGIN, HTML_END>  {
     {STRING} {return STRING;}
+    {NAME_JOIN} {return NAME_JOIN;}
+    "=" { return EQ; }
 }
-<HTML_BEGIN> {
-    {STRING} {return STRING;}
-}
+// 正常环境的 symbol
+<YYINITIAL, CODE_CONTEXT> {SYMBOL} {return SYMBOL;}
 // HTML 糟粕, 特殊处理一下
 <HTML_BEGIN> {HTML_BAD_TAG} {
     if (reachTag) {
@@ -180,6 +186,12 @@ HTML_BAD_TAG = "hr"
         return HTML_TAG_SYMBOL;
     }
 }
+// 遇到了泛型
+<HTML_BEGIN, HTML_END> < {
+    angle_balance += 1;
+    return GENERIC_L;
+}
+
 // 字符环境允许的字面量
 <HTML_CONTEXT> [^<>{}]+ {
     return STRING;
@@ -202,20 +214,26 @@ HTML_BAD_TAG = "hr"
 // 自闭转换 <a/>
 <HTML_BEGIN> \/> {
     safe_pop();
+    yybegin(safe_peek());
     return HTML_SELF_END_TOKEN;
 }
 // 根据上下文进入对应的模式
 // 如果是坏标签, 那么直接恢复上下文
 <HTML_BEGIN> > {
+    if (angle_balance>0) {
+        angle_balance--;
+        return GENERIC_R;
+    }
     if (canBeBadEnd) {
-        canBeBadEnd = false;
+        // canBeBadEnd = false;
         safe_pop();
+        yybegin(safe_peek());
         return HTML_SELF_END_TOKEN;
     }
     else {
-        yybegin(safe_pop());
+        yybegin(safe_peek());
+        return HTML_START_END_TOKEN;
     }
-    return HTML_START_END_TOKEN;
 }
 // 准备终止
 <YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
@@ -226,6 +244,10 @@ HTML_BAD_TAG = "hr"
 // 立即终止, 恢复上下文
 // pop 时确保至少有一个上下文
 <HTML_END> > {
+    if (angle_balance>0) {
+        angle_balance--;
+        return GENERIC_R;
+    }
     safe_pop();
     yybegin(safe_peek());
     return HTML_OPEN_END_TOKEN;

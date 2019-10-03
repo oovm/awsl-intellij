@@ -19,7 +19,7 @@ public class AwslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitHtmlBeginInner(@NotNull AwslHtmlBeginInner o) {
+  public void visitGeneric(@NotNull AwslGeneric o) {
     visitPsiElement(o);
   }
 

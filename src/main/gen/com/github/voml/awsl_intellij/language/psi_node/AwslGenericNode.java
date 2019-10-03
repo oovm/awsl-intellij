@@ -11,20 +11,26 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.voml.awsl_intellij.language.psi.*;
 
-public class AwslHtmlBeginInnerNode extends ASTWrapperPsiElement implements AwslHtmlBeginInner {
+public class AwslGenericNode extends ASTWrapperPsiElement implements AwslGeneric {
 
-  public AwslHtmlBeginInnerNode(@NotNull ASTNode node) {
+  public AwslGenericNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitHtmlBeginInner(this);
+    visitor.visitGeneric(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof AwslVisitor) accept((AwslVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public AwslGeneric getGeneric() {
+    return findChildByClass(AwslGeneric.class);
   }
 
 }

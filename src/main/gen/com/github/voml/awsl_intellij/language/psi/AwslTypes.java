@@ -10,15 +10,13 @@ public interface AwslTypes {
 
   IElementType BRACE_BLOCK = new AwslElementType("BRACE_BLOCK");
   IElementType BRACKET_BLOCK = new AwslElementType("BRACKET_BLOCK");
-  IElementType HTML_BEGIN_INNER = new AwslElementType("HTML_BEGIN_INNER");
+  IElementType GENERIC = new AwslElementType("GENERIC");
   IElementType HTML_NORMAL = new AwslElementType("HTML_NORMAL");
   IElementType HTML_OPEN_END = new AwslElementType("HTML_OPEN_END");
   IElementType HTML_SELF_END = new AwslElementType("HTML_SELF_END");
   IElementType HTML_START = new AwslElementType("HTML_START");
 
   IElementType ACCENT = new AwslTokenType("^");
-  IElementType ANGLE_L = new AwslTokenType("<");
-  IElementType ANGLE_R = new AwslTokenType(">");
   IElementType AT = new AwslTokenType("@");
   IElementType BRACE_L = new AwslTokenType("{");
   IElementType BRACE_R = new AwslTokenType("}");
@@ -34,12 +32,15 @@ public interface AwslTypes {
   IElementType DOT = new AwslTokenType(".");
   IElementType EQ = new AwslTokenType("=");
   IElementType FOR = new AwslTokenType("Keyword for");
-  IElementType HTML_BEGIN_TOKEN = new AwslTokenType("Token::HtmlBegin");
-  IElementType HTML_OPEN_END_TOKEN = new AwslTokenType("HTML_OPEN_END_TOKEN");
-  IElementType HTML_SELF_END_TOKEN = new AwslTokenType("Token::HtmlEnd");
+  IElementType GENERIC_L = new AwslTokenType("<");
+  IElementType GENERIC_R = new AwslTokenType(">");
+  IElementType HTML_BEGIN_TOKEN = new AwslTokenType("HTML_BEGIN_TOKEN");
+  IElementType HTML_OPEN_END_TOKEN = new AwslTokenType("HTML_OPEN_CLOSE_END_TOKEN");
+  IElementType HTML_SELF_END_TOKEN = new AwslTokenType("HTML_SELF_CLOSE_END_TOKEN");
   IElementType HTML_START_END_TOKEN = new AwslTokenType("HTML_START_END_TOKEN");
   IElementType HTML_TAG_SYMBOL = new AwslTokenType("Symbol::HtmlTag");
   IElementType IN = new AwslTokenType("Keyword in");
+  IElementType NAME_JOIN = new AwslTokenType("::");
   IElementType PARENTHESIS_L = new AwslTokenType("(");
   IElementType PARENTHESIS_R = new AwslTokenType(")");
   IElementType SEMICOLON = new AwslTokenType(";");
@@ -57,8 +58,8 @@ public interface AwslTypes {
       else if (type == BRACKET_BLOCK) {
         return new AwslBracketBlockNode(node);
       }
-      else if (type == HTML_BEGIN_INNER) {
-        return new AwslHtmlBeginInnerNode(node);
+      else if (type == GENERIC) {
+        return new AwslGenericNode(node);
       }
       else if (type == HTML_NORMAL) {
         return new AwslHtmlNormalNode(node);

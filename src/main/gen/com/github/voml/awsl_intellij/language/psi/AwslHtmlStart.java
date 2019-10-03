@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface AwslHtmlStart extends PsiElement {
 
-  @NotNull
-  AwslHtmlBeginInner getHtmlBeginInner();
+  @Nullable
+  AwslGeneric getGeneric();
 
 }
