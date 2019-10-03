@@ -11,7 +11,10 @@ public interface AwslTypes {
   IElementType BRACE_BLOCK = new AwslElementType("BRACE_BLOCK");
   IElementType BRACKET_BLOCK = new AwslElementType("BRACKET_BLOCK");
   IElementType HTML_BEGIN_INNER = new AwslElementType("HTML_BEGIN_INNER");
-  IElementType HTML_ELEMENT_BEGIN = new AwslElementType("HTML_ELEMENT_BEGIN");
+  IElementType HTML_NORMAL = new AwslElementType("HTML_NORMAL");
+  IElementType HTML_OPEN_END = new AwslElementType("HTML_OPEN_END");
+  IElementType HTML_SELF_END = new AwslElementType("HTML_SELF_END");
+  IElementType HTML_START = new AwslElementType("HTML_START");
 
   IElementType ACCENT = new AwslTokenType("^");
   IElementType ANGLE_L = new AwslTokenType("<");
@@ -32,7 +35,9 @@ public interface AwslTypes {
   IElementType EQ = new AwslTokenType("=");
   IElementType FOR = new AwslTokenType("Keyword for");
   IElementType HTML_BEGIN_TOKEN = new AwslTokenType("Token::HtmlBegin");
-  IElementType HTML_END_TOKEN = new AwslTokenType("Token::HtmlEnd");
+  IElementType HTML_OPEN_END_TOKEN = new AwslTokenType("HTML_OPEN_END_TOKEN");
+  IElementType HTML_SELF_END_TOKEN = new AwslTokenType("Token::HtmlEnd");
+  IElementType HTML_START_END_TOKEN = new AwslTokenType("HTML_START_END_TOKEN");
   IElementType HTML_TAG_SYMBOL = new AwslTokenType("Symbol::HtmlTag");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType PARENTHESIS_L = new AwslTokenType("(");
@@ -55,8 +60,17 @@ public interface AwslTypes {
       else if (type == HTML_BEGIN_INNER) {
         return new AwslHtmlBeginInnerNode(node);
       }
-      else if (type == HTML_ELEMENT_BEGIN) {
-        return new AwslHtmlElementBeginNode(node);
+      else if (type == HTML_NORMAL) {
+        return new AwslHtmlNormalNode(node);
+      }
+      else if (type == HTML_OPEN_END) {
+        return new AwslHtmlOpenEndNode(node);
+      }
+      else if (type == HTML_SELF_END) {
+        return new AwslHtmlSelfEndNode(node);
+      }
+      else if (type == HTML_START) {
+        return new AwslHtmlStartNode(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

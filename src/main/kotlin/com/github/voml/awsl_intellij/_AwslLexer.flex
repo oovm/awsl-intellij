@@ -156,8 +156,29 @@ HTML_BAD_TAG = "hr"
     {SYMBOL} {return SYMBOL;}
     {STRING} {return STRING;}
 }
-<HTML_BEGIN, HTML_END> {
+<HTML_BEGIN> {
     {STRING} {return STRING;}
+}
+// HTML 糟粕, 特殊处理一下
+<HTML_BEGIN> {HTML_BAD_TAG} {
+    if (reachTag) {
+        return SYMBOL;
+    }
+    else {
+        reachTag = true;
+        canBeBadEnd = true;
+        return HTML_TAG_SYMBOL;
+    }
+}
+// 遇到了正常标签
+<HTML_BEGIN, HTML_END> {SYMBOL} {
+    if (reachTag) {
+        return SYMBOL;
+    }
+    else {
+        reachTag = true;
+        return HTML_TAG_SYMBOL;
+    }
 }
 // 字符环境允许的字面量
 <HTML_CONTEXT> [^<>{}]+ {
@@ -178,23 +199,10 @@ HTML_BAD_TAG = "hr"
     yybegin(HTML_BEGIN);
     return HTML_BEGIN_TOKEN;
 }
-// HTML 糟粕, 特殊处理一下
-<HTML_BEGIN> {HTML_BAD_TAG} {
-    if (reachTag==false) {
-        reachTag = true;
-        canBeBadEnd = true;
-    }
-    return HTML_TAG_SYMBOL;
-}
-// 遇到了正常标签
-<HTML_BEGIN> {SYMBOL} {
-    reachTag = true;
-    return HTML_TAG_SYMBOL;
-}
 // 自闭转换 <a/>
 <HTML_BEGIN> \/> {
     safe_pop();
-    return HTML_END_TOKEN;
+    return HTML_SELF_END_TOKEN;
 }
 // 根据上下文进入对应的模式
 // 如果是坏标签, 那么直接恢复上下文
@@ -202,11 +210,12 @@ HTML_BAD_TAG = "hr"
     if (canBeBadEnd) {
         canBeBadEnd = false;
         safe_pop();
+        return HTML_SELF_END_TOKEN;
     }
     else {
         yybegin(safe_pop());
     }
-    return HTML_END_TOKEN;
+    return HTML_START_END_TOKEN;
 }
 // 准备终止
 <YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
@@ -219,7 +228,7 @@ HTML_BAD_TAG = "hr"
 <HTML_END> > {
     safe_pop();
     yybegin(safe_peek());
-    return HTML_END_TOKEN;
+    return HTML_OPEN_END_TOKEN;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
 [^] { return BAD_CHARACTER; }

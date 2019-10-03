@@ -63,8 +63,7 @@ private statement ::=
     COMMENT_DOCUMENT
   | SYMBOL
   | STRING
-  | html_start
-  | html_open_end
+  | html_normal
   | html_self_end
  // | ignore
   ;
@@ -74,14 +73,21 @@ fake binary_expr ::= expr + {
     right="/expr[1]"
   ]
 }
-
-
+// =====================================================================================================================
+// <hr>
+// <hr/>
+html_self_end ::= HTML_BEGIN_TOKEN [html_begin_inner] HTML_SELF_END_TOKEN;
+html_begin_inner ::= HTML_TAG_SYMBOL;
+// <a>text</a>
+// <\a>code</a>
+html_normal ::= html_start [html_normal_inner] html_open_end;
 html_start ::= HTML_BEGIN_TOKEN html_begin_inner HTML_START_END_TOKEN;
 html_open_end ::= HTML_BEGIN_TOKEN html_begin_inner HTML_OPEN_END_TOKEN;
-html_self_end ::= HTML_BEGIN_TOKEN html_begin_inner HTML_SELF_END_TOKEN;
-html_begin_inner ::= [HTML_TAG_SYMBOL]
+private html_normal_inner ::= STRING;
 
 
+
+// =====================================================================================================================
 // parenthesis ( )
 private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;
 // bracket [ ]

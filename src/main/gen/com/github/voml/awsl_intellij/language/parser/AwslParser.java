@@ -146,26 +146,90 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [HTML_TAG_SYMBOL]
+  // HTML_TAG_SYMBOL
   public static boolean html_begin_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_begin_inner")) return false;
-    Marker m = enter_section_(b, l, _NONE_, HTML_BEGIN_INNER, "<html begin inner>");
-    consumeToken(b, HTML_TAG_SYMBOL);
-    exit_section_(b, l, m, true, false, null);
+    if (!nextTokenIs(b, HTML_TAG_SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, HTML_TAG_SYMBOL);
+    exit_section_(b, m, HTML_BEGIN_INNER, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // html_start [html_normal_inner] html_open_end
+  public static boolean html_normal(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_normal")) return false;
+    if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = html_start(b, l + 1);
+    r = r && html_normal_1(b, l + 1);
+    r = r && html_open_end(b, l + 1);
+    exit_section_(b, m, HTML_NORMAL, r);
+    return r;
+  }
+
+  // [html_normal_inner]
+  private static boolean html_normal_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_normal_1")) return false;
+    html_normal_inner(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // HTML_BEGIN_TOKEN html_begin_inner HTML_END_TOKEN
-  public static boolean html_element_begin(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_element_begin")) return false;
+  // STRING
+  static boolean html_normal_inner(PsiBuilder b, int l) {
+    return consumeToken(b, STRING);
+  }
+
+  /* ********************************************************** */
+  // HTML_BEGIN_TOKEN html_begin_inner HTML_OPEN_END_TOKEN
+  public static boolean html_open_end(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_open_end")) return false;
     if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HTML_BEGIN_TOKEN);
     r = r && html_begin_inner(b, l + 1);
-    r = r && consumeToken(b, HTML_END_TOKEN);
-    exit_section_(b, m, HTML_ELEMENT_BEGIN, r);
+    r = r && consumeToken(b, HTML_OPEN_END_TOKEN);
+    exit_section_(b, m, HTML_OPEN_END, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // HTML_BEGIN_TOKEN [html_begin_inner] HTML_SELF_END_TOKEN
+  public static boolean html_self_end(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_self_end")) return false;
+    if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, HTML_BEGIN_TOKEN);
+    r = r && html_self_end_1(b, l + 1);
+    r = r && consumeToken(b, HTML_SELF_END_TOKEN);
+    exit_section_(b, m, HTML_SELF_END, r);
+    return r;
+  }
+
+  // [html_begin_inner]
+  private static boolean html_self_end_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_self_end_1")) return false;
+    html_begin_inner(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // HTML_BEGIN_TOKEN html_begin_inner HTML_START_END_TOKEN
+  public static boolean html_start(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_start")) return false;
+    if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, HTML_BEGIN_TOKEN);
+    r = r && html_begin_inner(b, l + 1);
+    r = r && consumeToken(b, HTML_START_END_TOKEN);
+    exit_section_(b, m, HTML_START, r);
     return r;
   }
 
@@ -187,14 +251,16 @@ public class AwslParser implements PsiParser, LightPsiParser {
   // COMMENT_DOCUMENT
   //   | SYMBOL
   //   | STRING
-  //   | html_element_begin
+  //   | html_normal
+  //   | html_self_end
   static boolean statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement")) return false;
     boolean r;
     r = consumeToken(b, COMMENT_DOCUMENT);
     if (!r) r = consumeToken(b, SYMBOL);
     if (!r) r = consumeToken(b, STRING);
-    if (!r) r = html_element_begin(b, l + 1);
+    if (!r) r = html_normal(b, l + 1);
+    if (!r) r = html_self_end(b, l + 1);
     return r;
   }
 
