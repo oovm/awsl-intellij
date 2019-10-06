@@ -787,7 +787,7 @@ public class _AwslLexer implements FlexLexer {
             { reachTag = false;
     stateStack.push(HTML_CONTEXT);
     yybegin(HTML_BEGIN);
-    return HTML_BEGIN_TOKEN;
+    return HTML_START_TEXT_L;
             } 
             // fall through
           case 41: break;
@@ -876,11 +876,12 @@ public class _AwslLexer implements FlexLexer {
         // canBeBadEnd = false;
         safe_pop();
         yybegin(safe_peek());
-        return HTML_SELF_END_TOKEN;
+        return HTML_START_R;
+//        return HTML_SELF_END_R;
     }
     else {
         yybegin(safe_peek());
-        return HTML_START_END_TOKEN;
+        return HTML_START_R;
     }
             } 
             // fall through
@@ -908,7 +909,7 @@ public class _AwslLexer implements FlexLexer {
     }
     safe_pop();
     yybegin(safe_peek());
-    return HTML_OPEN_END_TOKEN;
+    return HTML_END_R;
             } 
             // fall through
           case 60: break;
@@ -920,7 +921,7 @@ public class _AwslLexer implements FlexLexer {
           case 26: 
             { reachTag = false;
     yybegin(HTML_END);
-    return HTML_BEGIN_TOKEN;
+    return HTML_END_L;
             } 
             // fall through
           case 62: break;
@@ -928,7 +929,7 @@ public class _AwslLexer implements FlexLexer {
             { reachTag = false;
     stateStack.push(CODE_CONTEXT);
     yybegin(HTML_BEGIN);
-    return HTML_BEGIN_TOKEN;
+    return HTML_START_CODE_L;
             } 
             // fall through
           case 63: break;
@@ -945,7 +946,7 @@ public class _AwslLexer implements FlexLexer {
           case 30: 
             { safe_pop();
     yybegin(safe_peek());
-    return HTML_SELF_END_TOKEN;
+    return HTML_SELF_END_R;
             } 
             // fall through
           case 66: break;

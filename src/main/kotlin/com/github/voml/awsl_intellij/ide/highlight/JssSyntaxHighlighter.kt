@@ -35,10 +35,8 @@ class JssSyntaxHighlighter : SyntaxHighlighterBase() {
             STRING -> AwslColor.STRING
             SYMBOL -> AwslColor.IDENTIFIER
             // 模板
-            HTML_OPEN_END_TOKEN -> AwslColor.HTML_END
-            HTML_START_END_TOKEN -> AwslColor.HTML_END
-            HTML_SELF_END_TOKEN -> AwslColor.HTML_END
-            HTML_BEGIN_TOKEN -> AwslColor.HTML_BEGIN
+            HTML_END_L, HTML_START_CODE_L, HTML_START_TEXT_L -> AwslColor.HTML_BEGIN
+            HTML_END_R, HTML_START_R, HTML_SELF_END_R -> AwslColor.HTML_END
             HTML_TAG_SYMBOL -> AwslColor.HTML_TAG
             // 注释
             COMMENT_LINE -> AwslColor.LINE_COMMENT

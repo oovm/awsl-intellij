@@ -11,14 +11,14 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.voml.awsl_intellij.language.psi.*;
 
-public class AwslHtmlNormalNode extends ASTWrapperPsiElement implements AwslHtmlNormal {
+public class AwslHtmlStartCodeNode extends ASTWrapperPsiElement implements AwslHtmlStartCode {
 
-  public AwslHtmlNormalNode(@NotNull ASTNode node) {
+  public AwslHtmlStartCodeNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitHtmlNormal(this);
+    visitor.visitHtmlStartCode(this);
   }
 
   @Override
@@ -28,21 +28,9 @@ public class AwslHtmlNormalNode extends ASTWrapperPsiElement implements AwslHtml
   }
 
   @Override
-  @NotNull
-  public List<AwslHtmlOpenEnd> getHtmlOpenEndList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlOpenEnd.class);
-  }
-
-  @Override
-  @NotNull
-  public List<AwslHtmlSelfEnd> getHtmlSelfEndList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlSelfEnd.class);
-  }
-
-  @Override
-  @NotNull
-  public AwslHtmlStart getHtmlStart() {
-    return findNotNullChildByClass(AwslHtmlStart.class);
+  @Nullable
+  public AwslGeneric getGeneric() {
+    return findChildByClass(AwslGeneric.class);
   }
 
 }

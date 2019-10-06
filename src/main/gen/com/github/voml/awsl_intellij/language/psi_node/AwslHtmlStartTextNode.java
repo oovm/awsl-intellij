@@ -11,14 +11,14 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.voml.awsl_intellij.language.psi.*;
 
-public class AwslHtmlSelfEndNode extends ASTWrapperPsiElement implements AwslHtmlSelfEnd {
+public class AwslHtmlStartTextNode extends ASTWrapperPsiElement implements AwslHtmlStartText {
 
-  public AwslHtmlSelfEndNode(@NotNull ASTNode node) {
+  public AwslHtmlStartTextNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitHtmlSelfEnd(this);
+    visitor.visitHtmlStartText(this);
   }
 
   @Override

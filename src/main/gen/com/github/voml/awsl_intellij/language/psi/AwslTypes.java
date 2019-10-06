@@ -11,10 +11,12 @@ public interface AwslTypes {
   IElementType BRACE_BLOCK = new AwslElementType("BRACE_BLOCK");
   IElementType BRACKET_BLOCK = new AwslElementType("BRACKET_BLOCK");
   IElementType GENERIC = new AwslElementType("GENERIC");
-  IElementType HTML_NORMAL = new AwslElementType("HTML_NORMAL");
-  IElementType HTML_OPEN_END = new AwslElementType("HTML_OPEN_END");
-  IElementType HTML_SELF_END = new AwslElementType("HTML_SELF_END");
-  IElementType HTML_START = new AwslElementType("HTML_START");
+  IElementType HTML_CODE = new AwslElementType("HTML_CODE");
+  IElementType HTML_END = new AwslElementType("HTML_END");
+  IElementType HTML_SELF_CLOSE = new AwslElementType("HTML_SELF_CLOSE");
+  IElementType HTML_START_CODE = new AwslElementType("HTML_START_CODE");
+  IElementType HTML_START_TEXT = new AwslElementType("HTML_START_TEXT");
+  IElementType HTML_TEXT = new AwslElementType("HTML_TEXT");
 
   IElementType ACCENT = new AwslTokenType("^");
   IElementType AT = new AwslTokenType("@");
@@ -34,10 +36,12 @@ public interface AwslTypes {
   IElementType FOR = new AwslTokenType("Keyword for");
   IElementType GENERIC_L = new AwslTokenType("<");
   IElementType GENERIC_R = new AwslTokenType(">");
-  IElementType HTML_BEGIN_TOKEN = new AwslTokenType("HTML_BEGIN_TOKEN");
-  IElementType HTML_OPEN_END_TOKEN = new AwslTokenType("HTML_OPEN_CLOSE_END_TOKEN");
-  IElementType HTML_SELF_END_TOKEN = new AwslTokenType("HTML_SELF_CLOSE_END_TOKEN");
-  IElementType HTML_START_END_TOKEN = new AwslTokenType("HTML_START_END_TOKEN");
+  IElementType HTML_END_L = new AwslTokenType("HTML_END_L");
+  IElementType HTML_END_R = new AwslTokenType("HTML_END_R");
+  IElementType HTML_SELF_END_R = new AwslTokenType("HTML_SELF_END_R");
+  IElementType HTML_START_CODE_L = new AwslTokenType("HTML_START_CODE_L");
+  IElementType HTML_START_R = new AwslTokenType("HTML_START_R");
+  IElementType HTML_START_TEXT_L = new AwslTokenType("HTML_START_TEXT_L");
   IElementType HTML_TAG_SYMBOL = new AwslTokenType("Symbol::HtmlTag");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType NAME_JOIN = new AwslTokenType("::");
@@ -61,17 +65,23 @@ public interface AwslTypes {
       else if (type == GENERIC) {
         return new AwslGenericNode(node);
       }
-      else if (type == HTML_NORMAL) {
-        return new AwslHtmlNormalNode(node);
+      else if (type == HTML_CODE) {
+        return new AwslHtmlCodeNode(node);
       }
-      else if (type == HTML_OPEN_END) {
-        return new AwslHtmlOpenEndNode(node);
+      else if (type == HTML_END) {
+        return new AwslHtmlEndNode(node);
       }
-      else if (type == HTML_SELF_END) {
-        return new AwslHtmlSelfEndNode(node);
+      else if (type == HTML_SELF_CLOSE) {
+        return new AwslHtmlSelfCloseNode(node);
       }
-      else if (type == HTML_START) {
-        return new AwslHtmlStartNode(node);
+      else if (type == HTML_START_CODE) {
+        return new AwslHtmlStartCodeNode(node);
+      }
+      else if (type == HTML_START_TEXT) {
+        return new AwslHtmlStartTextNode(node);
+      }
+      else if (type == HTML_TEXT) {
+        return new AwslHtmlTextNode(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

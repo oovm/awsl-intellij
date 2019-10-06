@@ -100,8 +100,6 @@ STRING_NON_ESCAPE=[^\\\"]
 
 HEX=[a-fA-F0-9]
 
-HTML_CODE_START = <\
-HTML_TEXT_START = <
 HTML_BAD_TAG = "hr"
   | "br"
   | "img"
@@ -202,20 +200,20 @@ HTML_BAD_TAG = "hr"
     reachTag = false;
     stateStack.push(CODE_CONTEXT);
     yybegin(HTML_BEGIN);
-    return HTML_BEGIN_TOKEN;
+    return HTML_START_CODE_L;
 }
 // 常规转换 <a>HTML_CONTEXT</a>
 <YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> < {
     reachTag = false;
     stateStack.push(HTML_CONTEXT);
     yybegin(HTML_BEGIN);
-    return HTML_BEGIN_TOKEN;
+    return HTML_START_TEXT_L;
 }
 // 自闭转换 <a/>
 <HTML_BEGIN> \/> {
     safe_pop();
     yybegin(safe_peek());
-    return HTML_SELF_END_TOKEN;
+    return HTML_SELF_END_R;
 }
 // 根据上下文进入对应的模式
 // 如果是坏标签, 那么直接恢复上下文
@@ -228,18 +226,19 @@ HTML_BAD_TAG = "hr"
         // canBeBadEnd = false;
         safe_pop();
         yybegin(safe_peek());
-        return HTML_SELF_END_TOKEN;
+        return HTML_START_R;
+//        return HTML_SELF_END_R;
     }
     else {
         yybegin(safe_peek());
-        return HTML_START_END_TOKEN;
+        return HTML_START_R;
     }
 }
 // 准备终止
 <YYINITIAL, CODE_CONTEXT, HTML_CONTEXT> <\/ {
     reachTag = false;
     yybegin(HTML_END);
-    return HTML_BEGIN_TOKEN;
+    return HTML_END_L;
 }
 // 立即终止, 恢复上下文
 // pop 时确保至少有一个上下文
@@ -250,7 +249,7 @@ HTML_BAD_TAG = "hr"
     }
     safe_pop();
     yybegin(safe_peek());
-    return HTML_OPEN_END_TOKEN;
+    return HTML_END_R;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
 [^] { return BAD_CHARACTER; }

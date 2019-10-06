@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AwslHtmlStart extends PsiElement {
+public interface AwslHtmlEnd extends PsiElement {
 
   @Nullable
   AwslGeneric getGeneric();

@@ -45,10 +45,12 @@
         ANGLE_R=">"
         GENERIC_L="<"
         GENERIC_R=">"
-        HTML_BEGIN_TOKEN="HTML_BEGIN_TOKEN"
-        HTML_START_END_TOKEN="HTML_START_END_TOKEN"
-        HTML_OPEN_END_TOKEN="HTML_OPEN_CLOSE_END_TOKEN"
-        HTML_SELF_END_TOKEN="HTML_SELF_CLOSE_END_TOKEN"
+        HTML_START_TEXT_L = "HTML_START_TEXT_L"
+        HTML_START_CODE_L = "HTML_START_CODE_L"
+        HTML_START_R = "HTML_START_R"
+        HTML_SELF_END_R = "HTML_SELF_END_R"
+        HTML_END_L = "HTML_END_L"
+        HTML_END_R = "HTML_END_R"
         HTML_TAG_SYMBOL="Symbol::HtmlTag"
         SYMBOL="Symbol"
     ]
@@ -66,9 +68,9 @@ private statement ::=
     COMMENT_DOCUMENT
   | SYMBOL
   | STRING
-  | html_normal
-  | html_self_end
- // | ignore
+  | html_self_close
+  | html_text
+  | html_code
   ;
 fake binary_expr ::= expr + {
   methods=[
@@ -79,19 +81,36 @@ fake binary_expr ::= expr + {
 // =====================================================================================================================
 // <hr>
 // <hr/>
-html_self_end ::= HTML_BEGIN_TOKEN [html_begin_inner_head] HTML_SELF_END_TOKEN;
-private html_begin_inner_head ::= HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_begin_inner_rest*;
-private html_begin_inner_rest ::= SYMBOL EQ STRING;
+html_self_close ::= (HTML_START_TEXT_L|HTML_START_CODE_L) [html_inner] HTML_SELF_END_R;
+private html_inner ::= HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_inner_rest*;
+private html_inner_rest ::= SYMBOL EQ STRING;
+// =====================================================================================================================
+// a::<T>
 generic ::= GENERIC_L (SYMBOL [generic]) GENERIC_R;
 // <a>text</a>
 // <\a>code</a>
-html_normal ::= html_start html_inner* html_open_end;
-html_start ::= HTML_BEGIN_TOKEN html_begin_inner_head HTML_START_END_TOKEN;
-html_open_end ::= HTML_BEGIN_TOKEN html_begin_inner_head HTML_OPEN_END_TOKEN;
-private html_inner ::= STRING | html_self_end | html_open_end | SYMBOL;
 
 
-
+// =====================================================================================================================
+// <a>text</a>
+html_text ::= html_start_text html_text_inner* html_end;
+html_start_text ::= HTML_START_TEXT_L [html_inner] HTML_START_R;
+html_end ::= HTML_END_L [html_inner] HTML_END_R;
+private html_text_inner ::=
+    STRING
+  | html_self_close
+  | html_code
+  | html_text;
+// =====================================================================================================================
+// <\a>code</a>
+html_code ::= html_start_code html_code_inner* html_end;
+html_start_code ::= HTML_START_CODE_L [html_inner] HTML_START_R;
+private html_code_inner ::=
+    STRING
+  | SYMBOL
+  | html_self_close
+  | html_code
+  | html_text;
 // =====================================================================================================================
 // parenthesis ( )
 private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;
