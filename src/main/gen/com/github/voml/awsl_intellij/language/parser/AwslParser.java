@@ -36,12 +36,12 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // statement*
+  // top_statement*
   static boolean Awsl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Awsl")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!statement(b, l + 1)) break;
+      if (!top_statement(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "Awsl", c)) break;
     }
     return true;
@@ -178,152 +178,230 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_begin_inner_rest*
-  static boolean html_begin_inner_head(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_begin_inner_head")) return false;
+  // html_start_code statement* html_end
+  public static boolean html_code(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_code")) return false;
+    if (!nextTokenIs(b, HTML_START_CODE_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = html_start_code(b, l + 1);
+    r = r && html_code_1(b, l + 1);
+    r = r && html_end(b, l + 1);
+    exit_section_(b, m, HTML_CODE, r);
+    return r;
+  }
+
+  // statement*
+  private static boolean html_code_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_code_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!statement(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "html_code_1", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // HTML_END_L [html_inner] HTML_END_R
+  public static boolean html_end(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_end")) return false;
+    if (!nextTokenIs(b, HTML_END_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, HTML_END_L);
+    r = r && html_end_1(b, l + 1);
+    r = r && consumeToken(b, HTML_END_R);
+    exit_section_(b, m, HTML_END, r);
+    return r;
+  }
+
+  // [html_inner]
+  private static boolean html_end_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_end_1")) return false;
+    html_inner(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_inner_rest*
+  static boolean html_inner(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_inner")) return false;
     if (!nextTokenIs(b, HTML_TAG_SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HTML_TAG_SYMBOL);
-    r = r && html_begin_inner_head_1(b, l + 1);
-    r = r && html_begin_inner_head_2(b, l + 1);
+    r = r && html_inner_1(b, l + 1);
+    r = r && html_inner_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [NAME_JOIN (SYMBOL|generic)]
-  private static boolean html_begin_inner_head_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_begin_inner_head_1")) return false;
-    html_begin_inner_head_1_0(b, l + 1);
+  private static boolean html_inner_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_inner_1")) return false;
+    html_inner_1_0(b, l + 1);
     return true;
   }
 
   // NAME_JOIN (SYMBOL|generic)
-  private static boolean html_begin_inner_head_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_begin_inner_head_1_0")) return false;
+  private static boolean html_inner_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_inner_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, NAME_JOIN);
-    r = r && html_begin_inner_head_1_0_1(b, l + 1);
+    r = r && html_inner_1_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // SYMBOL|generic
-  private static boolean html_begin_inner_head_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_begin_inner_head_1_0_1")) return false;
+  private static boolean html_inner_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_inner_1_0_1")) return false;
     boolean r;
     r = consumeToken(b, SYMBOL);
     if (!r) r = generic(b, l + 1);
     return r;
   }
 
-  // html_begin_inner_rest*
-  private static boolean html_begin_inner_head_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_begin_inner_head_2")) return false;
+  // html_inner_rest*
+  private static boolean html_inner_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_inner_2")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!html_begin_inner_rest(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "html_begin_inner_head_2", c)) break;
+      if (!html_inner_rest(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "html_inner_2", c)) break;
     }
     return true;
+  }
+
+  /* ********************************************************** */
+  // html_kv
+  static boolean html_inner_rest(PsiBuilder b, int l) {
+    return html_kv(b, l + 1);
   }
 
   /* ********************************************************** */
   // SYMBOL EQ STRING
-  static boolean html_begin_inner_rest(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_begin_inner_rest")) return false;
+  public static boolean html_kv(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_kv")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, SYMBOL, EQ, STRING);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, HTML_KV, r);
     return r;
   }
 
   /* ********************************************************** */
-  // STRING | html_self_end | html_open_end | SYMBOL
-  static boolean html_inner(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_inner")) return false;
+  // (HTML_START_TEXT_L|HTML_START_CODE_L) [html_inner] HTML_SELF_END_R
+  public static boolean html_self_close(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_self_close")) return false;
+    if (!nextTokenIs(b, "<html self close>", HTML_START_CODE_L, HTML_START_TEXT_L)) return false;
     boolean r;
-    r = consumeToken(b, STRING);
-    if (!r) r = html_self_end(b, l + 1);
-    if (!r) r = html_open_end(b, l + 1);
-    if (!r) r = consumeToken(b, SYMBOL);
+    Marker m = enter_section_(b, l, _NONE_, HTML_SELF_CLOSE, "<html self close>");
+    r = html_self_close_0(b, l + 1);
+    r = r && html_self_close_1(b, l + 1);
+    r = r && consumeToken(b, HTML_SELF_END_R);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // HTML_START_TEXT_L|HTML_START_CODE_L
+  private static boolean html_self_close_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_self_close_0")) return false;
+    boolean r;
+    r = consumeToken(b, HTML_START_TEXT_L);
+    if (!r) r = consumeToken(b, HTML_START_CODE_L);
+    return r;
+  }
+
+  // [html_inner]
+  private static boolean html_self_close_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_self_close_1")) return false;
+    html_inner(b, l + 1);
+    return true;
+  }
+
   /* ********************************************************** */
-  // html_start html_inner* html_open_end
-  public static boolean html_normal(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_normal")) return false;
-    if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
+  // HTML_START_CODE_L [html_inner] HTML_START_R
+  public static boolean html_start_code(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_start_code")) return false;
+    if (!nextTokenIs(b, HTML_START_CODE_L)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = html_start(b, l + 1);
-    r = r && html_normal_1(b, l + 1);
-    r = r && html_open_end(b, l + 1);
-    exit_section_(b, m, HTML_NORMAL, r);
+    r = consumeToken(b, HTML_START_CODE_L);
+    r = r && html_start_code_1(b, l + 1);
+    r = r && consumeToken(b, HTML_START_R);
+    exit_section_(b, m, HTML_START_CODE, r);
     return r;
   }
 
-  // html_inner*
-  private static boolean html_normal_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_normal_1")) return false;
+  // [html_inner]
+  private static boolean html_start_code_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_start_code_1")) return false;
+    html_inner(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // HTML_START_TEXT_L [html_inner] HTML_START_R
+  public static boolean html_start_text(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_start_text")) return false;
+    if (!nextTokenIs(b, HTML_START_TEXT_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, HTML_START_TEXT_L);
+    r = r && html_start_text_1(b, l + 1);
+    r = r && consumeToken(b, HTML_START_R);
+    exit_section_(b, m, HTML_START_TEXT, r);
+    return r;
+  }
+
+  // [html_inner]
+  private static boolean html_start_text_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_start_text_1")) return false;
+    html_inner(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // html_start_text html_text_inner* html_end
+  public static boolean html_text(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_text")) return false;
+    if (!nextTokenIs(b, HTML_START_TEXT_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = html_start_text(b, l + 1);
+    r = r && html_text_1(b, l + 1);
+    r = r && html_end(b, l + 1);
+    exit_section_(b, m, HTML_TEXT, r);
+    return r;
+  }
+
+  // html_text_inner*
+  private static boolean html_text_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_text_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!html_inner(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "html_normal_1", c)) break;
+      if (!html_text_inner(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "html_text_1", c)) break;
     }
     return true;
   }
 
   /* ********************************************************** */
-  // HTML_BEGIN_TOKEN html_begin_inner_head HTML_OPEN_END_TOKEN
-  public static boolean html_open_end(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_open_end")) return false;
-    if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
+  // HTML_STRING
+  //   | html_self_close
+  //   | html_code
+  //   | html_text
+  static boolean html_text_inner(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_text_inner")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, HTML_BEGIN_TOKEN);
-    r = r && html_begin_inner_head(b, l + 1);
-    r = r && consumeToken(b, HTML_OPEN_END_TOKEN);
-    exit_section_(b, m, HTML_OPEN_END, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // HTML_BEGIN_TOKEN [html_begin_inner_head] HTML_SELF_END_TOKEN
-  public static boolean html_self_end(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_self_end")) return false;
-    if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, HTML_BEGIN_TOKEN);
-    r = r && html_self_end_1(b, l + 1);
-    r = r && consumeToken(b, HTML_SELF_END_TOKEN);
-    exit_section_(b, m, HTML_SELF_END, r);
-    return r;
-  }
-
-  // [html_begin_inner_head]
-  private static boolean html_self_end_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_self_end_1")) return false;
-    html_begin_inner_head(b, l + 1);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // HTML_BEGIN_TOKEN html_begin_inner_head HTML_START_END_TOKEN
-  public static boolean html_start(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_start")) return false;
-    if (!nextTokenIs(b, HTML_BEGIN_TOKEN)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, HTML_BEGIN_TOKEN);
-    r = r && html_begin_inner_head(b, l + 1);
-    r = r && consumeToken(b, HTML_START_END_TOKEN);
-    exit_section_(b, m, HTML_START, r);
+    r = consumeToken(b, HTML_STRING);
+    if (!r) r = html_self_close(b, l + 1);
+    if (!r) r = html_code(b, l + 1);
+    if (!r) r = html_text(b, l + 1);
     return r;
   }
 
@@ -342,19 +420,38 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // STRING
+  //   | SYMBOL
+  //   | html_self_close
+  //   | html_code
+  //   | html_text
+  static boolean statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement")) return false;
+    boolean r;
+    r = consumeToken(b, STRING);
+    if (!r) r = consumeToken(b, SYMBOL);
+    if (!r) r = html_self_close(b, l + 1);
+    if (!r) r = html_code(b, l + 1);
+    if (!r) r = html_text(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
   // COMMENT_DOCUMENT
   //   | SYMBOL
   //   | STRING
-  //   | html_normal
-  //   | html_self_end
-  static boolean statement(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement")) return false;
+  //   | html_self_close
+  //   | html_text
+  //   | html_code
+  static boolean top_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "top_statement")) return false;
     boolean r;
     r = consumeToken(b, COMMENT_DOCUMENT);
     if (!r) r = consumeToken(b, SYMBOL);
     if (!r) r = consumeToken(b, STRING);
-    if (!r) r = html_normal(b, l + 1);
-    if (!r) r = html_self_end(b, l + 1);
+    if (!r) r = html_self_close(b, l + 1);
+    if (!r) r = html_text(b, l + 1);
+    if (!r) r = html_code(b, l + 1);
     return r;
   }
 

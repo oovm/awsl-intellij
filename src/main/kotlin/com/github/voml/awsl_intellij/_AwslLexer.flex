@@ -12,46 +12,42 @@ import static com.github.voml.awsl_intellij.language.psi.AwslTypes.*;
 
 %{
     private static final IntStack stateStack = new IntStack();
-        private static final IntStack leftBracketStack = new IntStack();
-        private static final Stack<String> xmlTag = new Stack();
-        // { }
-        private static int brace_balance = 0;
-        // < >
-        private static int angle_balance = 0;
-        private static boolean reachTag = false;
-        private static boolean canBeBadEnd = false;
+    // { }
+    private static int brace_balance = 0;
+    // < >
+    private static int angle_balance = 0;
+    private static boolean reachTag = false;
+    private static boolean canBeBadEnd = false;
 
-        private static int safe_peek() {
-            if (stateStack.empty()) {
-                return YYINITIAL;
-            }
-            else {
-                return stateStack.peek();
-            }
+    private static int safe_peek() {
+        if (stateStack.empty()) {
+            return YYINITIAL;
         }
-
-        private static int safe_pop() {
-            if (stateStack.empty()) {
-                return YYINITIAL;
-            }
-            else {
-                return stateStack.pop();
-            }
+        else {
+            return stateStack.peek();
         }
+    }
 
-
-        private static void init() {
-            brace_balance = 0;
-            angle_balance = 0;
-            stateStack.clear();
-            leftBracketStack.clear();
-            xmlTag.clear();
+    private static int safe_pop() {
+        if (stateStack.empty()) {
+            return YYINITIAL;
         }
-
-        public _AwslLexer() {
-            this((java.io.Reader) null);
-            init();
+        else {
+            return stateStack.pop();
         }
+    }
+
+
+    private static void init() {
+        brace_balance = 0;
+        angle_balance = 0;
+        stateStack.clear();
+    }
+
+    public _AwslLexer() {
+        this((java.io.Reader) null);
+        init();
+    }
 %}
 
 %public
@@ -121,7 +117,7 @@ HTML_BAD_TAG = "hr"
 // 初态: YYINITIAL =====================================================================================================
 // 初态: 无视空格
 <YYINITIAL,CODE_CONTEXT, HTML_BEGIN, HTML_END> {WHITE_SPACE} {return WHITE_SPACE;}
-<YYINITIAL,CODE_CONTEXT> {
+<YYINITIAL,CODE_CONTEXT, HTML_BEGIN, HTML_END> {
     // 放上面防止被覆盖
     {COMMENT_DOCUMENT} {return COMMENT_DOCUMENT;}
     {COMMENT_LINE} {return COMMENT_LINE;}
@@ -131,23 +127,23 @@ HTML_BAD_TAG = "hr"
 
 // 先直接找出所有符号
 <YYINITIAL, CODE_CONTEXT> {
-  "(" { return PARENTHESIS_L; }
-  ")" { return PARENTHESIS_R; }
-  "[" { return BRACKET_L; }
-  "]" { return BRACKET_R; }
-  "{" { return BRACE_L; }
-  "}" { return BRACE_R; }
+    "(" { return PARENTHESIS_L; }
+    ")" { return PARENTHESIS_R; }
+    "[" { return BRACKET_L; }
+    "]" { return BRACKET_R; }
+    "{" { return BRACE_L; }
+    "}" { return BRACE_R; }
 //  "<" { return ANGLE_L; }
 //  ">" { return ANGLE_R; }
-  "^" { return ACCENT; }
-  "=" { return EQ; }
-  ":" { return COLON; }
-  ";" { return SEMICOLON; }
-  "," { return COMMA; }
-  "$" { return DOLLAR; }
-  "." { return DOT; }
-  "*" { return STAR; }
-  "@" { return AT; }
+    "^" { return ACCENT; }
+    "=" { return EQ; }
+    ":" { return COLON; }
+    ";" { return SEMICOLON; }
+    "," { return COMMA; }
+    "$" { return DOLLAR; }
+    "." { return DOT; }
+    "*" { return STAR; }
+    "@" { return AT; }
 }
 // 然后找出关键词
 <YYINITIAL, CODE_CONTEXT> {
@@ -170,7 +166,7 @@ HTML_BAD_TAG = "hr"
     }
     else {
         reachTag = true;
-        canBeBadEnd = true;
+        // canBeBadEnd = true;
         return HTML_TAG_SYMBOL;
     }
 }
@@ -192,7 +188,7 @@ HTML_BAD_TAG = "hr"
 
 // 字符环境允许的字面量
 <HTML_CONTEXT> [^<>{}]+ {
-    return STRING;
+    return HTML_STRING;
 }
 // HTML模板态: HTML_TEMPLATE ============================================================================================
 // 表达式转化 <\a>CODE_CONTEXT</a>
@@ -226,8 +222,7 @@ HTML_BAD_TAG = "hr"
         // canBeBadEnd = false;
         safe_pop();
         yybegin(safe_peek());
-        return HTML_START_R;
-//        return HTML_SELF_END_R;
+        return HTML_SELF_END_R;
     }
     else {
         yybegin(safe_peek());

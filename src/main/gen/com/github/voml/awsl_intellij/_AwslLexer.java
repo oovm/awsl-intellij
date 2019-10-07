@@ -206,10 +206,10 @@ public class _AwslLexer implements FlexLexer {
     "\1\7\1\1\1\10\1\11\2\7\1\12\1\13\1\14"+
     "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\7"+
     "\1\1\1\24\1\25\1\1\16\26\1\27\1\5\1\30"+
-    "\1\31\1\0\1\32\1\33\1\34\1\0\1\27\1\0"+
-    "\1\35\2\7\1\36\1\37\14\26\1\0\1\31\1\40"+
-    "\1\0\1\7\1\41\12\26\2\0\1\7\6\26\1\0"+
-    "\1\42\1\43\2\26\1\44";
+    "\1\31\1\0\1\32\1\33\1\34\1\0\1\35\1\0"+
+    "\1\36\2\7\1\37\1\40\14\26\1\0\1\31\1\41"+
+    "\1\0\1\7\1\42\12\26\2\0\1\7\6\26\1\0"+
+    "\1\43\1\44\2\26\1\45";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[106];
@@ -285,7 +285,7 @@ public class _AwslLexer implements FlexLexer {
     "\1\44\1\45\1\46\2\42\1\47\1\50\1\51\1\52"+
     "\1\53\1\54\1\55\1\56\3\42\1\57\4\6\1\27"+
     "\5\6\1\42\6\60\1\61\2\60\1\6\6\60\2\6"+
-    "\36\60\1\6\1\7\1\6\1\7\2\6\1\37\2\6"+
+    "\36\60\1\6\1\7\1\10\1\7\2\6\1\37\2\6"+
     "\1\62\1\41\1\42\1\6\1\16\1\6\1\42\2\6"+
     "\23\42\4\6\1\27\5\6\1\42\61\0\1\7\1\0"+
     "\1\7\56\0\1\63\1\0\1\64\55\0\1\65\13\0"+
@@ -294,72 +294,73 @@ public class _AwslLexer implements FlexLexer {
     "\2\15\2\0\1\15\2\0\6\15\1\73\14\15\12\0"+
     "\1\15\13\0\2\15\2\0\1\15\2\0\1\74\22\15"+
     "\12\0\1\15\13\0\2\15\2\0\1\15\2\0\17\15"+
-    "\1\75\3\15\12\0\1\15\11\0\1\76\61\0\2\42"+
-    "\2\0\1\42\2\0\23\42\12\0\1\42\13\0\2\42"+
-    "\2\0\1\42\2\0\1\42\1\77\21\42\12\0\1\42"+
-    "\13\0\2\42\2\0\1\42\2\0\1\42\1\77\10\42"+
-    "\1\100\10\42\12\0\1\42\13\0\2\42\2\0\1\42"+
-    "\2\0\4\42\1\101\1\42\1\102\14\42\12\0\1\42"+
-    "\13\0\2\42\2\0\1\42\2\0\11\42\1\103\11\42"+
-    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\12\42"+
-    "\1\104\10\42\12\0\1\42\13\0\2\42\2\0\1\42"+
-    "\2\0\1\42\1\105\21\42\12\0\1\42\13\0\2\42"+
-    "\2\0\1\42\2\0\4\42\1\106\16\42\12\0\1\42"+
-    "\13\0\2\42\2\0\1\42\2\0\1\42\1\107\21\42"+
-    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\3\42"+
-    "\1\110\17\42\12\0\1\42\13\0\2\42\2\0\1\42"+
-    "\2\0\11\42\1\111\11\42\12\0\1\42\13\0\2\42"+
-    "\2\0\1\42\2\0\17\42\1\112\3\42\12\0\1\42"+
-    "\13\0\2\42\2\0\1\42\2\0\17\42\1\113\3\42"+
-    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\2\42"+
-    "\1\43\20\42\12\0\1\42\6\60\1\0\2\60\1\0"+
-    "\6\60\2\0\36\60\2\0\1\65\4\0\1\114\6\0"+
-    "\1\66\41\0\2\115\1\116\1\0\54\115\4\0\1\117"+
-    "\53\0\60\70\13\0\2\15\2\0\1\15\2\0\3\15"+
-    "\1\120\17\15\12\0\1\15\13\0\2\15\2\0\1\15"+
-    "\2\0\1\15\1\121\21\15\12\0\1\15\13\0\2\42"+
-    "\2\0\1\42\2\0\15\42\1\122\5\42\12\0\1\42"+
-    "\13\0\2\42\2\0\1\42\2\0\5\42\1\77\15\42"+
-    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\7\42"+
-    "\1\123\13\42\12\0\1\42\13\0\2\42\2\0\1\42"+
-    "\2\0\10\42\1\124\12\42\12\0\1\42\13\0\2\42"+
-    "\2\0\1\42\2\0\1\42\1\125\21\42\12\0\1\42"+
-    "\13\0\2\42\2\0\1\42\2\0\12\42\1\126\10\42"+
-    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\2\42"+
-    "\1\127\20\42\12\0\1\42\13\0\2\42\2\0\1\42"+
-    "\2\0\11\42\1\124\11\42\12\0\1\42\13\0\2\42"+
-    "\2\0\1\42\2\0\6\42\1\130\14\42\12\0\1\42"+
-    "\13\0\2\42\2\0\1\42\2\0\21\42\1\131\1\42"+
-    "\12\0\1\42\13\0\2\42\2\0\1\132\2\0\23\42"+
+    "\1\75\3\15\12\0\1\15\2\0\1\63\1\0\1\64"+
+    "\4\0\1\76\61\0\2\42\2\0\1\42\2\0\23\42"+
+    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\1\42"+
+    "\1\77\21\42\12\0\1\42\13\0\2\42\2\0\1\42"+
+    "\2\0\1\42\1\77\10\42\1\100\10\42\12\0\1\42"+
+    "\13\0\2\42\2\0\1\42\2\0\4\42\1\101\1\42"+
+    "\1\102\14\42\12\0\1\42\13\0\2\42\2\0\1\42"+
+    "\2\0\11\42\1\103\11\42\12\0\1\42\13\0\2\42"+
+    "\2\0\1\42\2\0\12\42\1\104\10\42\12\0\1\42"+
+    "\13\0\2\42\2\0\1\42\2\0\1\42\1\105\21\42"+
     "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\4\42"+
-    "\1\133\6\42\1\77\7\42\12\0\1\42\10\0\1\134"+
-    "\47\0\3\115\1\0\54\115\3\116\1\0\54\116\2\0"+
-    "\1\135\70\0\2\15\2\0\1\15\2\0\13\15\1\136"+
-    "\7\15\12\0\1\15\13\0\2\42\2\0\1\42\2\0"+
-    "\11\42\1\77\11\42\12\0\1\42\13\0\2\42\2\0"+
-    "\1\137\2\0\23\42\12\0\1\42\13\0\2\42\2\0"+
-    "\1\42\2\0\12\42\1\77\10\42\12\0\1\42\13\0"+
-    "\2\42\2\0\1\42\2\0\12\42\1\140\10\42\12\0"+
-    "\1\42\13\0\2\42\2\0\1\42\2\0\16\42\1\130"+
-    "\4\42\12\0\1\42\13\0\2\42\2\0\1\42\2\0"+
-    "\11\42\1\141\11\42\12\0\1\42\13\0\2\42\2\0"+
-    "\1\42\2\0\14\42\1\77\6\42\12\0\1\42\13\0"+
-    "\2\42\2\0\1\42\2\0\5\42\1\142\15\42\12\0"+
-    "\1\42\13\0\2\42\2\0\1\42\2\0\1\42\1\143"+
-    "\21\42\12\0\1\42\13\0\2\42\2\0\1\42\2\0"+
-    "\4\42\1\144\16\42\12\0\1\42\10\0\1\145\54\0"+
-    "\1\146\65\0\2\15\2\0\1\15\2\0\11\15\1\147"+
-    "\11\15\12\0\1\15\13\0\2\42\2\0\1\42\2\0"+
-    "\10\42\1\77\12\42\12\0\1\42\13\0\2\42\2\0"+
-    "\1\42\2\0\4\42\1\77\16\42\12\0\1\42\13\0"+
-    "\2\42\2\0\1\42\2\0\20\42\1\77\2\42\12\0"+
-    "\1\42\13\0\2\42\2\0\1\42\2\0\11\42\1\150"+
-    "\11\42\12\0\1\42\13\0\2\42\2\0\1\42\2\0"+
-    "\16\42\1\122\4\42\12\0\1\42\13\0\2\42\2\0"+
-    "\1\42\2\0\12\42\1\151\10\42\12\0\1\42\11\0"+
-    "\1\152\61\0\2\42\2\0\1\42\2\0\6\42\1\77"+
-    "\14\42\12\0\1\42\13\0\2\42\2\0\1\42\2\0"+
-    "\6\42\1\141\14\42\12\0\1\42";
+    "\1\106\16\42\12\0\1\42\13\0\2\42\2\0\1\42"+
+    "\2\0\1\42\1\107\21\42\12\0\1\42\13\0\2\42"+
+    "\2\0\1\42\2\0\3\42\1\110\17\42\12\0\1\42"+
+    "\13\0\2\42\2\0\1\42\2\0\11\42\1\111\11\42"+
+    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\17\42"+
+    "\1\112\3\42\12\0\1\42\13\0\2\42\2\0\1\42"+
+    "\2\0\17\42\1\113\3\42\12\0\1\42\13\0\2\42"+
+    "\2\0\1\42\2\0\2\42\1\43\20\42\12\0\1\42"+
+    "\6\60\1\0\2\60\1\0\6\60\2\0\36\60\2\0"+
+    "\1\65\4\0\1\114\6\0\1\66\41\0\2\115\1\116"+
+    "\1\0\54\115\4\0\1\117\53\0\60\70\13\0\2\15"+
+    "\2\0\1\15\2\0\3\15\1\120\17\15\12\0\1\15"+
+    "\13\0\2\15\2\0\1\15\2\0\1\15\1\121\21\15"+
+    "\12\0\1\15\13\0\2\42\2\0\1\42\2\0\15\42"+
+    "\1\122\5\42\12\0\1\42\13\0\2\42\2\0\1\42"+
+    "\2\0\5\42\1\77\15\42\12\0\1\42\13\0\2\42"+
+    "\2\0\1\42\2\0\7\42\1\123\13\42\12\0\1\42"+
+    "\13\0\2\42\2\0\1\42\2\0\10\42\1\124\12\42"+
+    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\1\42"+
+    "\1\125\21\42\12\0\1\42\13\0\2\42\2\0\1\42"+
+    "\2\0\12\42\1\126\10\42\12\0\1\42\13\0\2\42"+
+    "\2\0\1\42\2\0\2\42\1\127\20\42\12\0\1\42"+
+    "\13\0\2\42\2\0\1\42\2\0\11\42\1\124\11\42"+
+    "\12\0\1\42\13\0\2\42\2\0\1\42\2\0\6\42"+
+    "\1\130\14\42\12\0\1\42\13\0\2\42\2\0\1\42"+
+    "\2\0\21\42\1\131\1\42\12\0\1\42\13\0\2\42"+
+    "\2\0\1\132\2\0\23\42\12\0\1\42\13\0\2\42"+
+    "\2\0\1\42\2\0\4\42\1\133\6\42\1\77\7\42"+
+    "\12\0\1\42\10\0\1\134\47\0\3\115\1\0\54\115"+
+    "\3\116\1\0\54\116\2\0\1\135\70\0\2\15\2\0"+
+    "\1\15\2\0\13\15\1\136\7\15\12\0\1\15\13\0"+
+    "\2\42\2\0\1\42\2\0\11\42\1\77\11\42\12\0"+
+    "\1\42\13\0\2\42\2\0\1\137\2\0\23\42\12\0"+
+    "\1\42\13\0\2\42\2\0\1\42\2\0\12\42\1\77"+
+    "\10\42\12\0\1\42\13\0\2\42\2\0\1\42\2\0"+
+    "\12\42\1\140\10\42\12\0\1\42\13\0\2\42\2\0"+
+    "\1\42\2\0\16\42\1\130\4\42\12\0\1\42\13\0"+
+    "\2\42\2\0\1\42\2\0\11\42\1\141\11\42\12\0"+
+    "\1\42\13\0\2\42\2\0\1\42\2\0\14\42\1\77"+
+    "\6\42\12\0\1\42\13\0\2\42\2\0\1\42\2\0"+
+    "\5\42\1\142\15\42\12\0\1\42\13\0\2\42\2\0"+
+    "\1\42\2\0\1\42\1\143\21\42\12\0\1\42\13\0"+
+    "\2\42\2\0\1\42\2\0\4\42\1\144\16\42\12\0"+
+    "\1\42\10\0\1\145\54\0\1\146\65\0\2\15\2\0"+
+    "\1\15\2\0\11\15\1\147\11\15\12\0\1\15\13\0"+
+    "\2\42\2\0\1\42\2\0\10\42\1\77\12\42\12\0"+
+    "\1\42\13\0\2\42\2\0\1\42\2\0\4\42\1\77"+
+    "\16\42\12\0\1\42\13\0\2\42\2\0\1\42\2\0"+
+    "\20\42\1\77\2\42\12\0\1\42\13\0\2\42\2\0"+
+    "\1\42\2\0\11\42\1\150\11\42\12\0\1\42\13\0"+
+    "\2\42\2\0\1\42\2\0\16\42\1\122\4\42\12\0"+
+    "\1\42\13\0\2\42\2\0\1\42\2\0\12\42\1\151"+
+    "\10\42\12\0\1\42\11\0\1\152\61\0\2\42\2\0"+
+    "\1\42\2\0\6\42\1\77\14\42\12\0\1\42\13\0"+
+    "\2\42\2\0\1\42\2\0\6\42\1\141\14\42\12\0"+
+    "\1\42";
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[3648];
@@ -463,46 +464,42 @@ public class _AwslLexer implements FlexLexer {
 
   /* user code: */
     private static final IntStack stateStack = new IntStack();
-        private static final IntStack leftBracketStack = new IntStack();
-        private static final Stack<String> xmlTag = new Stack();
-        // { }
-        private static int brace_balance = 0;
-        // < >
-        private static int angle_balance = 0;
-        private static boolean reachTag = false;
-        private static boolean canBeBadEnd = false;
+    // { }
+    private static int brace_balance = 0;
+    // < >
+    private static int angle_balance = 0;
+    private static boolean reachTag = false;
+    private static boolean canBeBadEnd = false;
 
-        private static int safe_peek() {
-            if (stateStack.empty()) {
-                return YYINITIAL;
-            }
-            else {
-                return stateStack.peek();
-            }
+    private static int safe_peek() {
+        if (stateStack.empty()) {
+            return YYINITIAL;
         }
-
-        private static int safe_pop() {
-            if (stateStack.empty()) {
-                return YYINITIAL;
-            }
-            else {
-                return stateStack.pop();
-            }
+        else {
+            return stateStack.peek();
         }
+    }
 
-
-        private static void init() {
-            brace_balance = 0;
-            angle_balance = 0;
-            stateStack.clear();
-            leftBracketStack.clear();
-            xmlTag.clear();
+    private static int safe_pop() {
+        if (stateStack.empty()) {
+            return YYINITIAL;
         }
-
-        public _AwslLexer() {
-            this((java.io.Reader) null);
-            init();
+        else {
+            return stateStack.pop();
         }
+    }
+
+
+    private static void init() {
+        brace_balance = 0;
+        angle_balance = 0;
+        stateStack.clear();
+    }
+
+    public _AwslLexer() {
+        this((java.io.Reader) null);
+        init();
+    }
 
 
   /**
@@ -767,22 +764,22 @@ public class _AwslLexer implements FlexLexer {
             { return BAD_CHARACTER;
             } 
             // fall through
-          case 37: break;
+          case 38: break;
           case 2: 
             { return WHITE_SPACE;
             } 
             // fall through
-          case 38: break;
+          case 39: break;
           case 3: 
             { return STAR;
             } 
             // fall through
-          case 39: break;
+          case 40: break;
           case 4: 
             { return BRACKET_R;
             } 
             // fall through
-          case 40: break;
+          case 41: break;
           case 5: 
             { reachTag = false;
     stateStack.push(HTML_CONTEXT);
@@ -790,83 +787,83 @@ public class _AwslLexer implements FlexLexer {
     return HTML_START_TEXT_L;
             } 
             // fall through
-          case 41: break;
+          case 42: break;
           case 6: 
             { return COLON;
             } 
             // fall through
-          case 42: break;
+          case 43: break;
           case 7: 
             { return SYMBOL;
             } 
             // fall through
-          case 43: break;
+          case 44: break;
           case 8: 
             { return BRACE_L;
             } 
             // fall through
-          case 44: break;
+          case 45: break;
           case 9: 
             { return BRACE_R;
             } 
             // fall through
-          case 45: break;
+          case 46: break;
           case 10: 
             { return PARENTHESIS_L;
             } 
             // fall through
-          case 46: break;
+          case 47: break;
           case 11: 
             { return PARENTHESIS_R;
             } 
             // fall through
-          case 47: break;
+          case 48: break;
           case 12: 
             { return BRACKET_L;
             } 
             // fall through
-          case 48: break;
+          case 49: break;
           case 13: 
             { return ACCENT;
             } 
             // fall through
-          case 49: break;
+          case 50: break;
           case 14: 
             { return EQ;
             } 
             // fall through
-          case 50: break;
+          case 51: break;
           case 15: 
             { return SEMICOLON;
             } 
             // fall through
-          case 51: break;
+          case 52: break;
           case 16: 
             { return COMMA;
             } 
             // fall through
-          case 52: break;
+          case 53: break;
           case 17: 
             { return DOLLAR;
             } 
             // fall through
-          case 53: break;
+          case 54: break;
           case 18: 
             { return DOT;
             } 
             // fall through
-          case 54: break;
+          case 55: break;
           case 19: 
             { return AT;
             } 
             // fall through
-          case 55: break;
+          case 56: break;
           case 20: 
             { angle_balance += 1;
     return GENERIC_L;
             } 
             // fall through
-          case 56: break;
+          case 57: break;
           case 21: 
             { if (angle_balance>0) {
         angle_balance--;
@@ -876,8 +873,7 @@ public class _AwslLexer implements FlexLexer {
         // canBeBadEnd = false;
         safe_pop();
         yybegin(safe_peek());
-        return HTML_START_R;
-//        return HTML_SELF_END_R;
+        return HTML_SELF_END_R;
     }
     else {
         yybegin(safe_peek());
@@ -885,7 +881,7 @@ public class _AwslLexer implements FlexLexer {
     }
             } 
             // fall through
-          case 57: break;
+          case 58: break;
           case 22: 
             { if (reachTag) {
         return SYMBOL;
@@ -896,12 +892,12 @@ public class _AwslLexer implements FlexLexer {
     }
             } 
             // fall through
-          case 58: break;
+          case 59: break;
           case 23: 
-            { return STRING;
+            { return HTML_STRING;
             } 
             // fall through
-          case 59: break;
+          case 60: break;
           case 24: 
             { if (angle_balance>0) {
         angle_balance--;
@@ -912,19 +908,19 @@ public class _AwslLexer implements FlexLexer {
     return HTML_END_R;
             } 
             // fall through
-          case 60: break;
+          case 61: break;
           case 25: 
             { return COMMENT_LINE;
             } 
             // fall through
-          case 61: break;
+          case 62: break;
           case 26: 
             { reachTag = false;
     yybegin(HTML_END);
     return HTML_END_L;
             } 
             // fall through
-          case 62: break;
+          case 63: break;
           case 27: 
             { reachTag = false;
     stateStack.push(CODE_CONTEXT);
@@ -932,61 +928,66 @@ public class _AwslLexer implements FlexLexer {
     return HTML_START_CODE_L;
             } 
             // fall through
-          case 63: break;
+          case 64: break;
           case 28: 
             { return NAME_JOIN;
             } 
             // fall through
-          case 64: break;
+          case 65: break;
           case 29: 
+            { return STRING;
+            } 
+            // fall through
+          case 66: break;
+          case 30: 
             { return IN;
             } 
             // fall through
-          case 65: break;
-          case 30: 
+          case 67: break;
+          case 31: 
             { safe_pop();
     yybegin(safe_peek());
     return HTML_SELF_END_R;
             } 
             // fall through
-          case 66: break;
-          case 31: 
+          case 68: break;
+          case 32: 
             { if (reachTag) {
         return SYMBOL;
     }
     else {
         reachTag = true;
-        canBeBadEnd = true;
+        // canBeBadEnd = true;
         return HTML_TAG_SYMBOL;
     }
             } 
             // fall through
-          case 67: break;
-          case 32: 
+          case 69: break;
+          case 33: 
             { return COMMENT_DOCUMENT;
             } 
             // fall through
-          case 68: break;
-          case 33: 
+          case 70: break;
+          case 34: 
             { return FOR;
             } 
             // fall through
-          case 69: break;
-          case 34: 
+          case 71: break;
+          case 35: 
             { return COMMENT_BLOCK;
             } 
             // fall through
-          case 70: break;
-          case 35: 
+          case 72: break;
+          case 36: 
             { return WHILE;
             } 
             // fall through
-          case 71: break;
-          case 36: 
+          case 73: break;
+          case 37: 
             { return COMMENT_HTML;
             } 
             // fall through
-          case 72: break;
+          case 74: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

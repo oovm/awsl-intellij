@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AwslHtmlStartCode extends PsiElement {
-
-  @Nullable
-  AwslGeneric getGeneric();
-
-  @NotNull
-  List<AwslHtmlKv> getHtmlKvList();
+public interface AwslHtmlKv extends PsiElement {
 
 }

@@ -10,4 +10,7 @@ public interface AwslHtmlEnd extends PsiElement {
   @Nullable
   AwslGeneric getGeneric();
 
+  @NotNull
+  List<AwslHtmlKv> getHtmlKvList();
+
 }

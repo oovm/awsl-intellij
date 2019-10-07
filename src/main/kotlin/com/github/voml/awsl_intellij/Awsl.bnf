@@ -62,9 +62,9 @@
 //    mixin("HTML_END")="com.github.voml.awsl_intellij.psi.impl.AwslHtmlEndMixin"
 }
 
-Awsl ::= statement*;
+Awsl ::= top_statement*;
 
-private statement ::=
+private top_statement ::=
     COMMENT_DOCUMENT
   | SYMBOL
   | STRING
@@ -83,7 +83,9 @@ fake binary_expr ::= expr + {
 // <hr/>
 html_self_close ::= (HTML_START_TEXT_L|HTML_START_CODE_L) [html_inner] HTML_SELF_END_R;
 private html_inner ::= HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_inner_rest*;
-private html_inner_rest ::= SYMBOL EQ STRING;
+private html_inner_rest ::= html_kv;
+html_kv ::=SYMBOL EQ STRING;
+
 // =====================================================================================================================
 // a::<T>
 generic ::= GENERIC_L (SYMBOL [generic]) GENERIC_R;
@@ -97,15 +99,15 @@ html_text ::= html_start_text html_text_inner* html_end;
 html_start_text ::= HTML_START_TEXT_L [html_inner] HTML_START_R;
 html_end ::= HTML_END_L [html_inner] HTML_END_R;
 private html_text_inner ::=
-    STRING
+    HTML_STRING
   | html_self_close
   | html_code
   | html_text;
 // =====================================================================================================================
 // <\a>code</a>
-html_code ::= html_start_code html_code_inner* html_end;
+html_code ::= html_start_code statement* html_end;
 html_start_code ::= HTML_START_CODE_L [html_inner] HTML_START_R;
-private html_code_inner ::=
+private statement ::=
     STRING
   | SYMBOL
   | html_self_close

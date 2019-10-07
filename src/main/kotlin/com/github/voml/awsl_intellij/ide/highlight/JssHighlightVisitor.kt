@@ -12,6 +12,12 @@ import com.intellij.psi.PsiFile
 class JssHighlightVisitor : AwslVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
+    override fun visitHtmlKv(o: AwslHtmlKv) {
+        highlight(o.firstChild, AwslColor.SYM_PROP)
+        super.visitHtmlKv(o)
+    }
+
+
     private fun highlight(element: PsiElement, color: AwslColor) {
         val builder = HighlightInfo.newHighlightInfo(HighlightInfoType.INFORMATION)
         builder.textAttributes(color.textAttributesKey)

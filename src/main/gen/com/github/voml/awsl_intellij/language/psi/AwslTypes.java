@@ -13,6 +13,7 @@ public interface AwslTypes {
   IElementType GENERIC = new AwslElementType("GENERIC");
   IElementType HTML_CODE = new AwslElementType("HTML_CODE");
   IElementType HTML_END = new AwslElementType("HTML_END");
+  IElementType HTML_KV = new AwslElementType("HTML_KV");
   IElementType HTML_SELF_CLOSE = new AwslElementType("HTML_SELF_CLOSE");
   IElementType HTML_START_CODE = new AwslElementType("HTML_START_CODE");
   IElementType HTML_START_TEXT = new AwslElementType("HTML_START_TEXT");
@@ -42,6 +43,7 @@ public interface AwslTypes {
   IElementType HTML_START_CODE_L = new AwslTokenType("HTML_START_CODE_L");
   IElementType HTML_START_R = new AwslTokenType("HTML_START_R");
   IElementType HTML_START_TEXT_L = new AwslTokenType("HTML_START_TEXT_L");
+  IElementType HTML_STRING = new AwslTokenType("HTML_STRING");
   IElementType HTML_TAG_SYMBOL = new AwslTokenType("Symbol::HtmlTag");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType NAME_JOIN = new AwslTokenType("::");
@@ -70,6 +72,9 @@ public interface AwslTypes {
       }
       else if (type == HTML_END) {
         return new AwslHtmlEndNode(node);
+      }
+      else if (type == HTML_KV) {
+        return new AwslHtmlKvNode(node);
       }
       else if (type == HTML_SELF_CLOSE) {
         return new AwslHtmlSelfCloseNode(node);

@@ -33,4 +33,10 @@ public class AwslHtmlSelfCloseNode extends ASTWrapperPsiElement implements AwslH
     return findChildByClass(AwslGeneric.class);
   }
 
+  @Override
+  @NotNull
+  public List<AwslHtmlKv> getHtmlKvList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlKv.class);
+  }
+
 }

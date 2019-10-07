@@ -33,4 +33,10 @@ public class AwslHtmlEndNode extends ASTWrapperPsiElement implements AwslHtmlEnd
     return findChildByClass(AwslGeneric.class);
   }
 
+  @Override
+  @NotNull
+  public List<AwslHtmlKv> getHtmlKvList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlKv.class);
+  }
+
 }
