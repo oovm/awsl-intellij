@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij
 
-import com.github.voml.awsl_intellij.JssLanguage.Companion.BUNDLE
+import com.github.voml.awsl_intellij.AwslLanguage.Companion.BUNDLE
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.Nls
 import org.jetbrains.annotations.PropertyKey

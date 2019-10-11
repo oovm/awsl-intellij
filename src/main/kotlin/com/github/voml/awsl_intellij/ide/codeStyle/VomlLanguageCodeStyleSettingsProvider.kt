@@ -1,12 +1,12 @@
 package com.github.voml.awsl_intellij.ide.codeStyle
 
-import com.github.voml.awsl_intellij.JssLanguage
+import com.github.voml.awsl_intellij.AwslLanguage
 import com.intellij.application.options.CodeStyleAbstractConfigurable
 import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.psi.codeStyle.*
 
 class VomlLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvider() {
-    override fun getLanguage() = JssLanguage.INSTANCE
+    override fun getLanguage() = AwslLanguage.INSTANCE
 
     override fun getIndentOptionsEditor() = SmartIndentOptionsEditor()
 

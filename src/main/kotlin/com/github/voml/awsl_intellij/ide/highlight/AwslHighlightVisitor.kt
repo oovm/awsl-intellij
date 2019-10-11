@@ -9,7 +9,7 @@ import com.intellij.codeInsight.daemon.impl.analysis.HighlightInfoHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 
-class JssHighlightVisitor : AwslVisitor(), HighlightVisitor {
+class AwslHighlightVisitor : AwslVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
     override fun visitHtmlKv(o: AwslHtmlKv) {
@@ -38,7 +38,7 @@ class JssHighlightVisitor : AwslVisitor(), HighlightVisitor {
         return true
     }
 
-    override fun clone(): HighlightVisitor = JssHighlightVisitor()
+    override fun clone(): HighlightVisitor = AwslHighlightVisitor()
 
     override fun suitableForFile(file: PsiFile): Boolean = file is JssFile
 

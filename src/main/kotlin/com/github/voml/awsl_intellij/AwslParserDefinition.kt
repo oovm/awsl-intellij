@@ -20,7 +20,7 @@ class AwslParserDefinition : ParserDefinition {
         val COMMENTS = TokenSet.create(AwslTypes.COMMENT_LINE, AwslTypes.COMMENT_BLOCK, AwslTypes.COMMENT_HTML)
         val STRING_LITERALS = TokenSet.create(AwslTypes.STRING)
         // val WHITE_SPACE = TokenSet.create(AwslTypes.WHITE_SPACE)
-        val FILE = IFileElementType(JssLanguage.INSTANCE)
+        val FILE = IFileElementType(AwslLanguage.INSTANCE)
     }
 
     override fun createLexer(project: Project): Lexer = AwslLexerAdapter()

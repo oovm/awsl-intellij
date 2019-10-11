@@ -5,7 +5,7 @@ import com.github.voml.awsl_intellij.ide.file_view.JssIcons
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 
-class JssColorSettingsPage : ColorSettingsPage {
+class AwslColorSettingsPage : ColorSettingsPage {
     private val annotatorTags = AwslColor
         .values()
         .associateBy({ it.name }, { it.textAttributesKey })
@@ -21,7 +21,7 @@ class JssColorSettingsPage : ColorSettingsPage {
 
     override fun getIcon() = JssIcons.FILE
 
-    override fun getHighlighter() = JssSyntaxHighlighter()
+    override fun getHighlighter() = AwslSyntaxHighlighter()
 
     override fun getAdditionalHighlightingTagToDescriptorMap() = annotatorTags
 

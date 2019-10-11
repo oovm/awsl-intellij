@@ -1,84 +1,76 @@
 <idea-plugin>
 	<id>com.github.voml.awsl_intellij</id>
-	<name>JSS Support</name>
+	<name>AWSL Support</name>
 	<vendor>voml</vendor>
-
-	<description><![CDATA[
-Intellij plugin for [VOML](https://github.com/voml), support all IDEs.
-
-## Features
-- Syntax Highlight
-- Braces Matcher
-    ]]></description>
 
 	<!-- Product and plugin compatibility requirements -->
 	<!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
 	<!--    <depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>-->
-	<resource-bundle>messages.JssBundle</resource-bundle>
+	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
 		<fileType
-			name="JSS"
-			language="JSS"
-			extensions="jss"
+			name="AWSL"
+			language="AWSL"
+			extensions="awsl"
 			implementationClass="com.github.voml.awsl_intellij.ide.file_view.JssFileType"
 			fieldName="INSTANCE"
 		/>
 		<lang.parserDefinition
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.AwslParserDefinition"
 		/>
 		<projectViewNestingRulesProvider implementation="com.github.voml.awsl_intellij.ide.file_view.JssFileGroup"/>
 		<!-- Highlight -->
-		<additionalTextAttributes scheme="Default" file="colors/JssDefault.xml"/>
-		<additionalTextAttributes scheme="Darcula" file="colors/JssDarcula.xml"/>
-		<colorSettingsPage implementation="com.github.voml.awsl_intellij.ide.highlight.JssColorSettingsPage"/>
-		<highlightVisitor implementation="com.github.voml.awsl_intellij.ide.highlight.JssHighlightVisitor"/>
+		<additionalTextAttributes scheme="Default" file="colors/AwslDefault.xml"/>
+		<additionalTextAttributes scheme="Darcula" file="colors/AwslDarcula.xml"/>
+		<colorSettingsPage implementation="com.github.voml.awsl_intellij.ide.highlight.AwslColorSettingsPage"/>
+		<highlightVisitor implementation="com.github.voml.awsl_intellij.ide.highlight.AwslHighlightVisitor"/>
 		<lang.syntaxHighlighter
-			language="JSS"
-			implementationClass="com.github.voml.awsl_intellij.ide.highlight.JssSyntaxHighlighter"
+			language="AWSL"
+			implementationClass="com.github.voml.awsl_intellij.ide.highlight.AwslSyntaxHighlighter"
 		/>
 		<!-- Formatter -->
 		<lang.formatter
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssFormattingModelBuilder"
 		/>
 		<lang.commenter
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssCommenter"
 		/>
 		<lang.smartEnterProcessor
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssSmartEnter"
 		/>
 		<!-- Document -->
 		<!--documentationProvider implementation="com.github.voml.awsl_intellij.ide.doc.JssDocumentationExtender"-->
 		<lang.documentationProvider
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.doc.JssDocumentationProvider"
 		/>
 
 		<lang.braceMatcher
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssBraceMatcher"
 		/>
 		<lang.quoteHandler
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssQuoteHandler"
 		/>
 		<lang.foldingBuilder
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssFoldingBuilder"
 		/>
 		<indexPatternBuilder
 			implementation="com.github.voml.awsl_intellij.ide.todo.VomlTodoIndexPatternBuilder"
 		/>
 		<todoIndexer
-			filetype="JSS"
+			filetype="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.todo.VomlTodoIndexer"
 		/>
 		<completion.contributor
-			language="JSS"
+			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.completion.VomlOptionCompletionContributor"
 		/>
 
