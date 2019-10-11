@@ -1,0 +1,23 @@
+screens {
+    tablet: 640px
+    laptop: 1024px
+    desktop: 1280px
+}
+
+use base;
+use components;
+use utilities;
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+layer base {
+    h1 {
+        apply text-2xl
+    }
+    h2 {
+        apply text-xl
+    }
+}

@@ -205,25 +205,46 @@ catch error {
 style 短指令
 
 < div
-    // style accepts a list of style abbreviations
-    // see more: [tailwindcss](https://tailwindcss.com/)
-    style="flex-none w-48 relative"
-    //
-    // `style` can be repeated many times, and each style will accumulate
-    style={
+    //? style accepts a list of style abbreviations
+    //? see more: [tailwindcss](https://tailwindcss.com/)
+    style = "flex w-48 relative"
+    //?
+    //? `style` can be repeated many times, and each style will accumulate
+    style = {
         z_index: 0
     }
-    // You can also use a list to accumulate.
-    // which is especially suitable for dynamic changes.
-    style=[theme]
-    // If you want to use css, this is not recommended
-    // `style-raw` setter will override all styles above
-    style-raw=css"""
-
+    //? You can also use a list to accumulate.
+    //? which is especially suitable for dynamic changes.
+    style = [theme]
+    //? If you want to use css, this is not recommended
+    //? `style-raw` setter will override all styles above
+    style-raw = css"""
+        padding: 1rem;
     """
+    //?
+    style:md = "bg-blue-500"
+    style:lg = "bg-green-500"
 />
 
 < style global>
 
 
 </style>
+
+style 断点
+
+<div style="bg-green-500 md:bg-red-500 lg:bg-green-500">
+
+</div>
+
+
+<div
+    style="bg-red-500"
+    style:md="bg-blue-500"
+    style:lg="bg-green-500"
+>
+
+</div>
+
+
+
