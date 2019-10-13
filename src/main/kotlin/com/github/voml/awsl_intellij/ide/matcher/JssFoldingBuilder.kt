@@ -1,7 +1,6 @@
 package com.github.voml.awsl_intellij.ide.matcher
 
-import com.github.voml.awsl_intellij.ide.file_view.JssFile
-import com.github.voml.awsl_intellij.language.psi.AwslTypes
+import com.github.voml.awsl_intellij.ide.file_view.AwslFile
 import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.CustomFoldingBuilder
 import com.intellij.lang.folding.FoldingDescriptor
@@ -18,7 +17,7 @@ class JssFoldingBuilder : CustomFoldingBuilder(), DumbAware {
         document: Document,
         quick: Boolean
     ) {
-        if (root !is JssFile) return
+        if (root !is AwslFile) return
         val visitor = JssFoldingVisitor(descriptors)
         PsiTreeUtil.processElements(root) {
             it.accept(visitor);

@@ -9,7 +9,7 @@ class AwslLanguage private constructor() : Language("AWSL") {
         val INSTANCE = AwslLanguage()
 
         @NonNls
-        const val BUNDLE = "messages.JssBundle"
+        const val BUNDLE = "messages.AwslBundle"
     }
 }
 

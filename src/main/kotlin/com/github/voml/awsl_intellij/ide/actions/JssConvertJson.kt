@@ -1,8 +1,8 @@
 package com.github.voml.awsl_intellij.ide.actions
 
 import com.github.voml.awsl_intellij.AwslBundle
-import com.github.voml.awsl_intellij.ide.file_view.JssFileType
-import com.github.voml.awsl_intellij.ide.file_view.JssIcons
+import com.github.voml.awsl_intellij.ide.file_view.AwslFileType
+import com.github.voml.awsl_intellij.ide.file_view.AwslIcons
 import com.intellij.ide.actions.CreateFileAction
 import com.intellij.json.psi.JsonFile
 import com.intellij.json.psi.JsonObject
@@ -14,10 +14,10 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
 
-class JssConvertJson : CreateFileAction(name, description, JssIcons.FILE) {
+class JssConvertJson : CreateFileAction(name, description, AwslIcons.AwslFile) {
     companion object {
-        private val name = AwslBundle.message("action.convert_json")
-        private val description = AwslBundle.message("action.convert_json.description")
+        private val name = AwslBundle.message("action.convert_html")
+        private val description = AwslBundle.message("action.convert_html.description")
 
     }
 
@@ -51,7 +51,7 @@ fun createFromJson(source: JsonFile, name: String): PsiFile? {
         """${document.propertyList}
 """
     )
-    return PsiFileFactory.getInstance(source.project).createFileFromText(name, JssFileType.INSTANCE, buffer)
+    return PsiFileFactory.getInstance(source.project).createFileFromText(name, AwslFileType.INSTANCE, buffer)
 }
 
 fun tryGetJsonSchema(file: PsiFile): JsonObject? {

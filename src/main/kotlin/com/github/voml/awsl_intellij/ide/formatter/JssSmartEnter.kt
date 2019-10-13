@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.ide.formatter
 
-import com.github.voml.awsl_intellij.ide.file_view.JssFile
+import com.github.voml.awsl_intellij.ide.file_view.AwslFile
 import com.intellij.lang.SmartEnterProcessorWithFixers
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
@@ -27,7 +27,7 @@ class JssSmartEnter : SmartEnterProcessorWithFixers() {
 
     private class PlainEnterProcessor : FixEnterProcessor() {
         override fun doEnter(atCaret: PsiElement, file: PsiFile, editor: Editor, modified: Boolean): Boolean {
-            if (file !is JssFile) return false
+            if (file !is AwslFile) return false
             plainEnter(editor)
             return true
         }

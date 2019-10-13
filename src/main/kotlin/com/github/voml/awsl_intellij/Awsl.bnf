@@ -62,7 +62,7 @@
 //    mixin("HTML_END")="com.github.voml.awsl_intellij.psi.impl.AwslHtmlEndMixin"
 }
 
-Awsl ::= top_statement*;
+AWSL ::= top_statement*;
 
 private top_statement ::=
     COMMENT_DOCUMENT

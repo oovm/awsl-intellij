@@ -9,18 +9,11 @@
 	<!--    <depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>-->
 	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
-		<fileType
-			name="AWSL"
-			language="AWSL"
-			extensions="awsl"
-			implementationClass="com.github.voml.awsl_intellij.ide.file_view.JssFileType"
-			fieldName="INSTANCE"
+		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;aw"
+		          implementationClass="com.github.voml.awsl_intellij.ide.file_view.AwslFileType"
+		          fieldName="INSTANCE"
 		/>
-		<lang.parserDefinition
-			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.AwslParserDefinition"
-		/>
-		<projectViewNestingRulesProvider implementation="com.github.voml.awsl_intellij.ide.file_view.JssFileGroup"/>
+		<projectViewNestingRulesProvider implementation="com.github.voml.awsl_intellij.ide.file_view.AwslFileGroup"/>
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/AwslDefault.xml"/>
 		<additionalTextAttributes scheme="Darcula" file="colors/AwslDarcula.xml"/>
@@ -31,6 +24,10 @@
 			implementationClass="com.github.voml.awsl_intellij.ide.highlight.AwslSyntaxHighlighter"
 		/>
 		<!-- Formatter -->
+		<lang.parserDefinition
+			language="AWSL"
+			implementationClass="com.github.voml.awsl_intellij.AwslParserDefinition"
+		/>
 		<lang.formatter
 			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssFormattingModelBuilder"
@@ -38,6 +35,10 @@
 		<lang.commenter
 			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssCommenter"
+		/>
+		<lang.foldingBuilder
+			language="AWSL"
+			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssFoldingBuilder"
 		/>
 		<lang.smartEnterProcessor
 			language="AWSL"
@@ -58,10 +59,7 @@
 			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssQuoteHandler"
 		/>
-		<lang.foldingBuilder
-			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssFoldingBuilder"
-		/>
+
 		<indexPatternBuilder
 			implementation="com.github.voml.awsl_intellij.ide.todo.VomlTodoIndexPatternBuilder"
 		/>

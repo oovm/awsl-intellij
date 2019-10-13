@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.ide.actions
 
-import com.github.voml.awsl_intellij.ide.file_view.JssFileType
+import com.github.voml.awsl_intellij.ide.file_view.AwslFileType
 import com.intellij.codeInsight.CodeInsightActionHandler
 import com.intellij.json.psi.JsonFile
 import com.intellij.json.psi.JsonObject
@@ -20,7 +20,7 @@ class JssConvertJsonHandler : CodeInsightActionHandler {
 """
         )
         try {
-            PsiFileFactory.getInstance(file.project).createFileFromText(file.name, JssFileType.INSTANCE, buffer)
+            PsiFileFactory.getInstance(file.project).createFileFromText(file.name, AwslFileType.INSTANCE, buffer)
         } catch (e: IncorrectOperationException) {
             // do nothing
         }

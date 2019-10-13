@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij
 
-import com.github.voml.awsl_intellij.ide.file_view.JssFile
+import com.github.voml.awsl_intellij.ide.file_view.AwslFile
 import com.github.voml.awsl_intellij.language.parser.AwslParser
 import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.lang.ASTNode
@@ -37,7 +37,7 @@ class AwslParserDefinition : ParserDefinition {
 
     override fun createElement(node: ASTNode): PsiElement = AwslTypes.Factory.createElement(node)
 
-    override fun createFile(viewProvider: FileViewProvider): PsiFile = JssFile(viewProvider)
+    override fun createFile(viewProvider: FileViewProvider): PsiFile = AwslFile(viewProvider)
 
     override fun spaceExistenceTypeBetweenTokens(left: ASTNode, right: ASTNode): ParserDefinition.SpaceRequirements {
         return ParserDefinition.SpaceRequirements.MAY

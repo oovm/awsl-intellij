@@ -1,7 +1,7 @@
 package com.github.voml.awsl_intellij.ide.matcher
 
 import com.github.voml.awsl_intellij.AwslLanguage
-import com.github.voml.awsl_intellij.ide.file_view.JssFileType
+import com.github.voml.awsl_intellij.ide.file_view.AwslFileType
 import com.intellij.codeInsight.highlighting.PairedBraceMatcherAdapter
 import com.intellij.openapi.editor.highlighter.HighlighterIterator
 import com.intellij.openapi.fileTypes.FileType
@@ -19,7 +19,7 @@ class JssBraceMatcher : PairedBraceMatcherAdapter(BaseBraceMatcher(), AwslLangua
         fileType: FileType,
         left: Boolean
     ): Boolean {
-        if (fileType != JssFileType.INSTANCE) return false
+        if (fileType != AwslFileType.INSTANCE) return false
         val pair = findPair(left, iterator, fileText, fileType)
         return pair != null
     }

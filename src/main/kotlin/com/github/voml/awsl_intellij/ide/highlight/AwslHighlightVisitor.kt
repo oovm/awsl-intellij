@@ -1,6 +1,6 @@
 package com.github.voml.awsl_intellij.ide.highlight
 
-import com.github.voml.awsl_intellij.ide.file_view.JssFile
+import com.github.voml.awsl_intellij.ide.file_view.AwslFile
 import com.github.voml.awsl_intellij.language.psi.*
 import com.intellij.codeInsight.daemon.impl.HighlightInfo
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType
@@ -40,7 +40,7 @@ class AwslHighlightVisitor : AwslVisitor(), HighlightVisitor {
 
     override fun clone(): HighlightVisitor = AwslHighlightVisitor()
 
-    override fun suitableForFile(file: PsiFile): Boolean = file is JssFile
+    override fun suitableForFile(file: PsiFile): Boolean = file is AwslFile
 
     override fun visit(element: PsiElement) = element.accept(this)
 }
