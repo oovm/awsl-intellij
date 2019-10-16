@@ -5,6 +5,7 @@ import com.github.voml.awsl_intellij.language.parser.AwslParser
 import com.github.voml.awsl_intellij.language.psi.AwslTypes
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
+import com.intellij.lang.ParserDefinition.SpaceRequirements
 import com.intellij.lang.PsiParser
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.project.Project
@@ -39,8 +40,8 @@ class AwslParserDefinition : ParserDefinition {
 
     override fun createFile(viewProvider: FileViewProvider): PsiFile = AwslFile(viewProvider)
 
-    override fun spaceExistenceTypeBetweenTokens(left: ASTNode, right: ASTNode): ParserDefinition.SpaceRequirements {
-        return ParserDefinition.SpaceRequirements.MAY
+    override fun spaceExistenceTypeBetweenTokens(left: ASTNode, right: ASTNode): SpaceRequirements {
+        return SpaceRequirements.MAY
     }
 
 

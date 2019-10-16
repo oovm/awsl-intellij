@@ -6,19 +6,25 @@
 package com.github.voml.awsl_intellij.ide.doc
 
 import com.intellij.lang.documentation.AbstractDocumentationProvider
+import com.intellij.lang.documentation.DocumentationMarkup.*
 import com.intellij.psi.PsiElement
 
 
 class JssDocumentationProvider : AbstractDocumentationProvider() {
 
     override fun generateDoc(element: PsiElement?, originalElement: PsiElement?): String? {
-        return "<h1>generateDoc</h1>"
+        return listOf(
+            DEFINITION_START,
+            "generateDoc",
+            DEFINITION_END,
+            CONTENT_START,
+           CONTENT_END
+        ).joinToString("")
     }
 
-//    override fun generateHoverDoc(element: PsiElement, originalElement: PsiElement?): String? {
-//        return super.generateDoc(element, originalElement);
-//        // return "<h1>generateHoverDoc</h1>"
-//    }
+    override fun generateHoverDoc(element: PsiElement, originalElement: PsiElement?): String? {
+        return generateDoc(element, originalElement);
+    }
 
 //    override fun generateRenderedDoc(comment: PsiDocCommentBase): String? {
 //        return DocumentationMarkup.DEFINITION_ELEMENT.addRaw("generateRenderedDoc").toString()

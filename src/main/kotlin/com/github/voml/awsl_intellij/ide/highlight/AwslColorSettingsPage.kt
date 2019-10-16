@@ -1,7 +1,7 @@
 package com.github.voml.awsl_intellij.ide.highlight
 
 import com.github.voml.awsl_intellij.AwslBundle
-import com.github.voml.awsl_intellij.ide.file_view.AwslIcons
+import com.github.voml.awsl_intellij.ide.file_view.AwslIconProvider
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 
@@ -19,7 +19,7 @@ class AwslColorSettingsPage : ColorSettingsPage {
 
     override fun getDisplayName() = AwslBundle.message("filetype.name")
 
-    override fun getIcon() = AwslIcons.AwslFile
+    override fun getIcon() = AwslIconProvider.AwslFile
 
     override fun getHighlighter() = AwslSyntaxHighlighter()
 

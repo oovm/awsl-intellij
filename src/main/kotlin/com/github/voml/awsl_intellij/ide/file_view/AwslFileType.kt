@@ -12,9 +12,9 @@ class AwslFileType private constructor() : LanguageFileType(AwslLanguage.INSTANC
 
     override fun getDescription(): String = AwslBundle.message("filetype.awsl.description")
 
-    override fun getDefaultExtension(): String = "awsl;awc;aw"
+    override fun getDefaultExtension(): String = "awsl;awc;aw;"
 
-    override fun getIcon(): Icon = AwslIcons.AwslFile
+    override fun getIcon(): Icon = AwslIconProvider.AwslFile
 
     companion object {
         @JvmStatic

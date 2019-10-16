@@ -9,10 +9,11 @@
 	<!--    <depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>-->
 	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
-		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;aw"
+		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;aw;"
 		          implementationClass="com.github.voml.awsl_intellij.ide.file_view.AwslFileType"
 		          fieldName="INSTANCE"
 		/>
+		<iconProvider implementation="com.github.voml.awsl_intellij.ide.file_view.AwslIconProvider"/>
 		<projectViewNestingRulesProvider implementation="com.github.voml.awsl_intellij.ide.file_view.AwslFileGroup"/>
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/AwslDefault.xml"/>
@@ -46,6 +47,9 @@
 		/>
 		<!-- Document -->
 		<!--documentationProvider implementation="com.github.voml.awsl_intellij.ide.doc.JssDocumentationExtender"-->
+		<psi.referenceContributor
+			implementation="com.github.voml.awsl_intellij.ide.doc.AwslReferenceContributor"
+		/>
 		<lang.documentationProvider
 			language="AWSL"
 			implementationClass="com.github.voml.awsl_intellij.ide.doc.JssDocumentationProvider"

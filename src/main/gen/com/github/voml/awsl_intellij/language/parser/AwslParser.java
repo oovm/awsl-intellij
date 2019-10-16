@@ -32,17 +32,17 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-    return Awsl(b, l + 1);
+    return AWSL(b, l + 1);
   }
 
   /* ********************************************************** */
   // top_statement*
-  static boolean Awsl(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Awsl")) return false;
+  static boolean AWSL(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AWSL")) return false;
     while (true) {
       int c = current_position_(b);
       if (!top_statement(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "Awsl", c)) break;
+      if (!empty_element_parsed_guard_(b, "AWSL", c)) break;
     }
     return true;
   }
