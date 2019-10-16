@@ -12,14 +12,18 @@ class AwslIconProvider : IconProvider() {
 
         return when {
             fileName.endsWith(".awsl") -> AwslFile
-            fileName.endsWith(".awc") -> AwFile
+            fileName.endsWith(".aws") -> AwsFile
+            fileName.endsWith(".awc") -> AwcFile
             fileName.endsWith(".aw") -> AwFile
             else -> null
         }
     }
 
     companion object {
-        val AwslFile = IconLoader.getIcon("/icons/awsl.svg", AwslIconProvider::class.java)
+
         val AwFile = IconLoader.getIcon("/icons/aw.svg", AwslIconProvider::class.java)
+        val AwcFile = IconLoader.getIcon("/icons/awc.svg", AwslIconProvider::class.java)
+        val AwsFile = IconLoader.getIcon("/icons/aws.svg", AwslIconProvider::class.java)
+        val AwslFile = IconLoader.getIcon("/icons/awsl.svg", AwslIconProvider::class.java)
     }
 }
