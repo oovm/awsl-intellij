@@ -1,14 +1,13 @@
 package com.github.awsl_lang.ast
 
 import com.github.awsl_lang.ide.formatter.JssFormatterContext
-import com.github.awsl_lang.language.psi.AwslTypes
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiErrorElement
 import com.intellij.psi.formatter.FormatterUtil
 
-class JssAstBlock(
+class AwslAstBlock(
     private val node: ASTNode,
     private val alignment: Alignment?,
     private val indent: Indent?,

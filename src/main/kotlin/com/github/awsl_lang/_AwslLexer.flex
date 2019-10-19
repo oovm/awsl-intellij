@@ -68,6 +68,7 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 %state HTML_CONTEXT
 %state HTML_END
 %state CODE_CONTEXT
+%state RAW_CONTEXT
 %state Generic
 
 WHITE_SPACE=\s+
@@ -96,22 +97,24 @@ STRING_NON_ESCAPE=[^\\\"]
 
 HEX=[a-fA-F0-9]
 
-HTML_BAD_TAG = "hr"
-  | "br"
-  | "img"
-  | "input"
-  | "meta"
-  | "link"
-  | "area"
-  | "base"
-  | "col"
-  | "command"
-  | "embed"
-  | "keygen"
-  | "param"
-  | "source"
-  | "track"
-  | "wbr"
+HTML_TAG_SCRIPT = script
+HTML_TAG_RAW = style
+HTML_TAG_BAD = hr
+  | br
+  | img
+  | input
+  | meta
+  | link
+  | area
+  | base
+  | col
+  | command
+  | embed
+  | keygen
+  | param
+  | source
+  | track
+  | wbr
 %%
 
 // 初态: YYINITIAL =====================================================================================================
@@ -160,7 +163,7 @@ HTML_BAD_TAG = "hr"
 // 正常环境的 symbol
 <YYINITIAL, CODE_CONTEXT> {SYMBOL} {return SYMBOL;}
 // HTML 糟粕, 特殊处理一下
-<HTML_BEGIN> {HTML_BAD_TAG} {
+<HTML_BEGIN> {HTML_TAG_BAD} {
     if (reachTag) {
         return SYMBOL;
     }
@@ -170,6 +173,33 @@ HTML_BAD_TAG = "hr"
         return HTML_TAG_SYMBOL;
     }
 }
+// 强制 script 上下文
+<HTML_BEGIN> {HTML_TAG_SCRIPT} {
+    if (reachTag) {
+        return SYMBOL;
+    }
+    else {
+        reachTag = true;
+        safe_pop();
+        stateStack.push(CODE_CONTEXT);
+        // canBeBadEnd = true;
+        return HTML_TAG_SCRIPT;
+    }
+}
+// 强制 text 上下文
+<HTML_BEGIN> {HTML_TAG_RAW} {
+    if (reachTag) {
+        return SYMBOL;
+    }
+    else {
+        reachTag = true;
+        safe_pop();
+        stateStack.push(RAW_CONTEXT);
+        // canBeBadEnd = true;
+        return HTML_TAG_RAW;
+    }
+}
+
 // 遇到了正常标签
 <HTML_BEGIN, HTML_END> {SYMBOL} {
     if (reachTag) {

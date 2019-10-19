@@ -1,6 +1,5 @@
 package com.github.awsl_lang.ide.actions
 
-import com.github.awsl_lang.AwslBundle
 import com.github.awsl_lang.ide.file_view.AwslIconProvider
 import com.intellij.ide.actions.CreateFileFromTemplateAction
 import com.intellij.ide.actions.CreateFileFromTemplateDialog.*

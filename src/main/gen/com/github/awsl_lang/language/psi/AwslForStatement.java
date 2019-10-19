@@ -5,6 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AwslBracketBlock extends PsiElement {
+public interface AwslForStatement extends PsiElement {
+
+  @NotNull
+  AwslBraceBlock getBraceBlock();
 
 }

@@ -1,8 +1,7 @@
 package com.github.awsl_lang.ide.todo
 
 import com.github.awsl_lang.AwslParserDefinition
-import com.github.awsl_lang.AwslLexerAdapter
-import com.github.awsl_lang.ide.file_view.AwslFile
+import com.github.awsl_lang.ide.file_types.AwslFile
 
 import com.intellij.lexer.Lexer
 import com.intellij.psi.PsiFile

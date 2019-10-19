@@ -1,7 +1,6 @@
 package com.github.awsl_lang
 
-import com.github.awsl_lang.ide.file_view.AwslFile
-import com.github.awsl_lang.language.parser.AwslParser
+import com.github.awsl_lang.ide.file_types.AwslFile
 import com.github.awsl_lang.language.psi.AwslTypes
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition

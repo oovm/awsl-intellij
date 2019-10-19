@@ -19,6 +19,10 @@ public class AwslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitForStatement(@NotNull AwslForStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitGeneric(@NotNull AwslGeneric o) {
     visitPsiElement(o);
   }

@@ -55,7 +55,7 @@
         SYMBOL="Symbol"
     ]
 
-    extends = "com.intellij.extapi.psi.ASTWrapperPsiElement"
+    extends = "com.github.awsl_lang.ast.AwslAstNode"
 //    extends("(add|mul)_expr")=binary_expr
 //    extends(".*_expr")=expr
 //
@@ -65,7 +65,8 @@
 AWSL ::= top_statement*;
 
 private top_statement ::=
-    COMMENT_DOCUMENT
+    code_statement
+  | COMMENT_DOCUMENT
   | SYMBOL
   | STRING
   | html_self_close
@@ -78,6 +79,11 @@ fake binary_expr ::= expr + {
     right="/expr[1]"
   ]
 }
+
+private code_statement ::= for_statement;
+
+for_statement ::= FOR SYMBOL IN <<brace_block code_statement SEMICOLON>>
+
 // =====================================================================================================================
 // <hr>
 // <hr/>

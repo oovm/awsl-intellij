@@ -1,6 +1,5 @@
 package com.github.awsl_lang.ide.highlight
 
-import com.github.awsl_lang.AwslBundle
 import com.github.awsl_lang.ide.file_view.AwslIconProvider
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage

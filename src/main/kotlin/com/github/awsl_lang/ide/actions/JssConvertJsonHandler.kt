@@ -1,6 +1,6 @@
 package com.github.awsl_lang.ide.actions
 
-import com.github.awsl_lang.ide.file_view.AwslFileType
+import com.github.awsl_lang.ide.file_types.AwslFileType
 import com.intellij.codeInsight.CodeInsightActionHandler
 import com.intellij.json.psi.JsonFile
 import com.intellij.json.psi.JsonObject

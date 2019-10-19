@@ -1,7 +1,6 @@
 package com.github.awsl_lang.ide.highlight
 
-import com.github.awsl_lang.ide.file_view.AwslFile
-import com.github.awsl_lang.language.psi.*
+import com.github.awsl_lang.ide.file_types.AwslFile
 import com.intellij.codeInsight.daemon.impl.HighlightInfo
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType
 import com.intellij.codeInsight.daemon.impl.HighlightVisitor

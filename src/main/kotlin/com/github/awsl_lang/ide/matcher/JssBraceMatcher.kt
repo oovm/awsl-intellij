@@ -1,7 +1,6 @@
 package com.github.awsl_lang.ide.matcher
 
-import com.github.awsl_lang.AwslLanguage
-import com.github.awsl_lang.ide.file_view.AwslFileType
+import com.github.awsl_lang.ide.file_types.AwslFileType
 import com.intellij.codeInsight.highlighting.PairedBraceMatcherAdapter
 import com.intellij.openapi.editor.highlighter.HighlighterIterator
 import com.intellij.openapi.fileTypes.FileType

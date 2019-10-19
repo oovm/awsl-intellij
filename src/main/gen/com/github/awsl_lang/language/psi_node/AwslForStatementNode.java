@@ -11,14 +11,14 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslHtmlStartCodeNode extends ASTWrapperPsiElement implements AwslHtmlStartCode {
+public class AwslForStatementNode extends ASTWrapperPsiElement implements AwslForStatement {
 
-  public AwslHtmlStartCodeNode(@NotNull ASTNode node) {
+  public AwslForStatementNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitHtmlStartCode(this);
+    visitor.visitForStatement(this);
   }
 
   @Override
@@ -28,15 +28,9 @@ public class AwslHtmlStartCodeNode extends ASTWrapperPsiElement implements AwslH
   }
 
   @Override
-  @Nullable
-  public AwslGeneric getGeneric() {
-    return findChildByClass(AwslGeneric.class);
-  }
-
-  @Override
   @NotNull
-  public List<AwslHtmlKv> getHtmlKvList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlKv.class);
+  public AwslBraceBlock getBraceBlock() {
+    return findNotNullChildByClass(AwslBraceBlock.class);
   }
 
 }

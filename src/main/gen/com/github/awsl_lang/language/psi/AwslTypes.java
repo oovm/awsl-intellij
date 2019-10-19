@@ -1,7 +1,6 @@
 // This is a generated file. Not intended for manual editing.
 package com.github.awsl_lang.language.psi;
 
-import com.github.awsl_lang.language.psi_node.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
@@ -11,6 +10,7 @@ public interface AwslTypes {
 
   IElementType BRACE_BLOCK = new AwslElementType("BRACE_BLOCK");
   IElementType BRACKET_BLOCK = new AwslElementType("BRACKET_BLOCK");
+  IElementType FOR_STATEMENT = new AwslElementType("FOR_STATEMENT");
   IElementType GENERIC = new AwslElementType("GENERIC");
   IElementType HTML_CODE = new AwslElementType("HTML_CODE");
   IElementType HTML_END = new AwslElementType("HTML_END");
@@ -64,6 +64,9 @@ public interface AwslTypes {
       }
       else if (type == BRACKET_BLOCK) {
         return new AwslBracketBlockNode(node);
+      }
+      else if (type == FOR_STATEMENT) {
+        return new AwslForStatementNode(node);
       }
       else if (type == GENERIC) {
         return new AwslGenericNode(node);

@@ -1,7 +1,6 @@
 package com.github.awsl_lang.ide.actions
 
-import com.github.awsl_lang.AwslBundle
-import com.github.awsl_lang.ide.file_view.AwslFileType
+import com.github.awsl_lang.ide.file_types.AwslFileType
 import com.github.awsl_lang.ide.file_view.AwslIconProvider
 import com.intellij.ide.actions.CreateFileAction
 import com.intellij.json.psi.JsonFile

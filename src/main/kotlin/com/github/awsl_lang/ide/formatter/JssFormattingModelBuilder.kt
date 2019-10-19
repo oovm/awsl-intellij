@@ -1,6 +1,6 @@
 package com.github.awsl_lang.ide.formatter
 
-import com.github.awsl_lang.ast.JssAstBlock
+import com.github.awsl_lang.ast.AwslAstBlock
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
@@ -24,6 +24,6 @@ class JssFormattingModelBuilder : FormattingModelBuilder {
             indent: Indent?,
             wrap: Wrap?,
             ctx: JssFormatterContext
-        ): ASTBlock = JssAstBlock(node, alignment, indent, wrap, ctx)
+        ): ASTBlock = AwslAstBlock(node, alignment, indent, wrap, ctx)
     }
 }

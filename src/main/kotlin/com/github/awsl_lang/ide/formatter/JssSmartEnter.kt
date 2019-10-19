@@ -1,6 +1,6 @@
 package com.github.awsl_lang.ide.formatter
 
-import com.github.awsl_lang.ide.file_view.AwslFile
+import com.github.awsl_lang.ide.file_types.AwslFile
 import com.intellij.lang.SmartEnterProcessorWithFixers
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project

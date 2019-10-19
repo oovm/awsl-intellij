@@ -9,8 +9,8 @@
 	<!--    <depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>-->
 	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
-		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;aw;"
-		          implementationClass="com.github.awsl_lang.ide.file_view.AwslFileType"
+		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;"
+		          implementationClass="com.github.awsl_lang.ide.file_types.AwslFileType"
 		          fieldName="INSTANCE"
 		/>
 		<iconProvider implementation="com.github.awsl_lang.ide.file_view.AwslIconProvider"/>

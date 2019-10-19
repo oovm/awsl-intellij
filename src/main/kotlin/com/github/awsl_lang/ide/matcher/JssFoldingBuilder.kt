@@ -1,6 +1,6 @@
 package com.github.awsl_lang.ide.matcher
 
-import com.github.awsl_lang.ide.file_view.AwslFile
+import com.github.awsl_lang.ide.file_types.AwslFile
 import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.CustomFoldingBuilder
 import com.intellij.lang.folding.FoldingDescriptor

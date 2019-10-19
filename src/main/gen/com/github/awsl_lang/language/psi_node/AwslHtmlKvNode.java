@@ -2,9 +2,6 @@
 package com.github.awsl_lang.language.psi_node;
 
 import java.util.List;
-
-import com.github.awsl_lang.language.psi.AwslHtmlKv;
-import com.github.awsl_lang.language.psi.AwslVisitor;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;

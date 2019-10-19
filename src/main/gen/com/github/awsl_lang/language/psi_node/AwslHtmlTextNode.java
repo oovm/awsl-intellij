@@ -2,8 +2,6 @@
 package com.github.awsl_lang.language.psi_node;
 
 import java.util.List;
-
-import com.github.awsl_lang.language.psi.*;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
