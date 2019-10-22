@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.awsl_lang.language.psi.AwslTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.github.awsl_lang.ast.AwslAstNode;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslHtmlKvNode extends ASTWrapperPsiElement implements AwslHtmlKv {
+public class AwslHtmlKvNode extends AwslAstNode implements AwslHtmlKv {
 
   public AwslHtmlKvNode(@NotNull ASTNode node) {
     super(node);

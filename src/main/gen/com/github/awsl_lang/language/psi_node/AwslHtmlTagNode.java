@@ -11,26 +11,20 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 import com.github.awsl_lang.ast.AwslAstNode;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslForStatementNode extends AwslAstNode implements AwslForStatement {
+public class AwslHtmlTagNode extends AwslAstNode implements AwslHtmlTag {
 
-  public AwslForStatementNode(@NotNull ASTNode node) {
+  public AwslHtmlTagNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitForStatement(this);
+    visitor.visitHtmlTag(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof AwslVisitor) accept((AwslVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public AwslBraceBlock getBraceBlock() {
-    return findNotNullChildByClass(AwslBraceBlock.class);
   }
 
 }

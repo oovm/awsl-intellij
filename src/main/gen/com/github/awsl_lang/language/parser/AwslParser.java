@@ -243,13 +243,12 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_inner_rest*
+  // html_tag [NAME_JOIN (SYMBOL|generic)] html_inner_rest*
   static boolean html_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_inner")) return false;
-    if (!nextTokenIs(b, HTML_TAG_SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, HTML_TAG_SYMBOL);
+    r = html_tag(b, l + 1);
     r = r && html_inner_1(b, l + 1);
     r = r && html_inner_2(b, l + 1);
     exit_section_(b, m, null, r);
@@ -382,6 +381,19 @@ public class AwslParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "html_start_text_1")) return false;
     html_inner(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // HTML_TAG_RAW | HTML_TAG_SCRIPT | HTML_TAG_SYMBOL
+  public static boolean html_tag(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_tag")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, HTML_TAG, "<html tag>");
+    r = consumeToken(b, HTML_TAG_RAW);
+    if (!r) r = consumeToken(b, HTML_TAG_SCRIPT);
+    if (!r) r = consumeToken(b, HTML_TAG_SYMBOL);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */

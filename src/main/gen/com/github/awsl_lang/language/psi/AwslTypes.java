@@ -18,6 +18,7 @@ public interface AwslTypes {
   IElementType HTML_SELF_CLOSE = new AwslElementType("HTML_SELF_CLOSE");
   IElementType HTML_START_CODE = new AwslElementType("HTML_START_CODE");
   IElementType HTML_START_TEXT = new AwslElementType("HTML_START_TEXT");
+  IElementType HTML_TAG = new AwslElementType("HTML_TAG");
   IElementType HTML_TEXT = new AwslElementType("HTML_TEXT");
 
   IElementType ACCENT = new AwslTokenType("^");
@@ -45,7 +46,9 @@ public interface AwslTypes {
   IElementType HTML_START_R = new AwslTokenType("HTML_START_R");
   IElementType HTML_START_TEXT_L = new AwslTokenType("HTML_START_TEXT_L");
   IElementType HTML_STRING = new AwslTokenType("HTML_STRING");
-  IElementType HTML_TAG_SYMBOL = new AwslTokenType("Symbol::HtmlTag");
+  IElementType HTML_TAG_RAW = new AwslTokenType("HTML_TAG_RAW");
+  IElementType HTML_TAG_SCRIPT = new AwslTokenType("HTML_TAG_SCRIPT");
+  IElementType HTML_TAG_SYMBOL = new AwslTokenType("HTML_TAG_SYMBOL");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType NAME_JOIN = new AwslTokenType("::");
   IElementType PARENTHESIS_L = new AwslTokenType("(");
@@ -88,6 +91,9 @@ public interface AwslTypes {
       }
       else if (type == HTML_START_TEXT) {
         return new AwslHtmlStartTextNode(node);
+      }
+      else if (type == HTML_TAG) {
+        return new AwslHtmlTagNode(node);
       }
       else if (type == HTML_TEXT) {
         return new AwslHtmlTextNode(node);

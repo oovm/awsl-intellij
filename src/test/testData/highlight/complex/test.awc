@@ -1,9 +1,7 @@
 < DropDown::<Vec<T>>>
     TEXT
     <\a>
-        for i in s {
-
-        }
+        SYMBOL
     </a>
     TEXT
 </DropDown::<Vec<T>>>
@@ -11,13 +9,17 @@
 <p>These styles...</p>
 <Nested/>
 
-<\script>
-import Nested from './Nested.svelte';
+< script>
+// for i in s {
+//
+// }
 </script>
 
+< raw>
+<<<<<<<<<<<<<>>>
+</raw>
 
-
-<style>
+< style>
 p {
     color: purple;
     font-family: 'Comic Sans MS', cursive;

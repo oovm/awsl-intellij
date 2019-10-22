@@ -97,8 +97,10 @@ STRING_NON_ESCAPE=[^\\\"]
 
 HEX=[a-fA-F0-9]
 
+
+HTML_ESCAPE = &[a-zA-Z]+; | &#{HEX}+;
 HTML_TAG_SCRIPT = script
-HTML_TAG_RAW = style
+HTML_TAG_RAW = style | raw
 HTML_TAG_BAD = hr
   | br
   | img
@@ -182,7 +184,15 @@ HTML_TAG_BAD = hr
         reachTag = true;
         safe_pop();
         stateStack.push(CODE_CONTEXT);
-        // canBeBadEnd = true;
+        return HTML_TAG_SCRIPT;
+    }
+}
+<HTML_END>{HTML_TAG_SCRIPT} {
+    if (reachTag) {
+        return SYMBOL;
+    }
+    else {
+        reachTag = true;
         return HTML_TAG_SCRIPT;
     }
 }
@@ -195,11 +205,18 @@ HTML_TAG_BAD = hr
         reachTag = true;
         safe_pop();
         stateStack.push(RAW_CONTEXT);
-        // canBeBadEnd = true;
         return HTML_TAG_RAW;
     }
 }
-
+<HTML_END>{HTML_TAG_RAW} {
+    if (reachTag) {
+        return SYMBOL;
+    }
+    else {
+        reachTag = true;
+        return HTML_TAG_RAW;
+    }
+}
 // 遇到了正常标签
 <HTML_BEGIN, HTML_END> {SYMBOL} {
     if (reachTag) {
@@ -275,6 +292,20 @@ HTML_TAG_BAD = hr
     safe_pop();
     yybegin(safe_peek());
     return HTML_END_R;
+}
+// 原始捕捉组 ===========================================================================================================
+<RAW_CONTEXT> <\/ {
+    reachTag = false;
+    yybegin(HTML_END);
+    return HTML_END_L;
+}
+
+<RAW_CONTEXT> {HTML_ESCAPE} {
+    return HTML_ESCAPE;
+}
+
+<RAW_CONTEXT> [^]+ {
+    return HTML_STRING;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
 [^] { return BAD_CHARACTER; }

@@ -13,4 +13,7 @@ public interface AwslHtmlSelfClose extends PsiElement {
   @NotNull
   List<AwslHtmlKv> getHtmlKvList();
 
+  @Nullable
+  AwslHtmlTag getHtmlTag();
+
 }

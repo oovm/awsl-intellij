@@ -1,6 +1,5 @@
 package com.github.awsl_lang.ide.highlight
 
-import com.github.awsl_lang.AwslLexerAdapter
 import com.github.awsl_lang.language.psi.AwslTypes.*
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -22,6 +21,7 @@ class AwslSyntaxHighlighter : SyntaxHighlighterBase() {
             //
             // AS, SCHEMA, PROP -> JssColor.KEYWORD
             // ANNOTATION -> JssColor.ANNOTATION
+            HTML_TAG_RAW, HTML_TAG_SCRIPT -> AwslColor.KEYWORD_TAG
             //
             PARENTHESIS_L, PARENTHESIS_R -> AwslColor.PARENTHESES
             BRACKET_L, BRACKET_R -> AwslColor.BRACKETS

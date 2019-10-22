@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.awsl_lang.language.psi.AwslTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.github.awsl_lang.ast.AwslAstNode;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslHtmlStartTextNode extends ASTWrapperPsiElement implements AwslHtmlStartText {
+public class AwslHtmlStartTextNode extends AwslAstNode implements AwslHtmlStartText {
 
   public AwslHtmlStartTextNode(@NotNull ASTNode node) {
     super(node);
@@ -37,6 +37,12 @@ public class AwslHtmlStartTextNode extends ASTWrapperPsiElement implements AwslH
   @NotNull
   public List<AwslHtmlKv> getHtmlKvList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlKv.class);
+  }
+
+  @Override
+  @Nullable
+  public AwslHtmlTag getHtmlTag() {
+    return findChildByClass(AwslHtmlTag.class);
   }
 
 }

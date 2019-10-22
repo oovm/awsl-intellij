@@ -13,4 +13,7 @@ public interface AwslHtmlStartText extends PsiElement {
   @NotNull
   List<AwslHtmlKv> getHtmlKvList();
 
+  @Nullable
+  AwslHtmlTag getHtmlTag();
+
 }

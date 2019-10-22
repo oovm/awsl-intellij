@@ -51,7 +51,6 @@
         HTML_SELF_END_R = "HTML_SELF_END_R"
         HTML_END_L = "HTML_END_L"
         HTML_END_R = "HTML_END_R"
-        HTML_TAG_SYMBOL="Symbol::HtmlTag"
         SYMBOL="Symbol"
     ]
 
@@ -88,8 +87,9 @@ for_statement ::= FOR SYMBOL IN <<brace_block code_statement SEMICOLON>>
 // <hr>
 // <hr/>
 html_self_close ::= (HTML_START_TEXT_L|HTML_START_CODE_L) [html_inner] HTML_SELF_END_R;
-private html_inner ::= HTML_TAG_SYMBOL [NAME_JOIN (SYMBOL|generic)] html_inner_rest*;
+private html_inner ::= html_tag [NAME_JOIN (SYMBOL|generic)] html_inner_rest*;
 private html_inner_rest ::= html_kv;
+html_tag ::= HTML_TAG_RAW | HTML_TAG_SCRIPT | HTML_TAG_SYMBOL;
 html_kv ::=SYMBOL EQ STRING;
 
 // =====================================================================================================================
