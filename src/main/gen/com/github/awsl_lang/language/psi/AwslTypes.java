@@ -41,6 +41,7 @@ public interface AwslTypes {
   IElementType GENERIC_R = new AwslTokenType(">");
   IElementType HTML_END_L = new AwslTokenType("HTML_END_L");
   IElementType HTML_END_R = new AwslTokenType("HTML_END_R");
+  IElementType HTML_ESCAPE = new AwslTokenType("HTML_ESCAPE");
   IElementType HTML_SELF_END_R = new AwslTokenType("HTML_SELF_END_R");
   IElementType HTML_START_CODE_L = new AwslTokenType("HTML_START_CODE_L");
   IElementType HTML_START_R = new AwslTokenType("HTML_START_R");

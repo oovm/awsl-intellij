@@ -96,9 +96,10 @@ STRING_ESCAPE_ANY=\\[^]
 STRING_NON_ESCAPE=[^\\\"]
 
 HEX=[a-fA-F0-9]
+DEC=[0-9]
 
 
-HTML_ESCAPE = &[a-zA-Z]+; | &#{HEX}+;
+HTML_ESCAPE = &[a-zA-Z]+; | &#{DEC}+ | &#x{HEX}+;
 HTML_TAG_SCRIPT = script
 HTML_TAG_RAW = style | raw
 HTML_TAG_BAD = hr
@@ -232,7 +233,10 @@ HTML_TAG_BAD = hr
     angle_balance += 1;
     return GENERIC_L;
 }
-
+// 查找转义
+<HTML_CONTEXT> {HTML_ESCAPE} {
+    return HTML_ESCAPE;
+}
 // 字符环境允许的字面量
 <HTML_CONTEXT> [^<>{}]+ {
     return HTML_STRING;
@@ -258,6 +262,7 @@ HTML_TAG_BAD = hr
     yybegin(safe_peek());
     return HTML_SELF_END_R;
 }
+// 如果是泛型, 补泛型
 // 根据上下文进入对应的模式
 // 如果是坏标签, 那么直接恢复上下文
 <HTML_BEGIN> > {

@@ -106,6 +106,7 @@ html_start_text ::= HTML_START_TEXT_L [html_inner] HTML_START_R;
 html_end ::= HTML_END_L [html_inner] HTML_END_R;
 private html_text_inner ::=
     HTML_STRING
+  | HTML_ESCAPE
   | html_self_close
   | html_code
   | html_text;

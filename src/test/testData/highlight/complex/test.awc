@@ -16,6 +16,11 @@
 </script>
 
 < raw>
+&#x20AC;	hexadecimal numeric character reference
+&#8364;	decimal numeric character reference
+&euro;	named character reference&#x20AC;	hexadecimal numeric character reference
+&#8364;	decimal numeric character reference
+&euro;	named character reference
 <<<<<<<<<<<<<>>>
 </raw>
 

@@ -423,6 +423,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // HTML_STRING
+  //   | HTML_ESCAPE
   //   | html_self_close
   //   | html_code
   //   | html_text
@@ -430,6 +431,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "html_text_inner")) return false;
     boolean r;
     r = consumeToken(b, HTML_STRING);
+    if (!r) r = consumeToken(b, HTML_ESCAPE);
     if (!r) r = html_self_close(b, l + 1);
     if (!r) r = html_code(b, l + 1);
     if (!r) r = html_text(b, l + 1);

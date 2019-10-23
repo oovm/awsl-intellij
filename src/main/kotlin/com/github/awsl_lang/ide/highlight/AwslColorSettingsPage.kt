@@ -20,7 +20,7 @@ class AwslColorSettingsPage : ColorSettingsPage {
 
     override fun getIcon() = AwslIconProvider.AwslFile
 
-    override fun getHighlighter() = AwslSyntaxHighlighter()
+    override fun getHighlighter() = AwslTokenColor()
 
     override fun getAdditionalHighlightingTagToDescriptorMap() = annotatorTags
 

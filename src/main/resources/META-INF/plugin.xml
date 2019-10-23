@@ -22,7 +22,7 @@
 		<highlightVisitor implementation="com.github.awsl_lang.ide.highlight.AwslHighlightVisitor"/>
 		<lang.syntaxHighlighter
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.highlight.AwslSyntaxHighlighter"
+			implementationClass="com.github.awsl_lang.ide.highlight.AwslTokenColor"
 		/>
 		<!-- Formatter -->
 		<lang.parserDefinition
