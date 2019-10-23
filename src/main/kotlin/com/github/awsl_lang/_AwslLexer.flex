@@ -238,7 +238,7 @@ HTML_TAG_BAD = hr
     return HTML_ESCAPE;
 }
 // 字符环境允许的字面量
-<HTML_CONTEXT> [^<>{}]+ {
+<HTML_CONTEXT> [^&<>{}]+ {
     return HTML_STRING;
 }
 // HTML模板态: HTML_TEMPLATE ============================================================================================
@@ -309,7 +309,7 @@ HTML_TAG_BAD = hr
     return HTML_ESCAPE;
 }
 
-<RAW_CONTEXT> [^]+ {
+<RAW_CONTEXT> [^&<>]+ {
     return HTML_STRING;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================

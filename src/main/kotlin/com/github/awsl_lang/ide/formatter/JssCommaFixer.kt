@@ -19,7 +19,7 @@ class JssCommaFixer : SmartEnterProcessorWithFixers.Fixer<JssSmartEnter>() {
         } else {
             element
         }
-        var errorElement: PsiErrorElement? = getFirstErrorAround(current)
+        val errorElement: PsiErrorElement? = getFirstErrorAround(current)
         if (errorElement != null) {
             val description = errorElement.errorDescription
             val expectedId = description.indexOf("expected")

@@ -1,13 +1,10 @@
 < DropDown::<Vec<T>>>
-    TEXT
+    TEXT &#x20AC;
     <\a>
         SYMBOL
     </a>
-    TEXT
+    TEXT &euro;
 </DropDown::<Vec<T>>>
-
-<p>These styles...</p>
-<Nested/>
 
 < script>
 // for i in s {
@@ -21,7 +18,6 @@
 &euro;	named character reference&#x20AC;	hexadecimal numeric character reference
 &#8364;	decimal numeric character reference
 &euro;	named character reference
-<<<<<<<<<<<<<>>>
 </raw>
 
 < style>
