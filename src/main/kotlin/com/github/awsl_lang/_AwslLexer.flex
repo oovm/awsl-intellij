@@ -68,7 +68,7 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 %state HTML_CONTEXT
 %state HTML_END
 %state CODE_CONTEXT
-%state RAW_CONTEXT
+%state HTML_RAW_CONTEXT
 %state Generic
 
 WHITE_SPACE=\s+
@@ -205,7 +205,7 @@ HTML_TAG_BAD = hr
     else {
         reachTag = true;
         safe_pop();
-        stateStack.push(RAW_CONTEXT);
+        stateStack.push(HTML_RAW_CONTEXT);
         return HTML_TAG_RAW;
     }
 }
@@ -234,11 +234,15 @@ HTML_TAG_BAD = hr
     return GENERIC_L;
 }
 // 查找转义
+<HTML_CONTEXT> \s+ {
+    return WHITE_SPACE;
+}
+// 查找转义
 <HTML_CONTEXT> {HTML_ESCAPE} {
     return HTML_ESCAPE;
 }
 // 字符环境允许的字面量
-<HTML_CONTEXT> [^&<>{}]+ {
+<HTML_CONTEXT> [^&<>{}\s]+ {
     return HTML_STRING;
 }
 // HTML模板态: HTML_TEMPLATE ============================================================================================
@@ -299,17 +303,20 @@ HTML_TAG_BAD = hr
     return HTML_END_R;
 }
 // 原始捕捉组 ===========================================================================================================
-<RAW_CONTEXT> <\/ {
+<HTML_RAW_CONTEXT> <\/ {
     reachTag = false;
     yybegin(HTML_END);
     return HTML_END_L;
 }
-
-<RAW_CONTEXT> {HTML_ESCAPE} {
+// 查找空白
+//<HTML_RAW_CONTEXT> \s+ {
+//    return WHITE_SPACE;
+//}
+// 查找转义
+<HTML_RAW_CONTEXT> {HTML_ESCAPE} {
     return HTML_ESCAPE;
 }
-
-<RAW_CONTEXT> [^&<>]+ {
+<HTML_RAW_CONTEXT> [^&<>]+ {
     return HTML_STRING;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
