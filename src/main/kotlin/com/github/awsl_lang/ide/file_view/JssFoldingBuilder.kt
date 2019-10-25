@@ -1,6 +1,7 @@
 package com.github.awsl_lang.ide.file_view
 
 import com.github.awsl_lang.ide.file_types.AwslFile
+import com.github.awsl_lang.language.psi.AwslHtmlCode
 import com.github.awsl_lang.language.psi.AwslHtmlText
 import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.CustomFoldingBuilder
@@ -28,26 +29,57 @@ class JssFoldingBuilder : CustomFoldingBuilder(), DumbAware {
 
     override fun getLanguagePlaceholderText(node: ASTNode, range: TextRange): String {
         return when (val e = node.psi) {
-            is AwslHtmlText -> {
-                when (val tag = e.htmlStartText.htmlTag) {
-                    null -> {
-                        "</>"
-                    }
-                    else -> {
-                        "<${tag.text}/>"
-                    }
-                }
+            is AwslHtmlText -> fold(e)
+            is AwslHtmlCode -> fold(e)
+            else -> "..."
+        }
+    }
+
+
+    override fun isRegionCollapsedByDefault(node: ASTNode) = false
+
+    private fun fold(o: AwslHtmlText): String {
+        return when (val tag = o.htmlStartText.htmlTag) {
+            null -> {
+                "</>"
             }
             else -> {
-                "..."
+                when (val name = tag.text) {
+                    "script" -> {
+                        "<\\${name}/>"
+                    }
+                    else -> {
+                        "<${name}/>"
+                    }
+                }
             }
         }
     }
 
-    private fun fold(o: AwslHtmlText) {
-
+    private fun fold(o: AwslHtmlCode): String {
+        return when (val tag = o.htmlStartCode.htmlTag) {
+            null -> {
+                "<\\>"
+            }
+            else -> {
+                when (val name = tag.text) {
+                    "raw", "style" -> {
+                        "<${name}/>"
+                    }
+                    else -> {
+                        "<\\${name}/>"
+                    }
+                }
+            }
+        }
     }
 
-    override fun isRegionCollapsedByDefault(node: ASTNode) = false
+    private fun html_name(s: String, is_code: Boolean) {
+        when (s) {
+            "" -> {}
+            else -> {}
+        }
+    }
+
 }
 
