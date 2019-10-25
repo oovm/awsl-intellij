@@ -35,6 +35,10 @@ public class AwslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitHtmlEscape(@NotNull AwslHtmlEscape o) {
+    visitPsiElement(o);
+  }
+
   public void visitHtmlKv(@NotNull AwslHtmlKv o) {
     visitPsiElement(o);
   }

@@ -1073,7 +1073,7 @@ public class _AwslLexer implements FlexLexer {
             // fall through
           case 77: break;
           case 36: 
-            { return HTML_ESCAPE;
+            { return HTML_ESCAPE_TOKEN;
             } 
             // fall through
           case 78: break;

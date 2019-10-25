@@ -14,6 +14,9 @@ public interface AwslHtmlText extends PsiElement {
   AwslHtmlEnd getHtmlEnd();
 
   @NotNull
+  List<AwslHtmlEscape> getHtmlEscapeList();
+
+  @NotNull
   List<AwslHtmlSelfClose> getHtmlSelfCloseList();
 
   @NotNull

@@ -14,6 +14,7 @@ public interface AwslTypes {
   IElementType GENERIC = new AwslElementType("GENERIC");
   IElementType HTML_CODE = new AwslElementType("HTML_CODE");
   IElementType HTML_END = new AwslElementType("HTML_END");
+  IElementType HTML_ESCAPE = new AwslElementType("HTML_ESCAPE");
   IElementType HTML_KV = new AwslElementType("HTML_KV");
   IElementType HTML_SELF_CLOSE = new AwslElementType("HTML_SELF_CLOSE");
   IElementType HTML_START_CODE = new AwslElementType("HTML_START_CODE");
@@ -41,7 +42,7 @@ public interface AwslTypes {
   IElementType GENERIC_R = new AwslTokenType(">");
   IElementType HTML_END_L = new AwslTokenType("HTML_END_L");
   IElementType HTML_END_R = new AwslTokenType("HTML_END_R");
-  IElementType HTML_ESCAPE = new AwslTokenType("HTML_ESCAPE");
+  IElementType HTML_ESCAPE_TOKEN = new AwslTokenType("HTML_ESCAPE_TOKEN");
   IElementType HTML_SELF_END_R = new AwslTokenType("HTML_SELF_END_R");
   IElementType HTML_START_CODE_L = new AwslTokenType("HTML_START_CODE_L");
   IElementType HTML_START_R = new AwslTokenType("HTML_START_R");
@@ -80,6 +81,9 @@ public interface AwslTypes {
       }
       else if (type == HTML_END) {
         return new AwslHtmlEndNode(node);
+      }
+      else if (type == HTML_ESCAPE) {
+        return new AwslHtmlEscapeNode(node);
       }
       else if (type == HTML_KV) {
         return new AwslHtmlKvNode(node);

@@ -243,6 +243,18 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // HTML_ESCAPE_TOKEN
+  public static boolean html_escape(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_escape")) return false;
+    if (!nextTokenIs(b, HTML_ESCAPE_TOKEN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, HTML_ESCAPE_TOKEN);
+    exit_section_(b, m, HTML_ESCAPE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // html_tag [NAME_JOIN (SYMBOL|generic)] html_inner_rest*
   static boolean html_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_inner")) return false;
@@ -423,7 +435,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // HTML_STRING
-  //   | HTML_ESCAPE
+  //   | html_escape
   //   | html_self_close
   //   | html_code
   //   | html_text
@@ -431,7 +443,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "html_text_inner")) return false;
     boolean r;
     r = consumeToken(b, HTML_STRING);
-    if (!r) r = consumeToken(b, HTML_ESCAPE);
+    if (!r) r = html_escape(b, l + 1);
     if (!r) r = html_self_close(b, l + 1);
     if (!r) r = html_code(b, l + 1);
     if (!r) r = html_text(b, l + 1);

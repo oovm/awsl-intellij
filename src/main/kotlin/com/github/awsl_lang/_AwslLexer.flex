@@ -99,7 +99,7 @@ HEX=[a-fA-F0-9]
 DEC=[0-9]
 
 
-HTML_ESCAPE = &[a-zA-Z]+; | &#{DEC}+ | &#x{HEX}+;
+HTML_ESCAPE_TOKEN = &[a-zA-Z]+; | &#{DEC}+ | &#x{HEX}+;
 HTML_TAG_SCRIPT = script
 HTML_TAG_RAW = style | raw
 HTML_TAG_BAD = hr
@@ -238,8 +238,8 @@ HTML_TAG_BAD = hr
     return WHITE_SPACE;
 }
 // 查找转义
-<HTML_CONTEXT> {HTML_ESCAPE} {
-    return HTML_ESCAPE;
+<HTML_CONTEXT> {HTML_ESCAPE_TOKEN} {
+    return HTML_ESCAPE_TOKEN;
 }
 // 字符环境允许的字面量
 <HTML_CONTEXT> [^&<>{}\s]+ {
@@ -313,8 +313,8 @@ HTML_TAG_BAD = hr
 //    return WHITE_SPACE;
 //}
 // 查找转义
-<HTML_RAW_CONTEXT> {HTML_ESCAPE} {
-    return HTML_ESCAPE;
+<HTML_RAW_CONTEXT> {HTML_ESCAPE_TOKEN} {
+    return HTML_ESCAPE_TOKEN;
 }
 <HTML_RAW_CONTEXT> [^&<>]+ {
     return HTML_STRING;

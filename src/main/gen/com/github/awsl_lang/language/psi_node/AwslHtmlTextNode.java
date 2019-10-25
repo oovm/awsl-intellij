@@ -41,6 +41,12 @@ public class AwslHtmlTextNode extends AwslAstNode implements AwslHtmlText {
 
   @Override
   @NotNull
+  public List<AwslHtmlEscape> getHtmlEscapeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlEscape.class);
+  }
+
+  @Override
+  @NotNull
   public List<AwslHtmlSelfClose> getHtmlSelfCloseList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlSelfClose.class);
   }
