@@ -39,7 +39,7 @@ class AwslTokenColor : SyntaxHighlighterBase() {
             HTML_END_R, HTML_START_R, HTML_SELF_END_R -> AwslColor.HTML_END
             HTML_TAG_SYMBOL -> AwslColor.HTML_TAG
             HTML_TEXT -> AwslColor.HTML_TEXT
-            HTML_ESCAPE -> AwslColor.HTML_ESCAPE
+            HTML_ESCAPE_TOKEN -> AwslColor.HTML_ESCAPE
             // 注释
             COMMENT_LINE -> AwslColor.LINE_COMMENT
             COMMENT_BLOCK -> AwslColor.BLOCK_COMMENT
