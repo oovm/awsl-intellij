@@ -6,7 +6,7 @@ SYMBOL
 TEXT &euro;
 </DropDown::<Vec<T>>>
 
-< script>
+<\script>
 // for i in s {
 //
 // }

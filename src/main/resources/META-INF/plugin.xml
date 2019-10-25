@@ -39,7 +39,7 @@
 		/>
 		<lang.foldingBuilder
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.matcher.JssFoldingBuilder"
+			implementationClass="com.github.awsl_lang.ide.file_view.JssFoldingBuilder"
 		/>
 		<lang.smartEnterProcessor
 			language="AWSL"

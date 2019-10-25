@@ -1,6 +1,7 @@
-package com.github.awsl_lang.ide.matcher
+package com.github.awsl_lang.ide.file_view
 
 import com.github.awsl_lang.ide.file_types.AwslFile
+import com.github.awsl_lang.language.psi.AwslHtmlText
 import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.CustomFoldingBuilder
 import com.intellij.lang.folding.FoldingDescriptor
@@ -25,12 +26,27 @@ class JssFoldingBuilder : CustomFoldingBuilder(), DumbAware {
         }
     }
 
-    override fun getLanguagePlaceholderText(node: ASTNode, range: TextRange) =
-        when (node.elementType) {
-//            AwslTypes.BRACKET_BLOCK -> "[...]"
-//            AwslTypes.BRACE_BLOCK -> "{...}"
-            else -> "..."
+    override fun getLanguagePlaceholderText(node: ASTNode, range: TextRange): String {
+        return when (val e = node.psi) {
+            is AwslHtmlText -> {
+                when (val tag = e.htmlStartText.htmlTag) {
+                    null -> {
+                        "</>"
+                    }
+                    else -> {
+                        "<${tag.text}/>"
+                    }
+                }
+            }
+            else -> {
+                "..."
+            }
         }
+    }
+
+    private fun fold(o: AwslHtmlText) {
+
+    }
 
     override fun isRegionCollapsedByDefault(node: ASTNode) = false
 }
