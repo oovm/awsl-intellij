@@ -1,7 +1,7 @@
 package com.github.awsl_lang.ast
 
-import com.github.awsl_lang.ide.formatter.JssFormatterContext
-import com.github.awsl_lang.ide.formatter.JssFormattingModelBuilder
+import com.github.awsl_lang.ide.formatter.AwslFormatterContext
+import com.github.awsl_lang.ide.formatter.AwslFormattingModelBuilder
 import com.intellij.formatting.Block
 import com.intellij.formatting.Indent
 import com.intellij.formatting.Spacing
@@ -27,7 +27,7 @@ fun AwslAstBlock.buildChildren(): List<Block> {
     return node.getChildren(null)
         .filter { !it.isWhitespaceOrEmpty() }
         .map { childNode ->
-            JssFormattingModelBuilder.createBlock(
+            AwslFormattingModelBuilder.createBlock(
                 node = childNode,
                 alignment = null,
                 indent = computeIndent(childNode),
@@ -41,6 +41,6 @@ private fun ASTNode?.isWhitespaceOrEmpty(): Boolean {
     return this == null || textLength == 0 || elementType == TokenType.WHITE_SPACE
 }
 
-fun Block.computeSpacing(child1: Block?, child2: Block, ctx: JssFormatterContext): Spacing? {
+fun Block.computeSpacing(child1: Block?, child2: Block, ctx: AwslFormatterContext): Spacing? {
     return ctx.spacingBuilder.getSpacing(this, child1, child2)
 }

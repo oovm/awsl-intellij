@@ -1,11 +1,10 @@
 package com.github.awsl_lang.ide.formatter
 
 import com.github.awsl_lang.AwslLanguage
-import com.github.awsl_lang.ide.codeStyle.AwslCodeStyleSettings
+import com.github.awsl_lang.ide.formatter.codeStyle.AwslCodeStyleSettings
 import com.github.awsl_lang.language.psi.AwslHtmlStartCode
 import com.github.awsl_lang.language.psi.AwslHtmlStartText
 import com.github.awsl_lang.language.psi.AwslRecursiveVisitor
-import com.github.awsl_lang.language.psi.endOffset
 import com.intellij.application.options.CodeStyle
 import com.intellij.json.JsonElementTypes
 import com.intellij.lang.ASTNode

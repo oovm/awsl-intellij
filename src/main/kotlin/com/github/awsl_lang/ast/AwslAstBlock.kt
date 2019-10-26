@@ -1,6 +1,6 @@
 package com.github.awsl_lang.ast
 
-import com.github.awsl_lang.ide.formatter.JssFormatterContext
+import com.github.awsl_lang.ide.formatter.AwslFormatterContext
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
@@ -12,7 +12,7 @@ class AwslAstBlock(
     private val alignment: Alignment?,
     private val indent: Indent?,
     private val wrap: Wrap?,
-    val ctx: JssFormatterContext
+    val ctx: AwslFormatterContext
 ) : ASTBlock {
     override fun isLeaf(): Boolean = node.firstChildNode == null
 

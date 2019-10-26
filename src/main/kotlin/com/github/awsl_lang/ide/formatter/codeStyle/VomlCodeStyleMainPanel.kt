@@ -1,4 +1,4 @@
-package com.github.awsl_lang.ide.codeStyle
+package com.github.awsl_lang.ide.formatter.codeStyle
 
 import com.github.awsl_lang.AwslLanguage
 import com.intellij.application.options.GenerationCodeStylePanel

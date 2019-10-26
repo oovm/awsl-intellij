@@ -31,7 +31,7 @@
 		/>
 		<lang.formatter
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.formatter.JssFormattingModelBuilder"
+			implementationClass="com.github.awsl_lang.ide.formatter.AwslFormattingModelBuilder"
 		/>
 		<lang.commenter
 			language="AWSL"
@@ -79,7 +79,7 @@
 		<!--annotator language="JSS" implementationClass="com.github.awsl_lang.ide.annotator.LiteralChecker"-->
 
 		<langCodeStyleSettingsProvider
-			implementation="com.github.awsl_lang.ide.codeStyle.VomlLanguageCodeStyleSettingsProvider"
+			implementation="com.github.awsl_lang.ide.formatter.codeStyle.VomlLanguageCodeStyleSettingsProvider"
 		/>
 
 	</extensions>

@@ -1,35 +1,34 @@
 package com.github.awsl_lang.ide.formatter
 
-import com.github.awsl_lang.AwslLanguage
-import com.github.awsl_lang.language.psi.AwslTypes
+import com.github.awsl_lang.language.psi.AwslTypes.*
 import com.intellij.formatting.SpacingBuilder
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.tree.TokenSet
 
-data class JssFormatterContext(
+data class AwslFormatterContext(
     val commonSettings: CommonCodeStyleSettings,
     val spacingBuilder: SpacingBuilder
 ) {
     companion object {
-        fun create(settings: CodeStyleSettings): JssFormatterContext {
+        fun create(settings: CodeStyleSettings): AwslFormatterContext {
             val commonSettings = settings.getCommonSettings(com.github.awsl_lang.AwslLanguage.INSTANCE)
-            return JssFormatterContext(commonSettings, createSpacingBuilder(commonSettings))
+            return AwslFormatterContext(commonSettings, createSpacingBuilder(commonSettings))
         }
 
         private val remove_space_before = TokenSet.create(
-            com.github.awsl_lang.language.psi.AwslTypes.PARENTHESIS_R,
-            com.github.awsl_lang.language.psi.AwslTypes.BRACKET_R,
-            com.github.awsl_lang.language.psi.AwslTypes.COMMA,
-            com.github.awsl_lang.language.psi.AwslTypes.SEMICOLON
+            PARENTHESIS_R,
+            BRACKET_R,
+            COMMA,
+            SEMICOLON
         )
         private val remove_space_after = TokenSet.create(
-            com.github.awsl_lang.language.psi.AwslTypes.PARENTHESIS_L,
-            com.github.awsl_lang.language.psi.AwslTypes.BRACKET_L,
+            PARENTHESIS_L,
+            BRACKET_L,
         )
         private val remove_space_newline_after = TokenSet.create()
 
-        private val separators = TokenSet.create(com.github.awsl_lang.language.psi.AwslTypes.COMMA, com.github.awsl_lang.language.psi.AwslTypes.SEMICOLON)
+        private val separators = TokenSet.create(COMMA, SEMICOLON)
 
         private fun createSpacingBuilder(commonSettings: CommonCodeStyleSettings): SpacingBuilder {
             val custom = SpacingBuilder(commonSettings)

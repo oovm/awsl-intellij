@@ -1,6 +1,5 @@
-package com.github.awsl_lang.ide.codeStyle
+package com.github.awsl_lang.ide.formatter.codeStyle
 
-import com.github.awsl_lang.AwslLanguage
 import com.intellij.application.options.CodeStyleAbstractConfigurable
 import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.psi.codeStyle.*
