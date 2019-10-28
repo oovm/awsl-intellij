@@ -4,7 +4,7 @@ import com.intellij.application.options.CodeStyleAbstractConfigurable
 import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.psi.codeStyle.*
 
-class VomlLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvider() {
+class AwslCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvider() {
     override fun getLanguage() = com.github.awsl_lang.AwslLanguage.INSTANCE
 
     override fun getIndentOptionsEditor() = SmartIndentOptionsEditor()
@@ -18,7 +18,7 @@ class VomlLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvider(
             modelSettings,
             configurableDisplayName
         ) {
-            override fun createPanel(settings: CodeStyleSettings?) = VomlCodeStyleMainPanel(currentSettings, settings)
+            override fun createPanel(settings: CodeStyleSettings?) = AwslCodeStyleMainPanel(currentSettings, settings)
         }
     }
 

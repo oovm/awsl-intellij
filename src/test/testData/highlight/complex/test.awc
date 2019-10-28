@@ -1,15 +1,15 @@
 < DropDown::<Vec<T>>>
-TEXT &#x20AC;
-<\a>
-SYMBOL
-</a>
-TEXT &euro;
+    TEXT &#x20AC;
+    <\a>
+        SYMBOL
+    </a>
+    TEXT &euro;
 </DropDown::<Vec<T>>>
 
 <\script>
-// for i in s {
-//
-// }
+for i in s {
+    <a link = 2> </a>
+}
 </script>
 
 < raw>

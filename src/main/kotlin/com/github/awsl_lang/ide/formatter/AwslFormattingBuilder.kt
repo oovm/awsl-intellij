@@ -1,12 +1,11 @@
 package com.github.awsl_lang.ide.formatter
 
-import com.github.awsl_lang.ast.AwslAstBlock
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiFile
 
-class AwslFormattingModelBuilder : FormattingModelBuilder {
+class AwslFormattingBuilder : FormattingModelBuilder {
     override fun getRangeAffectingIndent(file: PsiFile?, offset: Int, elementAtOffset: ASTNode?): TextRange? = null
 
     override fun createModel(formattingContext: FormattingContext): FormattingModel {
@@ -24,6 +23,6 @@ class AwslFormattingModelBuilder : FormattingModelBuilder {
             indent: Indent?,
             wrap: Wrap?,
             ctx: AwslFormatterContext
-        ): ASTBlock = AwslAstBlock(node, alignment, indent, wrap, ctx)
+        ): ASTBlock = AwslFormatterHelper(node, alignment, indent, wrap, ctx)
     }
 }
