@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface AwslHtmlCode extends PsiElement {
 
   @NotNull
+  List<AwslForStatement> getForStatementList();
+
+  @NotNull
   List<AwslHtmlCode> getHtmlCodeList();
 
   @NotNull

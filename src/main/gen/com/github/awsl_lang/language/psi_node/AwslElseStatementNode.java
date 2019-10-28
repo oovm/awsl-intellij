@@ -11,14 +11,14 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 import com.github.awsl_lang.ast.AwslAstNode;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslForStatementNode extends AwslAstNode implements AwslForStatement {
+public class AwslElseStatementNode extends AwslAstNode implements AwslElseStatement {
 
-  public AwslForStatementNode(@NotNull ASTNode node) {
+  public AwslElseStatementNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitForStatement(this);
+    visitor.visitElseStatement(this);
   }
 
   @Override
@@ -31,18 +31,6 @@ public class AwslForStatementNode extends AwslAstNode implements AwslForStatemen
   @NotNull
   public AwslBraceBlock getBraceBlock() {
     return findNotNullChildByClass(AwslBraceBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public AwslElseStatement getElseStatement() {
-    return findChildByClass(AwslElseStatement.class);
-  }
-
-  @Override
-  @NotNull
-  public AwslPattern getPattern() {
-    return findNotNullChildByClass(AwslPattern.class);
   }
 
 }

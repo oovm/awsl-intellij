@@ -66,23 +66,21 @@ AWSL ::= top_statement*;
 private top_statement ::=
     code_statement
   | COMMENT_DOCUMENT
-  | SYMBOL
   | STRING
-  | html_self_close
-  | html_text
-  | html_code
   ;
-fake binary_expr ::= expr + {
-  methods=[
-    left="/expr[0]"
-    right="/expr[1]"
-  ]
-}
 
-private code_statement ::= for_statement;
+private code_statement ::=
+    html_self_close
+    | html_text
+    | html_code
+    | for_statement
+    | SYMBOL;
 
-for_statement ::= FOR SYMBOL IN <<brace_block code_statement SEMICOLON>>
+private expression ::= SYMBOL
 
+for_statement ::= FOR pattern IN expression <<brace_block code_statement SEMICOLON>> [else_statement]
+else_statement ::= ELSE <<brace_block code_statement SEMICOLON>>
+pattern ::= SYMBOL;
 // =====================================================================================================================
 // <hr>
 // <hr/>
@@ -114,14 +112,15 @@ private html_text_inner ::=
 html_escape ::= HTML_ESCAPE_TOKEN;
 // =====================================================================================================================
 // <\a>code</a>
-html_code ::= html_start_code statement* html_end;
+html_code ::= html_start_code code_statement* html_end;
 html_start_code ::= HTML_START_CODE_L [html_inner] HTML_START_R;
-private statement ::=
-    STRING
-  | SYMBOL
-  | html_self_close
-  | html_code
-  | html_text;
+// =====================================================================================================================
+fake binary_expr ::= expr + {
+    methods=[
+        left="/expr[0]"
+        right="/expr[1]"
+    ]
+}
 // =====================================================================================================================
 // parenthesis ( )
 private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;

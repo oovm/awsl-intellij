@@ -146,22 +146,63 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // for_statement
+  // html_self_close
+  //     | html_text
+  //     | html_code
+  //     | for_statement
+  //     | SYMBOL
   static boolean code_statement(PsiBuilder b, int l) {
-    return for_statement(b, l + 1);
+    if (!recursion_guard_(b, l, "code_statement")) return false;
+    boolean r;
+    r = html_self_close(b, l + 1);
+    if (!r) r = html_text(b, l + 1);
+    if (!r) r = html_code(b, l + 1);
+    if (!r) r = for_statement(b, l + 1);
+    if (!r) r = consumeToken(b, SYMBOL);
+    return r;
   }
 
   /* ********************************************************** */
-  // FOR SYMBOL IN <<brace_block code_statement SEMICOLON>>
+  // ELSE <<brace_block code_statement SEMICOLON>>
+  public static boolean else_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "else_statement")) return false;
+    if (!nextTokenIs(b, ELSE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && brace_block(b, l + 1, AwslParser::code_statement, SEMICOLON_parser_);
+    exit_section_(b, m, ELSE_STATEMENT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SYMBOL
+  static boolean expression(PsiBuilder b, int l) {
+    return consumeToken(b, SYMBOL);
+  }
+
+  /* ********************************************************** */
+  // FOR pattern IN expression <<brace_block code_statement SEMICOLON>> [else_statement]
   public static boolean for_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "for_statement")) return false;
     if (!nextTokenIs(b, FOR)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, FOR, SYMBOL, IN);
+    r = consumeToken(b, FOR);
+    r = r && pattern(b, l + 1);
+    r = r && consumeToken(b, IN);
+    r = r && expression(b, l + 1);
     r = r && brace_block(b, l + 1, AwslParser::code_statement, SEMICOLON_parser_);
+    r = r && for_statement_5(b, l + 1);
     exit_section_(b, m, FOR_STATEMENT, r);
     return r;
+  }
+
+  // [else_statement]
+  private static boolean for_statement_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "for_statement_5")) return false;
+    else_statement(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -197,7 +238,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // html_start_code statement* html_end
+  // html_start_code code_statement* html_end
   public static boolean html_code(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_code")) return false;
     if (!nextTokenIs(b, HTML_START_CODE_L)) return false;
@@ -210,12 +251,12 @@ public class AwslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // statement*
+  // code_statement*
   private static boolean html_code_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_code_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!statement(b, l + 1)) break;
+      if (!code_statement(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "html_code_1", c)) break;
     }
     return true;
@@ -465,40 +506,27 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING
-  //   | SYMBOL
-  //   | html_self_close
-  //   | html_code
-  //   | html_text
-  static boolean statement(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement")) return false;
+  // SYMBOL
+  public static boolean pattern(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pattern")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    r = consumeToken(b, STRING);
-    if (!r) r = consumeToken(b, SYMBOL);
-    if (!r) r = html_self_close(b, l + 1);
-    if (!r) r = html_code(b, l + 1);
-    if (!r) r = html_text(b, l + 1);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SYMBOL);
+    exit_section_(b, m, PATTERN, r);
     return r;
   }
 
   /* ********************************************************** */
   // code_statement
   //   | COMMENT_DOCUMENT
-  //   | SYMBOL
   //   | STRING
-  //   | html_self_close
-  //   | html_text
-  //   | html_code
   static boolean top_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "top_statement")) return false;
     boolean r;
     r = code_statement(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT_DOCUMENT);
-    if (!r) r = consumeToken(b, SYMBOL);
     if (!r) r = consumeToken(b, STRING);
-    if (!r) r = html_self_close(b, l + 1);
-    if (!r) r = html_text(b, l + 1);
-    if (!r) r = html_code(b, l + 1);
     return r;
   }
 

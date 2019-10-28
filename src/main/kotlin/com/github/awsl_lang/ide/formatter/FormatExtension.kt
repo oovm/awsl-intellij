@@ -1,10 +1,6 @@
-package com.github.awsl_lang.ast
+package com.github.awsl_lang.ide.formatter
 
-import com.github.awsl_lang.ide.formatter.AwslFormatterContext
-import com.github.awsl_lang.ide.formatter.AwslFormatterHelper
-import com.github.awsl_lang.ide.formatter.AwslFormattingBuilder
 import com.intellij.formatting.Block
-import com.intellij.formatting.Indent
 import com.intellij.formatting.Spacing
 import com.intellij.lang.ASTNode
 import com.intellij.psi.TokenType

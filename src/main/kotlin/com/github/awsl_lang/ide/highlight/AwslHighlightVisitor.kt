@@ -12,12 +12,12 @@ class AwslHighlightVisitor : com.github.awsl_lang.language.psi.AwslVisitor(), Hi
     private var infoHolder: HighlightInfoHolder? = null
 
     override fun visitHtmlKv(o: com.github.awsl_lang.language.psi.AwslHtmlKv) {
-        highlight(o.firstChild, AwslColor.SYM_PROP)
+        highlight(o.firstChild, AwslHighlightColor.SYM_PROP)
         super.visitHtmlKv(o)
     }
 
 
-    private fun highlight(element: PsiElement, color: AwslColor) {
+    private fun highlight(element: PsiElement, color: AwslHighlightColor) {
         val builder = HighlightInfo.newHighlightInfo(HighlightInfoType.INFORMATION)
         builder.textAttributes(color.textAttributesKey)
         builder.range(element)

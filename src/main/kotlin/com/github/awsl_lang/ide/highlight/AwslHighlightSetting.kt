@@ -4,12 +4,12 @@ import com.github.awsl_lang.ide.file_view.AwslIconProvider
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 
-class AwslColorSettingsPage : ColorSettingsPage {
-    private val annotatorTags = AwslColor
+class AwslHighlightSetting : ColorSettingsPage {
+    private val annotatorTags = AwslHighlightColor
         .values()
         .associateBy({ it.name }, { it.textAttributesKey })
 
-    override fun getAttributeDescriptors() = AwslColor
+    override fun getAttributeDescriptors() = AwslHighlightColor
         .values()
         .map { it.attributesDescriptor }
         .toTypedArray()
@@ -20,7 +20,7 @@ class AwslColorSettingsPage : ColorSettingsPage {
 
     override fun getIcon() = AwslIconProvider.AwslFile
 
-    override fun getHighlighter() = AwslTokenColor()
+    override fun getHighlighter() = AwslHighlightToken()
 
     override fun getAdditionalHighlightingTagToDescriptorMap() = annotatorTags
 

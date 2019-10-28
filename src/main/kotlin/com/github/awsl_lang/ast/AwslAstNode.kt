@@ -38,5 +38,4 @@ open class AwslAstNode(node: ASTNode) : ASTWrapperPsiElement(node), PsiReference
     override fun isSoft(): Boolean {
         TODO("Not yet implemented")
     }
-
 }

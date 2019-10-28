@@ -10,6 +10,7 @@ public interface AwslTypes {
 
   IElementType BRACE_BLOCK = new AwslElementType("BRACE_BLOCK");
   IElementType BRACKET_BLOCK = new AwslElementType("BRACKET_BLOCK");
+  IElementType ELSE_STATEMENT = new AwslElementType("ELSE_STATEMENT");
   IElementType FOR_STATEMENT = new AwslElementType("FOR_STATEMENT");
   IElementType GENERIC = new AwslElementType("GENERIC");
   IElementType HTML_CODE = new AwslElementType("HTML_CODE");
@@ -21,6 +22,7 @@ public interface AwslTypes {
   IElementType HTML_START_TEXT = new AwslElementType("HTML_START_TEXT");
   IElementType HTML_TAG = new AwslElementType("HTML_TAG");
   IElementType HTML_TEXT = new AwslElementType("HTML_TEXT");
+  IElementType PATTERN = new AwslElementType("PATTERN");
 
   IElementType ACCENT = new AwslTokenType("^");
   IElementType AT = new AwslTokenType("@");
@@ -36,6 +38,7 @@ public interface AwslTypes {
   IElementType COMMENT_LINE = new AwslTokenType("Comment Line");
   IElementType DOLLAR = new AwslTokenType("$");
   IElementType DOT = new AwslTokenType(".");
+  IElementType ELSE = new AwslTokenType("ELSE");
   IElementType EQ = new AwslTokenType("=");
   IElementType FOR = new AwslTokenType("Keyword for");
   IElementType GENERIC_L = new AwslTokenType("<");
@@ -70,6 +73,9 @@ public interface AwslTypes {
       else if (type == BRACKET_BLOCK) {
         return new AwslBracketBlockNode(node);
       }
+      else if (type == ELSE_STATEMENT) {
+        return new AwslElseStatementNode(node);
+      }
       else if (type == FOR_STATEMENT) {
         return new AwslForStatementNode(node);
       }
@@ -102,6 +108,9 @@ public interface AwslTypes {
       }
       else if (type == HTML_TEXT) {
         return new AwslHtmlTextNode(node);
+      }
+      else if (type == PATTERN) {
+        return new AwslPatternNode(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

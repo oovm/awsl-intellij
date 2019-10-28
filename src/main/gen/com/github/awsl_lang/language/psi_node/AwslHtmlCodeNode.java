@@ -29,6 +29,12 @@ public class AwslHtmlCodeNode extends AwslAstNode implements AwslHtmlCode {
 
   @Override
   @NotNull
+  public List<AwslForStatement> getForStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslForStatement.class);
+  }
+
+  @Override
+  @NotNull
   public List<AwslHtmlCode> getHtmlCodeList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlCode.class);
   }

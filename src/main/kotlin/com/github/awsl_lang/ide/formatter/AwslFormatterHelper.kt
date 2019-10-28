@@ -1,8 +1,6 @@
 package com.github.awsl_lang.ide.formatter
 
 
-import com.github.awsl_lang.ast.computeSpacing
-import com.github.awsl_lang.ast.isWhitespaceOrEmpty
 import com.github.awsl_lang.language.psi.AwslTypes
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
