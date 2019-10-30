@@ -73,22 +73,27 @@ private code_statement ::=
     html_self_close
     | html_text
     | html_code
+    | if_statement
     | for_statement
     | SYMBOL;
 
 private expression ::= SYMBOL
-
-for_statement ::= FOR pattern IN expression <<brace_block code_statement SEMICOLON>> [else_statement]
+// =====================================================================================================================
+if_statement ::= IF expression <<brace_block code_statement SEMICOLON>> [else_statement];
 else_statement ::= ELSE <<brace_block code_statement SEMICOLON>>
+// =====================================================================================================================
+for_statement ::= FOR pattern IN expression <<brace_block code_statement SEMICOLON>> [else_statement]
 pattern ::= SYMBOL;
 // =====================================================================================================================
 // <hr>
 // <hr/>
 html_self_close ::= (HTML_START_TEXT_L|HTML_START_CODE_L) [html_inner] HTML_SELF_END_R;
-private html_inner ::= html_tag [NAME_JOIN (SYMBOL|generic)] html_inner_rest*;
-private html_inner_rest ::= html_kv;
+private html_inner ::= html_tag [NAME_JOIN (SYMBOL|generic)] html_attribute*;
+private html_attribute ::=
+    html_kv
+    | number_literal;
 html_tag ::= HTML_TAG_RAW | HTML_TAG_SCRIPT | HTML_TAG_SYMBOL;
-html_kv ::=SYMBOL EQ STRING;
+html_kv ::= SYMBOL EQ value;
 
 // =====================================================================================================================
 // a::<T>
@@ -121,6 +126,10 @@ fake binary_expr ::= expr + {
         right="/expr[1]"
     ]
 }
+// =====================================================================================================================
+value ::= string_literal|number_literal;
+string_literal ::= STRING;
+number_literal ::= (INTEGER | DECIMAL) [NUMBER_UNIT]
 // =====================================================================================================================
 // parenthesis ( )
 private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;

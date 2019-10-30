@@ -5,18 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AwslHtmlStartText extends PsiElement {
+public interface AwslValue extends PsiElement {
 
   @Nullable
-  AwslGeneric getGeneric();
-
-  @NotNull
-  List<AwslHtmlKv> getHtmlKvList();
+  AwslNumberLiteral getNumberLiteral();
 
   @Nullable
-  AwslHtmlTag getHtmlTag();
-
-  @NotNull
-  List<AwslNumberLiteral> getNumberLiteralList();
+  AwslStringLiteral getStringLiteral();
 
 }

@@ -149,6 +149,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
   // html_self_close
   //     | html_text
   //     | html_code
+  //     | if_statement
   //     | for_statement
   //     | SYMBOL
   static boolean code_statement(PsiBuilder b, int l) {
@@ -157,6 +158,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
     r = html_self_close(b, l + 1);
     if (!r) r = html_text(b, l + 1);
     if (!r) r = html_code(b, l + 1);
+    if (!r) r = if_statement(b, l + 1);
     if (!r) r = for_statement(b, l + 1);
     if (!r) r = consumeToken(b, SYMBOL);
     return r;
@@ -238,6 +240,17 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // html_kv
+  //     | number_literal
+  static boolean html_attribute(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_attribute")) return false;
+    boolean r;
+    r = html_kv(b, l + 1);
+    if (!r) r = number_literal(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
   // html_start_code code_statement* html_end
   public static boolean html_code(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_code")) return false;
@@ -296,7 +309,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // html_tag [NAME_JOIN (SYMBOL|generic)] html_inner_rest*
+  // html_tag [NAME_JOIN (SYMBOL|generic)] html_attribute*
   static boolean html_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_inner")) return false;
     boolean r;
@@ -335,31 +348,26 @@ public class AwslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // html_inner_rest*
+  // html_attribute*
   private static boolean html_inner_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_inner_2")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!html_inner_rest(b, l + 1)) break;
+      if (!html_attribute(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "html_inner_2", c)) break;
     }
     return true;
   }
 
   /* ********************************************************** */
-  // html_kv
-  static boolean html_inner_rest(PsiBuilder b, int l) {
-    return html_kv(b, l + 1);
-  }
-
-  /* ********************************************************** */
-  // SYMBOL EQ STRING
+  // SYMBOL EQ value
   public static boolean html_kv(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_kv")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, SYMBOL, EQ, STRING);
+    r = consumeTokens(b, 0, SYMBOL, EQ);
+    r = r && value(b, l + 1);
     exit_section_(b, m, HTML_KV, r);
     return r;
   }
@@ -492,6 +500,57 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IF expression <<brace_block code_statement SEMICOLON>> [else_statement]
+  public static boolean if_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "if_statement")) return false;
+    if (!nextTokenIs(b, IF)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IF);
+    r = r && expression(b, l + 1);
+    r = r && brace_block(b, l + 1, AwslParser::code_statement, SEMICOLON_parser_);
+    r = r && if_statement_3(b, l + 1);
+    exit_section_(b, m, IF_STATEMENT, r);
+    return r;
+  }
+
+  // [else_statement]
+  private static boolean if_statement_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "if_statement_3")) return false;
+    else_statement(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // (INTEGER | DECIMAL) [NUMBER_UNIT]
+  public static boolean number_literal(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "number_literal")) return false;
+    if (!nextTokenIs(b, "<number literal>", DECIMAL, INTEGER)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, NUMBER_LITERAL, "<number literal>");
+    r = number_literal_0(b, l + 1);
+    r = r && number_literal_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // INTEGER | DECIMAL
+  private static boolean number_literal_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "number_literal_0")) return false;
+    boolean r;
+    r = consumeToken(b, INTEGER);
+    if (!r) r = consumeToken(b, DECIMAL);
+    return r;
+  }
+
+  // [NUMBER_UNIT]
+  private static boolean number_literal_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "number_literal_1")) return false;
+    consumeToken(b, NUMBER_UNIT);
+    return true;
+  }
+
+  /* ********************************************************** */
   // PARENTHESIS_L <<param>> PARENTHESIS_R
   static boolean parenthesis(PsiBuilder b, int l, Parser _param) {
     if (!recursion_guard_(b, l, "parenthesis")) return false;
@@ -518,6 +577,18 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // STRING
+  public static boolean string_literal(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "string_literal")) return false;
+    if (!nextTokenIs(b, STRING)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, STRING);
+    exit_section_(b, m, STRING_LITERAL, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // code_statement
   //   | COMMENT_DOCUMENT
   //   | STRING
@@ -527,6 +598,18 @@ public class AwslParser implements PsiParser, LightPsiParser {
     r = code_statement(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT_DOCUMENT);
     if (!r) r = consumeToken(b, STRING);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // string_literal|number_literal
+  public static boolean value(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "value")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, VALUE, "<value>");
+    r = string_literal(b, l + 1);
+    if (!r) r = number_literal(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

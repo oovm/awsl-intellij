@@ -25,4 +25,7 @@ public interface AwslHtmlCode extends PsiElement {
   @NotNull
   List<AwslHtmlText> getHtmlTextList();
 
+  @NotNull
+  List<AwslIfStatement> getIfStatementList();
+
 }

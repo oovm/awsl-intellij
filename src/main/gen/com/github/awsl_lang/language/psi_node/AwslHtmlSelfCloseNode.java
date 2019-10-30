@@ -45,4 +45,10 @@ public class AwslHtmlSelfCloseNode extends AwslAstNode implements AwslHtmlSelfCl
     return findChildByClass(AwslHtmlTag.class);
   }
 
+  @Override
+  @NotNull
+  public List<AwslNumberLiteral> getNumberLiteralList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslNumberLiteral.class);
+  }
+
 }

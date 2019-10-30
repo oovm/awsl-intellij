@@ -67,7 +67,23 @@ public class AwslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIfStatement(@NotNull AwslIfStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNumberLiteral(@NotNull AwslNumberLiteral o) {
+    visitPsiElement(o);
+  }
+
   public void visitPattern(@NotNull AwslPattern o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStringLiteral(@NotNull AwslStringLiteral o) {
+    visitPsiElement(o);
+  }
+
+  public void visitValue(@NotNull AwslValue o) {
     visitPsiElement(o);
   }
 

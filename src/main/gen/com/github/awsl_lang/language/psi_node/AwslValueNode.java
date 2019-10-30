@@ -11,14 +11,14 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 import com.github.awsl_lang.ast.AwslAstNode;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslHtmlEndNode extends AwslAstNode implements AwslHtmlEnd {
+public class AwslValueNode extends AwslAstNode implements AwslValue {
 
-  public AwslHtmlEndNode(@NotNull ASTNode node) {
+  public AwslValueNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitHtmlEnd(this);
+    visitor.visitValue(this);
   }
 
   @Override
@@ -29,26 +29,14 @@ public class AwslHtmlEndNode extends AwslAstNode implements AwslHtmlEnd {
 
   @Override
   @Nullable
-  public AwslGeneric getGeneric() {
-    return findChildByClass(AwslGeneric.class);
-  }
-
-  @Override
-  @NotNull
-  public List<AwslHtmlKv> getHtmlKvList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlKv.class);
+  public AwslNumberLiteral getNumberLiteral() {
+    return findChildByClass(AwslNumberLiteral.class);
   }
 
   @Override
   @Nullable
-  public AwslHtmlTag getHtmlTag() {
-    return findChildByClass(AwslHtmlTag.class);
-  }
-
-  @Override
-  @NotNull
-  public List<AwslNumberLiteral> getNumberLiteralList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslNumberLiteral.class);
+  public AwslStringLiteral getStringLiteral() {
+    return findChildByClass(AwslStringLiteral.class);
   }
 
 }

@@ -16,4 +16,7 @@ public interface AwslHtmlStartCode extends PsiElement {
   @Nullable
   AwslHtmlTag getHtmlTag();
 
+  @NotNull
+  List<AwslNumberLiteral> getNumberLiteralList();
+
 }

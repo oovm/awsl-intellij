@@ -11,44 +11,20 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 import com.github.awsl_lang.ast.AwslAstNode;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslHtmlEndNode extends AwslAstNode implements AwslHtmlEnd {
+public class AwslNumberLiteralNode extends AwslAstNode implements AwslNumberLiteral {
 
-  public AwslHtmlEndNode(@NotNull ASTNode node) {
+  public AwslNumberLiteralNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitHtmlEnd(this);
+    visitor.visitNumberLiteral(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof AwslVisitor) accept((AwslVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public AwslGeneric getGeneric() {
-    return findChildByClass(AwslGeneric.class);
-  }
-
-  @Override
-  @NotNull
-  public List<AwslHtmlKv> getHtmlKvList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlKv.class);
-  }
-
-  @Override
-  @Nullable
-  public AwslHtmlTag getHtmlTag() {
-    return findChildByClass(AwslHtmlTag.class);
-  }
-
-  @Override
-  @NotNull
-  public List<AwslNumberLiteral> getNumberLiteralList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslNumberLiteral.class);
   }
 
 }

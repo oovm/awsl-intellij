@@ -7,12 +7,12 @@
 </DropDown::<Vec<T>>>
 
 for i in s {
-<a link = 2> </a>
+    <a link = 2> </a>
 }
 
 <\script>
 for i in s {
-<a link = 2> </a>
+    <a link = 2> </a>
 }
 </script>
 

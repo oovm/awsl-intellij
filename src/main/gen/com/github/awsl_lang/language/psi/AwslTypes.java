@@ -22,7 +22,11 @@ public interface AwslTypes {
   IElementType HTML_START_TEXT = new AwslElementType("HTML_START_TEXT");
   IElementType HTML_TAG = new AwslElementType("HTML_TAG");
   IElementType HTML_TEXT = new AwslElementType("HTML_TEXT");
+  IElementType IF_STATEMENT = new AwslElementType("IF_STATEMENT");
+  IElementType NUMBER_LITERAL = new AwslElementType("NUMBER_LITERAL");
   IElementType PATTERN = new AwslElementType("PATTERN");
+  IElementType STRING_LITERAL = new AwslElementType("STRING_LITERAL");
+  IElementType VALUE = new AwslElementType("VALUE");
 
   IElementType ACCENT = new AwslTokenType("^");
   IElementType AT = new AwslTokenType("@");
@@ -36,6 +40,7 @@ public interface AwslTypes {
   IElementType COMMENT_DOCUMENT = new AwslTokenType("Comment Document");
   IElementType COMMENT_HTML = new AwslTokenType("Comment in HTML");
   IElementType COMMENT_LINE = new AwslTokenType("Comment Line");
+  IElementType DECIMAL = new AwslTokenType("DECIMAL");
   IElementType DOLLAR = new AwslTokenType("$");
   IElementType DOT = new AwslTokenType(".");
   IElementType ELSE = new AwslTokenType("ELSE");
@@ -54,8 +59,11 @@ public interface AwslTypes {
   IElementType HTML_TAG_RAW = new AwslTokenType("HTML_TAG_RAW");
   IElementType HTML_TAG_SCRIPT = new AwslTokenType("HTML_TAG_SCRIPT");
   IElementType HTML_TAG_SYMBOL = new AwslTokenType("HTML_TAG_SYMBOL");
+  IElementType IF = new AwslTokenType("IF");
   IElementType IN = new AwslTokenType("Keyword in");
+  IElementType INTEGER = new AwslTokenType("INTEGER");
   IElementType NAME_JOIN = new AwslTokenType("::");
+  IElementType NUMBER_UNIT = new AwslTokenType("NUMBER_UNIT");
   IElementType PARENTHESIS_L = new AwslTokenType("(");
   IElementType PARENTHESIS_R = new AwslTokenType(")");
   IElementType SEMICOLON = new AwslTokenType(";");
@@ -109,8 +117,20 @@ public interface AwslTypes {
       else if (type == HTML_TEXT) {
         return new AwslHtmlTextNode(node);
       }
+      else if (type == IF_STATEMENT) {
+        return new AwslIfStatementNode(node);
+      }
+      else if (type == NUMBER_LITERAL) {
+        return new AwslNumberLiteralNode(node);
+      }
       else if (type == PATTERN) {
         return new AwslPatternNode(node);
+      }
+      else if (type == STRING_LITERAL) {
+        return new AwslStringLiteralNode(node);
+      }
+      else if (type == VALUE) {
+        return new AwslValueNode(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

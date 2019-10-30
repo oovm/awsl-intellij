@@ -5,9 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AwslHtmlKv extends PsiElement {
-
-  @NotNull
-  AwslValue getValue();
+public interface AwslStringLiteral extends PsiElement {
 
 }

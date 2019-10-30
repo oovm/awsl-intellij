@@ -45,4 +45,10 @@ public class AwslHtmlStartTextNode extends AwslAstNode implements AwslHtmlStartT
     return findChildByClass(AwslHtmlTag.class);
   }
 
+  @Override
+  @NotNull
+  public List<AwslNumberLiteral> getNumberLiteralList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslNumberLiteral.class);
+  }
+
 }

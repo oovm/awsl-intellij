@@ -70,6 +70,7 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 %state CODE_CONTEXT
 %state HTML_RAW_CONTEXT
 %state Generic
+%state NUMBER_WAIT_UNIT
 
 WHITE_SPACE=\s+
 TEXT_SPACE=\s+
@@ -97,7 +98,8 @@ STRING_NON_ESCAPE=[^\\\"]
 
 HEX=[a-fA-F0-9]
 DEC=[0-9]
-
+INTEGER = 0|[1-9]([_]?[0-9])*
+DECIMAL = {INTEGER}[.]{INTEGER}
 
 HTML_ESCAPE_TOKEN = &[a-zA-Z]+; | &#{DEC}+ | &#x{HEX}+;
 HTML_TAG_SCRIPT = script
@@ -318,6 +320,25 @@ HTML_TAG_BAD = hr
 }
 <HTML_RAW_CONTEXT> [^&<>]+ {
     return HTML_STRING;
+}
+// 数字解析 =============================================================================================================
+<YYINITIAL,CODE_CONTEXT> {INTEGER} {
+    stateStack.push(yystate());
+    yybegin(NUMBER_WAIT_UNIT);
+    return INTEGER;
+}
+<YYINITIAL,CODE_CONTEXT> {DECIMAL} {
+    stateStack.push(yystate());
+    yybegin(NUMBER_WAIT_UNIT);
+    return DECIMAL;
+}
+<NUMBER_WAIT_UNIT> {SYMBOL} {
+    yybegin(stateStack.pop());
+    return NUMBER_UNIT;
+}
+<NUMBER_WAIT_UNIT> {WHITE_SPACE} {
+    yybegin(stateStack.pop());
+    return WHITE_SPACE;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
 [^] { return BAD_CHARACTER; }
