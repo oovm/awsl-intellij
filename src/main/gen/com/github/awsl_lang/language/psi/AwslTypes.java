@@ -13,9 +13,11 @@ public interface AwslTypes {
   IElementType ELSE_STATEMENT = new AwslElementType("ELSE_STATEMENT");
   IElementType FOR_STATEMENT = new AwslElementType("FOR_STATEMENT");
   IElementType GENERIC = new AwslElementType("GENERIC");
+  IElementType GENERIC_ITEM = new AwslElementType("GENERIC_ITEM");
   IElementType HTML_CODE = new AwslElementType("HTML_CODE");
   IElementType HTML_END = new AwslElementType("HTML_END");
   IElementType HTML_ESCAPE = new AwslElementType("HTML_ESCAPE");
+  IElementType HTML_KEY = new AwslElementType("HTML_KEY");
   IElementType HTML_KV = new AwslElementType("HTML_KV");
   IElementType HTML_SELF_CLOSE = new AwslElementType("HTML_SELF_CLOSE");
   IElementType HTML_START_CODE = new AwslElementType("HTML_START_CODE");
@@ -90,6 +92,9 @@ public interface AwslTypes {
       else if (type == GENERIC) {
         return new AwslGenericNode(node);
       }
+      else if (type == GENERIC_ITEM) {
+        return new AwslGenericItemNode(node);
+      }
       else if (type == HTML_CODE) {
         return new AwslHtmlCodeNode(node);
       }
@@ -98,6 +103,9 @@ public interface AwslTypes {
       }
       else if (type == HTML_ESCAPE) {
         return new AwslHtmlEscapeNode(node);
+      }
+      else if (type == HTML_KEY) {
+        return new AwslHtmlKeyNode(node);
       }
       else if (type == HTML_KV) {
         return new AwslHtmlKvNode(node);

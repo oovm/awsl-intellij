@@ -35,6 +35,12 @@ public class AwslHtmlEndNode extends AwslAstNode implements AwslHtmlEnd {
 
   @Override
   @NotNull
+  public List<AwslHtmlKey> getHtmlKeyList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlKey.class);
+  }
+
+  @Override
+  @NotNull
   public List<AwslHtmlKv> getHtmlKvList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlKv.class);
   }
@@ -43,12 +49,6 @@ public class AwslHtmlEndNode extends AwslAstNode implements AwslHtmlEnd {
   @Nullable
   public AwslHtmlTag getHtmlTag() {
     return findChildByClass(AwslHtmlTag.class);
-  }
-
-  @Override
-  @NotNull
-  public List<AwslNumberLiteral> getNumberLiteralList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslNumberLiteral.class);
   }
 
 }

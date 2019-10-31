@@ -88,16 +88,18 @@ pattern ::= SYMBOL;
 // <hr>
 // <hr/>
 html_self_close ::= (HTML_START_TEXT_L|HTML_START_CODE_L) [html_inner] HTML_SELF_END_R;
-private html_inner ::= html_tag [NAME_JOIN (SYMBOL|generic)] html_attribute*;
+private html_inner ::= html_tag [generic] html_attribute*;
 private html_attribute ::=
     html_kv
-    | number_literal;
+    | html_key;
 html_tag ::= HTML_TAG_RAW | HTML_TAG_SCRIPT | HTML_TAG_SYMBOL;
-html_kv ::= SYMBOL EQ value;
+html_kv ::=  html_key EQ value;
+html_key ::= SYMBOL;
 
 // =====================================================================================================================
 // a::<T>
-generic ::= GENERIC_L (SYMBOL [generic]) GENERIC_R;
+generic ::= GENERIC_L generic_item [COMMA generic_item] [COMMA] GENERIC_R;
+generic_item ::= SYMBOL [generic];
 // <a>text</a>
 // <\a>code</a>
 

@@ -208,45 +208,75 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // GENERIC_L (SYMBOL [generic]) GENERIC_R
+  // GENERIC_L generic_item [COMMA generic_item] [COMMA] GENERIC_R
   public static boolean generic(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "generic")) return false;
     if (!nextTokenIs(b, GENERIC_L)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, GENERIC_L);
-    r = r && generic_1(b, l + 1);
+    r = r && generic_item(b, l + 1);
+    r = r && generic_2(b, l + 1);
+    r = r && generic_3(b, l + 1);
     r = r && consumeToken(b, GENERIC_R);
     exit_section_(b, m, GENERIC, r);
     return r;
   }
 
-  // SYMBOL [generic]
-  private static boolean generic_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generic_1")) return false;
+  // [COMMA generic_item]
+  private static boolean generic_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generic_2")) return false;
+    generic_2_0(b, l + 1);
+    return true;
+  }
+
+  // COMMA generic_item
+  private static boolean generic_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generic_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, SYMBOL);
-    r = r && generic_1_1(b, l + 1);
+    r = consumeToken(b, COMMA);
+    r = r && generic_item(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
+  // [COMMA]
+  private static boolean generic_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generic_3")) return false;
+    consumeToken(b, COMMA);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // SYMBOL [generic]
+  public static boolean generic_item(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generic_item")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SYMBOL);
+    r = r && generic_item_1(b, l + 1);
+    exit_section_(b, m, GENERIC_ITEM, r);
+    return r;
+  }
+
   // [generic]
-  private static boolean generic_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generic_1_1")) return false;
+  private static boolean generic_item_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generic_item_1")) return false;
     generic(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
   // html_kv
-  //     | number_literal
+  //     | html_key
   static boolean html_attribute(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_attribute")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
     r = html_kv(b, l + 1);
-    if (!r) r = number_literal(b, l + 1);
+    if (!r) r = html_key(b, l + 1);
     return r;
   }
 
@@ -309,7 +339,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // html_tag [NAME_JOIN (SYMBOL|generic)] html_attribute*
+  // html_tag [generic] html_attribute*
   static boolean html_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_inner")) return false;
     boolean r;
@@ -321,31 +351,11 @@ public class AwslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [NAME_JOIN (SYMBOL|generic)]
+  // [generic]
   private static boolean html_inner_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_inner_1")) return false;
-    html_inner_1_0(b, l + 1);
+    generic(b, l + 1);
     return true;
-  }
-
-  // NAME_JOIN (SYMBOL|generic)
-  private static boolean html_inner_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_inner_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NAME_JOIN);
-    r = r && html_inner_1_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // SYMBOL|generic
-  private static boolean html_inner_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_inner_1_0_1")) return false;
-    boolean r;
-    r = consumeToken(b, SYMBOL);
-    if (!r) r = generic(b, l + 1);
-    return r;
   }
 
   // html_attribute*
@@ -360,13 +370,26 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SYMBOL EQ value
+  // SYMBOL
+  public static boolean html_key(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_key")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SYMBOL);
+    exit_section_(b, m, HTML_KEY, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // html_key EQ value
   public static boolean html_kv(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_kv")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, SYMBOL, EQ);
+    r = html_key(b, l + 1);
+    r = r && consumeToken(b, EQ);
     r = r && value(b, l + 1);
     exit_section_(b, m, HTML_KV, r);
     return r;

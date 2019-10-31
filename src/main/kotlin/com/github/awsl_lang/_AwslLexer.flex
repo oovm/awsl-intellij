@@ -100,6 +100,7 @@ HEX=[a-fA-F0-9]
 DEC=[0-9]
 INTEGER = 0|[1-9]([_]?[0-9])*
 DECIMAL = {INTEGER}[.]{INTEGER}
+HTML_SYMBOL = [\p{XID_Start}][\p{XID_Continue}\-_:]*
 
 HTML_ESCAPE_TOKEN = &[a-zA-Z]+; | &#{DEC}+ | &#x{HEX}+;
 HTML_TAG_SCRIPT = script
@@ -160,13 +161,12 @@ HTML_TAG_BAD = hr
   while { return WHILE; }
 }
 // 编程环境允许的字面量
-<YYINITIAL, CODE_CONTEXT, HTML_BEGIN, HTML_END>  {
+<YYINITIAL, CODE_CONTEXT>  {
     {STRING} {return STRING;}
+    {SYMBOL} {return SYMBOL;}
     {NAME_JOIN} {return NAME_JOIN;}
     "=" { return EQ; }
 }
-// 正常环境的 symbol
-<YYINITIAL, CODE_CONTEXT> {SYMBOL} {return SYMBOL;}
 // HTML 糟粕, 特殊处理一下
 <HTML_BEGIN> {HTML_TAG_BAD} {
     if (reachTag) {
@@ -234,6 +234,13 @@ HTML_TAG_BAD = hr
 <HTML_BEGIN, HTML_END> < {
     angle_balance += 1;
     return GENERIC_L;
+}
+// 允许的字面量
+<HTML_BEGIN, HTML_END> {
+    {STRING} {return STRING;}
+  //{NAME_JOIN} {return NAME_JOIN;}
+    {HTML_SYMBOL} {return SYMBOL;}
+    "=" { return EQ; }
 }
 // 查找转义
 <HTML_CONTEXT> \s+ {
@@ -322,12 +329,12 @@ HTML_TAG_BAD = hr
     return HTML_STRING;
 }
 // 数字解析 =============================================================================================================
-<YYINITIAL,CODE_CONTEXT> {INTEGER} {
+<YYINITIAL,CODE_CONTEXT, HTML_BEGIN, HTML_END> {INTEGER} {
     stateStack.push(yystate());
     yybegin(NUMBER_WAIT_UNIT);
     return INTEGER;
 }
-<YYINITIAL,CODE_CONTEXT> {DECIMAL} {
+<YYINITIAL,CODE_CONTEXT, HTML_BEGIN, HTML_END> {DECIMAL} {
     stateStack.push(yystate());
     yybegin(NUMBER_WAIT_UNIT);
     return DECIMAL;

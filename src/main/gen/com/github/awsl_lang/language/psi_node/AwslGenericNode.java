@@ -28,9 +28,9 @@ public class AwslGenericNode extends AwslAstNode implements AwslGeneric {
   }
 
   @Override
-  @Nullable
-  public AwslGeneric getGeneric() {
-    return findChildByClass(AwslGeneric.class);
+  @NotNull
+  public List<AwslGenericItem> getGenericItemList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslGenericItem.class);
   }
 
 }

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface AwslGeneric extends PsiElement {
 
-  @Nullable
-  AwslGeneric getGeneric();
+  @NotNull
+  List<AwslGenericItem> getGenericItemList();
 
 }

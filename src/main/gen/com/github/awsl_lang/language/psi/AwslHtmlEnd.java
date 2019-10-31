@@ -11,12 +11,12 @@ public interface AwslHtmlEnd extends PsiElement {
   AwslGeneric getGeneric();
 
   @NotNull
+  List<AwslHtmlKey> getHtmlKeyList();
+
+  @NotNull
   List<AwslHtmlKv> getHtmlKvList();
 
   @Nullable
   AwslHtmlTag getHtmlTag();
-
-  @NotNull
-  List<AwslNumberLiteral> getNumberLiteralList();
 
 }

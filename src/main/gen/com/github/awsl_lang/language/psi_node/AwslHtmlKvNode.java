@@ -29,6 +29,12 @@ public class AwslHtmlKvNode extends AwslAstNode implements AwslHtmlKv {
 
   @Override
   @NotNull
+  public AwslHtmlKey getHtmlKey() {
+    return findNotNullChildByClass(AwslHtmlKey.class);
+  }
+
+  @Override
+  @NotNull
   public AwslValue getValue() {
     return findNotNullChildByClass(AwslValue.class);
   }

@@ -1,13 +1,13 @@
-< DropDown::<Vec<T>>>
+< DropDow<Vec<T>> attr="?">
     TEXT &#x20AC;
     <\a>
         SYMBOL
     </a>
     TEXT &euro;
-</DropDown::<Vec<T>>>
+</DropDown<Vec<T>>>
 
 for i in s {
-    <a link = 2> </a>
+    <a link = 2> aa </a>
 }
 
 <\script>
