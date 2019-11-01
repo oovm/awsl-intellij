@@ -1,21 +1,11 @@
 package com.github.awsl_lang.ide.file_view
 
-import com.github.awsl_lang.language.psi.AwslHtmlCode
-import com.github.awsl_lang.language.psi.AwslHtmlEscape
-import com.github.awsl_lang.language.psi.AwslHtmlText
-import com.github.awsl_lang.language.psi.AwslRecursiveVisitor
+import com.github.awsl_lang.language.psi.*
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.psi.PsiElement
 import org.apache.commons.lang.StringEscapeUtils
 
 class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>) : AwslRecursiveVisitor() {
-//    override fun visitMap(o: VomlMap) {
-//        if (o.mapEntryList.isNotEmpty()) {
-//            fold(o)
-//            super.visitMap(o)
-//        }
-//    }
-
     override fun visitHtmlText(o: AwslHtmlText) {
         val text = when (val tag = o.htmlStartText.htmlTag) {
             null -> "</>"
@@ -44,6 +34,11 @@ class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>
         val char = StringEscapeUtils.unescapeHtml(o.text)
         fold(o, char, true)
         super.visitHtmlEscape(o)
+    }
+
+
+    override fun visitBraceBlock(o: AwslBraceBlock) {
+        fold(o, "{...}")
     }
 
     private fun fold(element: PsiElement) {
