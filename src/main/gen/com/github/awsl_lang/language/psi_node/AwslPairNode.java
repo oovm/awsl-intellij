@@ -11,14 +11,14 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 import com.github.awsl_lang.ast.AwslAstNode;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslValueNode extends AwslAstNode implements AwslValue {
+public class AwslPairNode extends AwslAstNode implements AwslPair {
 
-  public AwslValueNode(@NotNull ASTNode node) {
+  public AwslPairNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitValue(this);
+    visitor.visitPair(this);
   }
 
   @Override
@@ -28,27 +28,15 @@ public class AwslValueNode extends AwslAstNode implements AwslValue {
   }
 
   @Override
-  @Nullable
-  public AwslDict getDict() {
-    return findChildByClass(AwslDict.class);
+  @NotNull
+  public AwslKey getKey() {
+    return findNotNullChildByClass(AwslKey.class);
   }
 
   @Override
-  @Nullable
-  public AwslList getList() {
-    return findChildByClass(AwslList.class);
-  }
-
-  @Override
-  @Nullable
-  public AwslNumberLiteral getNumberLiteral() {
-    return findChildByClass(AwslNumberLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public AwslStringLiteral getStringLiteral() {
-    return findChildByClass(AwslStringLiteral.class);
+  @NotNull
+  public AwslValue getValue() {
+    return findNotNullChildByClass(AwslValue.class);
   }
 
 }

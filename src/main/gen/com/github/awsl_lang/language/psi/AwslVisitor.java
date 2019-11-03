@@ -15,7 +15,7 @@ public class AwslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBracketBlock(@NotNull AwslBracketBlock o) {
+  public void visitDict(@NotNull AwslDict o) {
     visitPsiElement(o);
   }
 
@@ -79,7 +79,19 @@ public class AwslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitKey(@NotNull AwslKey o) {
+    visitPsiElement(o);
+  }
+
+  public void visitList(@NotNull AwslList o) {
+    visitPsiElement(o);
+  }
+
   public void visitNumberLiteral(@NotNull AwslNumberLiteral o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPair(@NotNull AwslPair o) {
     visitPsiElement(o);
   }
 

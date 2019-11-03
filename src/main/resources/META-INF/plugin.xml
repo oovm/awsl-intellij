@@ -31,7 +31,7 @@
 		/>
 		<lang.formatter
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.formatter.AwslFormattingBuilder"
+			implementationClass="com.github.awsl_lang.ide.formatter.AwslFormatterBuilder"
 		/>
 		<lang.commenter
 			language="AWSL"

@@ -7,7 +7,7 @@ style 短指令
     //?
     //? `style` can be repeated many times, and each style will accumulate
     style = {
-        z_index: 0
+        z_index : 0
     }
     //? You can also use a list to accumulate.
     //? which is especially suitable for dynamic changes.
@@ -17,9 +17,9 @@ style 短指令
     style:lg = "bg-green-500"
     //? If you want to use css, this is not recommended
     //? `style-raw` setter will override all styles above
-    style-raw = css"""
-        padding: 1rem;
-    """
+    // style-raw = css"""
+    //     padding: 1rem;
+    // """
 >
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 </div>

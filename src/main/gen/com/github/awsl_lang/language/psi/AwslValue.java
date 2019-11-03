@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface AwslValue extends PsiElement {
 
   @Nullable
+  AwslDict getDict();
+
+  @Nullable
+  AwslList getList();
+
+  @Nullable
   AwslNumberLiteral getNumberLiteral();
 
   @Nullable

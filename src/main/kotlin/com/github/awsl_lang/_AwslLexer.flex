@@ -71,6 +71,7 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 %state HTML_RAW_CONTEXT
 %state Generic
 %state NUMBER_WAIT_UNIT
+%state DICT_CONTEXT
 
 WHITE_SPACE=\s+
 TEXT_SPACE=\s+
@@ -100,7 +101,6 @@ HEX=[a-fA-F0-9]
 DEC=[0-9]
 INTEGER = 0|[1-9]([_]?[0-9])*
 DECIMAL = {INTEGER}[.]{INTEGER}
-HTML_SYMBOL = [\p{XID_Start}][\p{XID_Continue}\-_:]*
 
 HTML_ESCAPE_TOKEN = &[a-zA-Z]+; | &#{DEC}+ | &#x{HEX}+;
 HTML_TAG_SCRIPT = script
@@ -239,8 +239,13 @@ HTML_TAG_BAD = hr
 <HTML_BEGIN, HTML_END> {
     {STRING} {return STRING;}
   //{NAME_JOIN} {return NAME_JOIN;}
-    {HTML_SYMBOL} {return SYMBOL;}
+    "-" { return HYPHEN; }
+    ":" { return COLON; }
     "=" { return EQ; }
+    "[" { return BRACKET_L; }
+    "]" { return BRACKET_R; }
+    "{" { return BRACE_L; }
+    "}" { return BRACE_R; }
 }
 // 查找转义
 <HTML_CONTEXT> \s+ {
@@ -347,5 +352,11 @@ HTML_TAG_BAD = hr
     yypushback(1);
     yybegin(stateStack.pop());
 }
+// 字典解析 =============================================================================================================
+//<HTML_BEGIN, HTML_END> \{ {
+//    stateStack.push(yystate());
+//    yybegin(DICT_CONTEXT);
+//    return INTEGER;
+//}
 // 未定义态: BAD_CHARACTER ==============================================================================================
 [^] { return BAD_CHARACTER; }

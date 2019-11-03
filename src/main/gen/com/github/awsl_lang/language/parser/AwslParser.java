@@ -85,7 +85,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BRACKET_L [<<item>> (<<sp>> <<item>>)* [<<sp>>]] BRACKET_R
-  public static boolean bracket_block(PsiBuilder b, int l, Parser _item, Parser _sp) {
+  static boolean bracket_block(PsiBuilder b, int l, Parser _item, Parser _sp) {
     if (!recursion_guard_(b, l, "bracket_block")) return false;
     if (!nextTokenIs(b, BRACKET_L)) return false;
     boolean r;
@@ -93,7 +93,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, BRACKET_L);
     r = r && bracket_block_1(b, l + 1, _item, _sp);
     r = r && consumeToken(b, BRACKET_R);
-    exit_section_(b, m, BRACKET_BLOCK, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -162,6 +162,26 @@ public class AwslParser implements PsiParser, LightPsiParser {
     if (!r) r = for_statement(b, l + 1);
     if (!r) r = consumeToken(b, SYMBOL);
     return r;
+  }
+
+  /* ********************************************************** */
+  // [SYMBOL] <<brace_block pair SEMICOLON>>
+  public static boolean dict(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "dict")) return false;
+    if (!nextTokenIs(b, "<dict>", BRACE_L, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, DICT, "<dict>");
+    r = dict_0(b, l + 1);
+    r = r && brace_block(b, l + 1, AwslParser::pair, SEMICOLON_parser_);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // [SYMBOL]
+  private static boolean dict_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "dict_0")) return false;
+    consumeToken(b, SYMBOL);
+    return true;
   }
 
   /* ********************************************************** */
@@ -370,14 +390,46 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SYMBOL
+  // SYMBOL ((COLON|HYPHEN) SYMBOL)*
   public static boolean html_key(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_key")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, SYMBOL);
+    r = r && html_key_1(b, l + 1);
     exit_section_(b, m, HTML_KEY, r);
+    return r;
+  }
+
+  // ((COLON|HYPHEN) SYMBOL)*
+  private static boolean html_key_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_key_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!html_key_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "html_key_1", c)) break;
+    }
+    return true;
+  }
+
+  // (COLON|HYPHEN) SYMBOL
+  private static boolean html_key_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_key_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = html_key_1_0_0(b, l + 1);
+    r = r && consumeToken(b, SYMBOL);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // COLON|HYPHEN
+  private static boolean html_key_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "html_key_1_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, COLON);
+    if (!r) r = consumeToken(b, HYPHEN);
     return r;
   }
 
@@ -545,6 +597,30 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // SYMBOL
+  public static boolean key(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "key")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SYMBOL);
+    exit_section_(b, m, KEY, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // <<bracket_block value COMMA>>
+  public static boolean list(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "list")) return false;
+    if (!nextTokenIs(b, BRACKET_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = bracket_block(b, l + 1, AwslParser::value, COMMA_parser_);
+    exit_section_(b, m, LIST, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // (INTEGER | DECIMAL) [NUMBER_UNIT]
   public static boolean number_literal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "number_literal")) return false;
@@ -571,6 +647,20 @@ public class AwslParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "number_literal_1")) return false;
     consumeToken(b, NUMBER_UNIT);
     return true;
+  }
+
+  /* ********************************************************** */
+  // key COLON value
+  public static boolean pair(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pair")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = key(b, l + 1);
+    r = r && consumeToken(b, COLON);
+    r = r && value(b, l + 1);
+    exit_section_(b, m, PAIR, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -625,16 +715,20 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // string_literal|number_literal
+  // dict | list | string_literal|number_literal | SYMBOL
   public static boolean value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, VALUE, "<value>");
-    r = string_literal(b, l + 1);
+    r = dict(b, l + 1);
+    if (!r) r = list(b, l + 1);
+    if (!r) r = string_literal(b, l + 1);
     if (!r) r = number_literal(b, l + 1);
+    if (!r) r = consumeToken(b, SYMBOL);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  static final Parser COMMA_parser_ = (b, l) -> consumeToken(b, COMMA);
   static final Parser SEMICOLON_parser_ = (b, l) -> consumeToken(b, SEMICOLON);
 }

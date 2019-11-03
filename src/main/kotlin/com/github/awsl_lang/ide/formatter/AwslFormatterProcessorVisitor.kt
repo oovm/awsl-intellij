@@ -1,42 +1,18 @@
 package com.github.awsl_lang.ide.formatter
 
-import com.github.awsl_lang.AwslLanguage
 import com.github.awsl_lang.ide.formatter.codeStyle.AwslCodeStyleSettings
 import com.github.awsl_lang.language.psi.AwslHtmlStartCode
 import com.github.awsl_lang.language.psi.AwslHtmlStartText
 import com.github.awsl_lang.language.psi.AwslRecursiveVisitor
-import com.intellij.application.options.CodeStyle
 import com.intellij.json.JsonElementTypes
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.editor.Document
-import com.intellij.openapi.util.TextRange
-import com.intellij.psi.*
-import com.intellij.psi.impl.source.codeStyle.PreFormatProcessor
-import com.intellij.util.DocumentUtil
+import com.intellij.psi.PsiComment
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiErrorElement
+import com.intellij.psi.PsiWhiteSpace
 
-class AwslFormatProcessor : PreFormatProcessor {
-    override fun process(element: ASTNode, range: TextRange): TextRange {
-        val rootPsi = element.psi
-        if (rootPsi.language !== AwslLanguage.INSTANCE) {
-            return range
-        }
-        val settings = CodeStyle.getCustomSettings(
-            rootPsi.containingFile,
-            AwslCodeStyleSettings::class.java
-        )
-        val psiDocumentManager = PsiDocumentManager.getInstance(rootPsi.project)
-        val document = psiDocumentManager.getDocument(rootPsi.containingFile) ?: return range
-        DocumentUtil.executeInBulk(document) {
-            psiDocumentManager.doPostponedOperationsAndUnblockDocument(document)
-            val visitor: PsiElementVisitor = AwslFormatProcessorVisitor(document, settings)
-            rootPsi.accept(visitor)
-            psiDocumentManager.commitDocument(document)
-        }
-        return range
-    }
-}
-
-class AwslFormatProcessorVisitor constructor(
+class AwslFormatterProcessorVisitor constructor(
     private val myDocument: Document,
     private var settings: AwslCodeStyleSettings
 ) : AwslRecursiveVisitor() {

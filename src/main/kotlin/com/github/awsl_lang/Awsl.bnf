@@ -29,6 +29,7 @@
         ACCENT="^"
         DOLLAR="$"
         DOT="."
+        HYPHEN="-"
         AT="@"
         EQ="="
         COLON=":"
@@ -94,7 +95,7 @@ private html_attribute ::=
     | html_key;
 html_tag ::= HTML_TAG_RAW | HTML_TAG_SCRIPT | HTML_TAG_SYMBOL;
 html_kv  ::=  html_key EQ value;
-html_key ::= SYMBOL;
+html_key ::= SYMBOL ((COLON|HYPHEN) SYMBOL)*;
 // =====================================================================================================================
 // a::<T>
 generic ::= GENERIC_L generic_item [COMMA generic_item] [COMMA] GENERIC_R;
@@ -128,14 +129,20 @@ fake binary_expr ::= expr + {
     ]
 }
 // =====================================================================================================================
-value ::= string_literal|number_literal;
+pair ::= key COLON value;
+key ::= SYMBOL;
+value ::= dict | list | string_literal|number_literal | SYMBOL;
+// =====================================================================================================================
+list ::= <<bracket_block value COMMA>>
+dict ::= [SYMBOL] <<brace_block pair SEMICOLON>>
+// =====================================================================================================================
 string_literal ::= STRING;
 number_literal ::= (INTEGER | DECIMAL) [NUMBER_UNIT]
 // =====================================================================================================================
 // parenthesis ( )
 private meta parenthesis ::= PARENTHESIS_L <<param>> PARENTHESIS_R;
 // bracket [ ]
-meta bracket_block ::= BRACKET_L [<<item>> (<<sp>> <<item>>)* [<<sp>>]] BRACKET_R;
+private meta bracket_block ::= BRACKET_L [<<item>> (<<sp>> <<item>>)* [<<sp>>]] BRACKET_R;
 // brace { }
 meta brace_block ::= BRACE_L (<<item>>|<<sp>>)* BRACE_R;
 

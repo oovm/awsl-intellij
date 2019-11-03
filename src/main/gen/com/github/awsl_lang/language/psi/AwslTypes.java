@@ -9,7 +9,7 @@ import com.github.awsl_lang.language.psi_node.*;
 public interface AwslTypes {
 
   IElementType BRACE_BLOCK = new AwslElementType("BRACE_BLOCK");
-  IElementType BRACKET_BLOCK = new AwslElementType("BRACKET_BLOCK");
+  IElementType DICT = new AwslElementType("DICT");
   IElementType ELSE_STATEMENT = new AwslElementType("ELSE_STATEMENT");
   IElementType FOR_STATEMENT = new AwslElementType("FOR_STATEMENT");
   IElementType GENERIC = new AwslElementType("GENERIC");
@@ -25,7 +25,10 @@ public interface AwslTypes {
   IElementType HTML_TAG = new AwslElementType("HTML_TAG");
   IElementType HTML_TEXT = new AwslElementType("HTML_TEXT");
   IElementType IF_STATEMENT = new AwslElementType("IF_STATEMENT");
+  IElementType KEY = new AwslElementType("KEY");
+  IElementType LIST = new AwslElementType("LIST");
   IElementType NUMBER_LITERAL = new AwslElementType("NUMBER_LITERAL");
+  IElementType PAIR = new AwslElementType("PAIR");
   IElementType PATTERN = new AwslElementType("PATTERN");
   IElementType STRING_LITERAL = new AwslElementType("STRING_LITERAL");
   IElementType VALUE = new AwslElementType("VALUE");
@@ -61,6 +64,7 @@ public interface AwslTypes {
   IElementType HTML_TAG_RAW = new AwslTokenType("HTML_TAG_RAW");
   IElementType HTML_TAG_SCRIPT = new AwslTokenType("HTML_TAG_SCRIPT");
   IElementType HTML_TAG_SYMBOL = new AwslTokenType("HTML_TAG_SYMBOL");
+  IElementType HYPHEN = new AwslTokenType("HYPHEN");
   IElementType IF = new AwslTokenType("IF");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType INTEGER = new AwslTokenType("INTEGER");
@@ -80,8 +84,8 @@ public interface AwslTypes {
       if (type == BRACE_BLOCK) {
         return new AwslBraceBlockNode(node);
       }
-      else if (type == BRACKET_BLOCK) {
-        return new AwslBracketBlockNode(node);
+      else if (type == DICT) {
+        return new AwslDictNode(node);
       }
       else if (type == ELSE_STATEMENT) {
         return new AwslElseStatementNode(node);
@@ -128,8 +132,17 @@ public interface AwslTypes {
       else if (type == IF_STATEMENT) {
         return new AwslIfStatementNode(node);
       }
+      else if (type == KEY) {
+        return new AwslKeyNode(node);
+      }
+      else if (type == LIST) {
+        return new AwslListNode(node);
+      }
       else if (type == NUMBER_LITERAL) {
         return new AwslNumberLiteralNode(node);
+      }
+      else if (type == PAIR) {
+        return new AwslPairNode(node);
       }
       else if (type == PATTERN) {
         return new AwslPatternNode(node);

@@ -11,20 +11,26 @@ import static com.github.awsl_lang.language.psi.AwslTypes.*;
 import com.github.awsl_lang.ast.AwslAstNode;
 import com.github.awsl_lang.language.psi.*;
 
-public class AwslBracketBlockNode extends AwslAstNode implements AwslBracketBlock {
+public class AwslListNode extends AwslAstNode implements AwslList {
 
-  public AwslBracketBlockNode(@NotNull ASTNode node) {
+  public AwslListNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitBracketBlock(this);
+    visitor.visitList(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof AwslVisitor) accept((AwslVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<AwslValue> getValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslValue.class);
   }
 
 }
