@@ -6,14 +6,14 @@ import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.tree.TokenSet
 
-data class AwslFormatterContext(
+data class AwslSpaceFormatter(
     val commonSettings: CommonCodeStyleSettings,
     val spacingBuilder: SpacingBuilder
 ) {
     companion object {
-        fun create(settings: CodeStyleSettings): AwslFormatterContext {
+        fun create(settings: CodeStyleSettings): AwslSpaceFormatter {
             val commonSettings = settings.getCommonSettings(com.github.awsl_lang.AwslLanguage.INSTANCE)
-            return AwslFormatterContext(commonSettings, createSpacingBuilder(commonSettings))
+            return AwslSpaceFormatter(commonSettings, createSpacingBuilder(commonSettings))
         }
 
         private val remove_space_before = TokenSet.create(

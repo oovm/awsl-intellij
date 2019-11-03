@@ -9,6 +9,6 @@ fun ASTNode?.isWhitespaceOrEmpty(): Boolean {
     return this == null || textLength == 0 || elementType == TokenType.WHITE_SPACE
 }
 
-fun Block.computeSpacing(child1: Block?, child2: Block, ctx: AwslFormatterContext): Spacing? {
+fun Block.computeSpacing(child1: Block?, child2: Block, ctx: AwslSpaceFormatter): Spacing? {
     return ctx.spacingBuilder.getSpacing(this, child1, child2)
 }

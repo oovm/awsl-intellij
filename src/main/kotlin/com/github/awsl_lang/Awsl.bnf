@@ -93,9 +93,8 @@ private html_attribute ::=
     html_kv
     | html_key;
 html_tag ::= HTML_TAG_RAW | HTML_TAG_SCRIPT | HTML_TAG_SYMBOL;
-html_kv ::=  html_key EQ value;
+html_kv  ::=  html_key EQ value;
 html_key ::= SYMBOL;
-
 // =====================================================================================================================
 // a::<T>
 generic ::= GENERIC_L generic_item [COMMA generic_item] [COMMA] GENERIC_R;

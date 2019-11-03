@@ -11,7 +11,7 @@ class AwslFormattingBuilder : FormattingModelBuilder {
     override fun createModel(formattingContext: FormattingContext): FormattingModel {
         val settings = formattingContext.codeStyleSettings
         val element = formattingContext.psiElement
-        val ctx = AwslFormatterContext.create(settings)
+        val ctx = AwslSpaceFormatter.create(settings)
         val block = createBlock(element.node, null, Indent.getNoneIndent(), null, ctx)
         return FormattingModelProvider.createFormattingModelForPsiFile(element.containingFile, block, settings)
     }
@@ -22,7 +22,7 @@ class AwslFormattingBuilder : FormattingModelBuilder {
             alignment: Alignment?,
             indent: Indent?,
             wrap: Wrap?,
-            ctx: AwslFormatterContext
-        ): ASTBlock = AwslFormatterHelper(node, alignment, indent, wrap, ctx)
+            ctx: AwslSpaceFormatter
+        ): ASTBlock = AwslIdentFormatter(node, alignment, indent, wrap, ctx)
     }
 }

@@ -35,6 +35,7 @@ class AwslHighlightToken : SyntaxHighlighterBase() {
             // atom
             INTEGER -> Color.INTEGER
             DECIMAL -> Color.DECIMAL
+            NUMBER_UNIT -> Color.NUM_HINT
             //URL -> JssColor.URL
             STRING -> Color.STRING
             SYMBOL -> Color.IDENTIFIER

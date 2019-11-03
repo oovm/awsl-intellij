@@ -26,7 +26,9 @@ enum class AwslHighlightColor(humanName: Supplier<@NlsContexts.AttributeDescript
     INTEGER(messagePointer("color.token.integer"), Default.NUMBER),
     STRING(messagePointer("color.token.string"), Default.STRING),
     URL(messagePointer("color.token.url"), STRING.textAttributesKey),
-
+    //
+    TYPE_HINT(messagePointer("color.token.symbol.type"), Default.CLASS_NAME),
+    NUM_HINT(messagePointer("color.token.symbol.type"), Default.PREDEFINED_SYMBOL),
     // 标识符
     IDENTIFIER(OptionsBundle.messagePointer("options.language.defaults.identifier"), Default.IDENTIFIER),
     SYM_ANNO(messagePointer("color.token.symbol.annotation"), Default.STATIC_METHOD),
@@ -39,8 +41,7 @@ enum class AwslHighlightColor(humanName: Supplier<@NlsContexts.AttributeDescript
     HTML_TAG(messagePointer("color.token.template.name"), Default.CLASS_NAME),
     HTML_TEXT(messagePointer("color.token.template.text"), XmlHighlighterColors.XML_TAG_DATA),
     HTML_ESCAPE(messagePointer("color.token.template.escape"), XmlHighlighterColors.HTML_ENTITY_REFERENCE),
-    //
-    TYPE_HINT(messagePointer("color.token.symbol.type"), Default.CLASS_NAME),
+
 
     // 标点符号
     PARENTHESES(OptionsBundle.messagePointer("options.language.defaults.parentheses"), Default.PARENTHESES),
