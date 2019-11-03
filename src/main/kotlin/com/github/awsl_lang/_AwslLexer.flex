@@ -343,9 +343,9 @@ HTML_TAG_BAD = hr
     yybegin(stateStack.pop());
     return NUMBER_UNIT;
 }
-<NUMBER_WAIT_UNIT> {WHITE_SPACE} {
+<NUMBER_WAIT_UNIT> [^\p{XID_Start}] {
+    yypushback(1);
     yybegin(stateStack.pop());
-    return WHITE_SPACE;
 }
 // 未定义态: BAD_CHARACTER ==============================================================================================
 [^] { return BAD_CHARACTER; }

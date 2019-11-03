@@ -36,7 +36,6 @@ class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>
         super.visitHtmlEscape(o)
     }
 
-
     override fun visitBraceBlock(o: AwslBraceBlock) {
         fold(o, "{...}")
     }

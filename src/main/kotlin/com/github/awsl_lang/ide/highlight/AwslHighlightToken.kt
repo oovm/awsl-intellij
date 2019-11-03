@@ -30,11 +30,11 @@ class AwslHighlightToken : SyntaxHighlighterBase() {
             PARENTHESIS_L, PARENTHESIS_R -> Color.PARENTHESES
             BRACKET_L, BRACKET_R -> Color.BRACKETS
             BRACE_L, BRACE_R -> Color.BRACES
-            //COLON, EQ -> JssColor.SET
+            COLON, EQ -> Color.SET
             COMMA -> Color.COMMA
             // atom
-            //INTEGER -> JssColor.INTEGER
-            //DECIMAL -> JssColor.DECIMAL
+            INTEGER -> Color.INTEGER
+            DECIMAL -> Color.DECIMAL
             //URL -> JssColor.URL
             STRING -> Color.STRING
             SYMBOL -> Color.IDENTIFIER
