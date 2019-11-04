@@ -16,7 +16,7 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as Default
 enum class AwslHighlightColor(humanName: Supplier<@NlsContexts.AttributeDescriptor String>, default: TextAttributesKey? = null) {
     // 特殊关键词
     KEYWORD(OptionsBundle.messagePointer("options.language.defaults.keyword"), Default.KEYWORD),
-    IDIOM_SYMBOL(messagePointer("color.token.symbol.idiom"), Default.METADATA),
+    METADATA(messagePointer("color.token.symbol.idiom"), Default.METADATA),
     KEYWORD_TAG(messagePointer("color.token.idiom_mark"), KEYWORD.textAttributesKey),
 
     // 字面量

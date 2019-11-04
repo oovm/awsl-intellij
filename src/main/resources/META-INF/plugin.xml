@@ -73,7 +73,7 @@
 		/>
 		<completion.contributor
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.completion.VomlOptionCompletionContributor"
+			implementationClass="com.github.awsl_lang.ide.completion.AwslCompletionContributor"
 		/>
 
 		<!--annotator language="JSS" implementationClass="com.github.awsl_lang.ide.annotator.LiteralChecker"-->

@@ -64,10 +64,10 @@ public interface AwslTypes {
   IElementType HTML_TAG_RAW = new AwslTokenType("HTML_TAG_RAW");
   IElementType HTML_TAG_SCRIPT = new AwslTokenType("HTML_TAG_SCRIPT");
   IElementType HTML_TAG_SYMBOL = new AwslTokenType("HTML_TAG_SYMBOL");
-  IElementType HYPHEN = new AwslTokenType("HYPHEN");
   IElementType IF = new AwslTokenType("IF");
   IElementType IN = new AwslTokenType("Keyword in");
   IElementType INTEGER = new AwslTokenType("INTEGER");
+  IElementType MINUS = new AwslTokenType("-");
   IElementType NAME_JOIN = new AwslTokenType("::");
   IElementType NUMBER_UNIT = new AwslTokenType("NUMBER_UNIT");
   IElementType PARENTHESIS_L = new AwslTokenType("(");

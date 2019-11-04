@@ -25,7 +25,7 @@ abstract class AnnotatorBase : Annotator {
         @TestOnly
         fun enableAnnotator(annotatorClass: Class<out AnnotatorBase>, parentDisposable: Disposable) {
             enabledAnnotators += annotatorClass
-            Disposer.register(parentDisposable, Disposable { enabledAnnotators -= annotatorClass })
+            Disposer.register(parentDisposable) { enabledAnnotators -= annotatorClass }
         }
     }
 }

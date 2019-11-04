@@ -10,7 +10,7 @@ for i in s {
 
 <\script>
 for i in s {
-    <a link = 2px>
+    <a style="text-" link = 2px>
         42
     </a>
 }

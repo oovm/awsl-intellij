@@ -81,7 +81,7 @@ COMMENT_BLOCK=(\/\*\*\/])
 COMMENT_HTML=(<\!-->)
 NAME_JOIN = ::
 
-SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
+SYMBOL=[\p{XID_Start}_-][\p{XID_Continue}_-]*
 STRING=\"{CHARACTER}*\"
 
 CHARACTER=
@@ -239,7 +239,6 @@ HTML_TAG_BAD = hr
 <HTML_BEGIN, HTML_END> {
     {STRING} {return STRING;}
   //{NAME_JOIN} {return NAME_JOIN;}
-    "-" { return HYPHEN; }
     ":" { return COLON; }
     "=" { return EQ; }
     "[" { return BRACKET_L; }

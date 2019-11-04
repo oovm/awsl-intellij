@@ -390,7 +390,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SYMBOL ((COLON|HYPHEN) SYMBOL)*
+  // SYMBOL (COLON SYMBOL)*
   public static boolean html_key(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_key")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
@@ -402,7 +402,7 @@ public class AwslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ((COLON|HYPHEN) SYMBOL)*
+  // (COLON SYMBOL)*
   private static boolean html_key_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_key_1")) return false;
     while (true) {
@@ -413,23 +413,13 @@ public class AwslParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (COLON|HYPHEN) SYMBOL
+  // COLON SYMBOL
   private static boolean html_key_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "html_key_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = html_key_1_0_0(b, l + 1);
-    r = r && consumeToken(b, SYMBOL);
+    r = consumeTokens(b, 0, COLON, SYMBOL);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // COLON|HYPHEN
-  private static boolean html_key_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "html_key_1_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, COLON);
-    if (!r) r = consumeToken(b, HYPHEN);
     return r;
   }
 
