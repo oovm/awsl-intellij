@@ -2,6 +2,7 @@ package com.github.awsl_lang.ide.file_view
 
 import com.github.awsl_lang.language.psi.*
 import com.intellij.lang.folding.FoldingDescriptor
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import org.apache.commons.lang.StringEscapeUtils
 
@@ -31,13 +32,15 @@ class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>
     }
 
     override fun visitHtmlSelfClose(o: AwslHtmlSelfClose) {
-       val tag =  when (val tag = o.htmlTag) {
-            null -> {"</>"}
+        val start = when (val tag = o.htmlTag) {
+            null -> {
+                o.firstChild.endOffset
+            }
             else -> {
-                "<${tag.text}/>"
+                tag.endOffset
             }
         }
-        fold(o, tag)
+        descriptors += FoldingDescriptor(o.node, TextRange(start, o.lastChild.startOffset))
         super.visitHtmlSelfClose(o)
     }
 
@@ -49,10 +52,6 @@ class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>
 
     override fun visitBraceBlock(o: AwslBraceBlock) {
         fold(o, "{...}")
-    }
-
-    private fun fold(element: PsiElement) {
-        descriptors += FoldingDescriptor(element.node, element.textRange)
     }
 
     private fun fold(element: PsiElement, text: String) {

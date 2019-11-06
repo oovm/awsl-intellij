@@ -1,6 +1,7 @@
 package com.github.awsl_lang
 
 import com.github.awsl_lang.ide.file_types.AwslFile
+import com.github.awsl_lang.language.parser.AwslParser
 import com.github.awsl_lang.language.psi.AwslTypes
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
@@ -25,18 +26,15 @@ class AwslParserDefinition : ParserDefinition {
 
     override fun createLexer(project: Project): Lexer = AwslLexerAdapter()
 
-    override fun createParser(project: Project): PsiParser = com.github.awsl_lang.language.parser.AwslParser()
+    override fun createParser(project: Project): PsiParser = AwslParser()
 
-    override fun getFileNodeType(): IFileElementType =
-        FILE
+    override fun getFileNodeType(): IFileElementType = FILE
 
-    override fun getCommentTokens(): TokenSet =
-        COMMENTS
+    override fun getCommentTokens(): TokenSet = COMMENTS
 
     // override fun getWhitespaceTokens(): TokenSet = WHITE_SPACE
 
-    override fun getStringLiteralElements(): TokenSet =
-        STRING_LITERALS
+    override fun getStringLiteralElements(): TokenSet =        STRING_LITERALS
 
     override fun createElement(node: ASTNode): PsiElement = AwslTypes.Factory.createElement(node)
 

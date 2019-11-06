@@ -5,6 +5,7 @@
 
 package com.github.awsl_lang.ide.doc
 
+import com.github.awsl_lang.AwslBundle
 import com.github.awsl_lang.ide.file_types.AwslFile
 import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.lang.documentation.DocumentationMarkup.*
@@ -59,16 +60,7 @@ class AwslDocumentationProvider : AbstractDocumentationProvider() {
         return generateDoc(element, originalElement);
     }
 
-    override fun generateRenderedDoc(comment: PsiDocCommentBase): String? {
-        return listOf(
-            DEFINITION_START,
-            "Unimplemented: AwslDocumentationProvider",
-            DEFINITION_END,
-            CONTENT_START,
-            comment.text,
-            CONTENT_END
-        ).joinToString("\n")
-    }
+
 
     override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String? {
         return "Unimplemented: AwslDocumentationProvider for $element"
@@ -82,6 +74,17 @@ class AwslDocumentationProvider : AbstractDocumentationProvider() {
             }
         }
         super.collectDocComments(file, sink)
+    }
+
+    override fun generateRenderedDoc(comment: PsiDocCommentBase): String? {
+        return listOf(
+            DEFINITION_START,
+            "Unimplemented: AwslDocumentationProvider",
+            DEFINITION_END,
+            CONTENT_START,
+            comment.text,
+            CONTENT_END
+        ).joinToString("\n")
     }
 
 }
