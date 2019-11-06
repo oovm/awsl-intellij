@@ -39,7 +39,7 @@
 		/>
 		<lang.foldingBuilder
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.file_view.JssFoldingBuilder"
+			implementationClass="com.github.awsl_lang.ide.file_view.AwslFoldingBuilder"
 		/>
 		<lang.smartEnterProcessor
 			language="AWSL"
@@ -52,7 +52,7 @@
 		/>
 		<lang.documentationProvider
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.doc.JssDocumentationProvider"
+			implementationClass="com.github.awsl_lang.ide.doc.AwslDocumentationProvider"
 		/>
 
 		<lang.braceMatcher

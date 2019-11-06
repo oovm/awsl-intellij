@@ -1,0 +1,18 @@
+<\div
+    class="theme-container"
+    bind:class="pageClasses"
+>
+    <Navbar
+        if="shouldShowNavbar"
+        on:toggle-sidebar="toggleSidebar"
+    />
+
+    <div
+        class="sidebar-mask"
+    />
+    // tttttttttttt
+    //
+    <Sidebar
+        bind:items="sidebarItems"
+    />
+</div>

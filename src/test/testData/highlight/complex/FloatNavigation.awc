@@ -1,0 +1,17 @@
+< header class="navbar">
+
+
+</header>
+
+//
+< style>
+.navbar {
+    padding: .7rem 1.5rem;
+    line-height: 2.2rem
+}
+</style>
+
+< style global>
+
+
+</style>

@@ -8,10 +8,10 @@ import org.apache.commons.lang.StringEscapeUtils
 class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>) : AwslRecursiveVisitor() {
     override fun visitHtmlText(o: AwslHtmlText) {
         val text = when (val tag = o.htmlStartText.htmlTag) {
-            null -> "</>"
+            null -> "< fragment>"
             else -> when (val name = tag.text) {
-                "script" -> "<\\${name}/>"
-                else -> "< ${name}/>"
+                "script" -> "<\\${name}>"
+                else -> "< ${name}>"
             }
         }
         fold(o, text)
@@ -20,14 +20,25 @@ class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>
 
     override fun visitHtmlCode(o: AwslHtmlCode) {
         val code = when (val tag = o.htmlStartCode.htmlTag) {
-            null -> "<\\>"
+            null -> "<\\fragment>"
             else -> when (val name = tag.text) {
-                "raw", "style" -> "< ${name}/>"
-                else -> "<\\${name}/>"
+                "raw", "style" -> "< ${name}>"
+                else -> "<\\${name}>"
             }
         }
         fold(o, code)
         super.visitHtmlCode(o)
+    }
+
+    override fun visitHtmlSelfClose(o: AwslHtmlSelfClose) {
+       val tag =  when (val tag = o.htmlTag) {
+            null -> {"</>"}
+            else -> {
+                "<${tag.text}/>"
+            }
+        }
+        fold(o, tag)
+        super.visitHtmlSelfClose(o)
     }
 
     override fun visitHtmlEscape(o: AwslHtmlEscape) {

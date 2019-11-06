@@ -18,37 +18,24 @@ object AwslIndentFormatter {
             return Indent.getNoneIndent()
         }
         return when (val e = node.psi) {
-            is AwslBraceBlock -> {
-                Indent.getNormalIndent()
+            is AwslHtmlText -> when (val tag = e.htmlStartText.htmlTag) {
+                null -> Indent.getNormalIndent()
+                else -> indentByTagName(tag.text)
             }
-            is AwslHtmlText -> {
-                when (val tag = e.htmlStartText.htmlTag) {
-                    null -> Indent.getNormalIndent()
-                    else -> indentByTagName(tag.text)
-                }
+            is AwslHtmlStartText -> Indent.getNormalIndent()
+            is AwslHtmlCode -> when (val tag = e.htmlStartCode.htmlTag) {
+                null -> Indent.getNormalIndent()
+                else -> indentByTagName(tag.text)
             }
-            is AwslHtmlStartText -> {
-                Indent.getNormalIndent()
-            }
-            is AwslHtmlCode -> {
-                when (val tag = e.htmlStartCode.htmlTag) {
-                    null -> Indent.getNormalIndent()
-                    else -> indentByTagName(tag.text)
-                }
-            }
-            is AwslHtmlStartCode -> {
-                Indent.getNormalIndent()
-            }
+            is AwslHtmlStartCode -> Indent.getNormalIndent()
+            is AwslHtmlSelfClose -> Indent.getNormalIndent()
+            is AwslBraceBlock -> Indent.getNormalIndent()
             else -> Indent.getNoneIndent()
         }
     }
 
     private fun indentByTagName(tag: String) = when (tag) {
-        "script" -> {
-            Indent.getNoneIndent()
-        }
-        else -> {
-            Indent.getNormalIndent()
-        }
+        "script" -> Indent.getNoneIndent()
+        else -> Indent.getNormalIndent()
     }
 }
