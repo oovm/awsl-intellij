@@ -1,14 +1,20 @@
 
-## GILT 运算符 `※`
+## Gilt Operation `※`
 
-※
 GILT 全称为 Globalization, Internationalization, Localization and translation)
 
-过长, 因此采用 bundle
+表示全球化、国际化、本地化和翻译, 因为名称过长, 以下简称 **多语言算符(Gilt Operation)**.
 
 ```
 // 
 @@default_gilt(VomlBundle)
+```
+
+会寻找下上文中所有的 LanguageBundle
+
+```aw
+※LanguageBundle.message.path
+※LanguageBundle.message.path(arg1, arg2)
 ```
 
 完全形式为 VomlBundle.

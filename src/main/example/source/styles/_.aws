@@ -1,0 +1,48 @@
+screens {
+    tablet: 640px
+    laptop: 1024px
+    desktop: 1280px
+}
+
+use base;
+use components;
+use utilities;
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+layer base {
+    h1 {
+        apply text-2xl
+    }
+    h2 {
+        apply text-xl
+    }
+}
+
+use awsl.red;
+
+
+colors themed cool-gray {
+    0: #F9FAFB
+    900: #111827
+    DEFAULT: '#c0ccda'
+    darkest: '#1f2d3d'
+    dark: '#3c4858'
+    light: '#e0e6ed'
+    lightest: '#f9fafc'
+}
+
+use style;
+
+
+
+colors extend regal-blue {
+
+}
+
+colors themed extend blue {
+
+}
