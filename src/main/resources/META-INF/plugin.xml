@@ -10,85 +10,85 @@
 	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
 		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;"
-		          implementationClass="com.github.awsl_lang.ide.file_types.AwslFileType"
+		          implementationClass="awsl.intellij.ide.file_types.AwslFileType"
 		          fieldName="INSTANCE"
 		/>
-		<iconProvider implementation="com.github.awsl_lang.ide.file_view.AwslIconProvider"/>
-		<projectViewNestingRulesProvider implementation="com.github.awsl_lang.ide.file_view.AwslFileGroup"/>
+		<iconProvider implementation="awsl.intellij.ide.file_view.AwslIconProvider"/>
+		<projectViewNestingRulesProvider implementation="awsl.intellij.ide.file_view.AwslFileGroup"/>
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/AwslDefault.xml"/>
 		<additionalTextAttributes scheme="Darcula" file="colors/AwslDarcula.xml"/>
-		<colorSettingsPage implementation="com.github.awsl_lang.ide.highlight.AwslHighlightSetting"/>
-		<highlightVisitor implementation="com.github.awsl_lang.ide.highlight.AwslHighlightVisitor"/>
+		<colorSettingsPage implementation="awsl.intellij.ide.highlight.AwslHighlightSetting"/>
+		<highlightVisitor implementation="awsl.intellij.ide.highlight.AwslHighlightVisitor"/>
 		<lang.syntaxHighlighter
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.highlight.AwslHighlightToken"
+			implementationClass="awsl.intellij.ide.highlight.AwslHighlightToken"
 		/>
 		<!-- Formatter -->
 		<lang.parserDefinition
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.AwslParserDefinition"
+			implementationClass="awsl.intellij.AwslParserDefinition"
 		/>
 		<lang.formatter
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.formatter.AwslFormatterBuilder"
+			implementationClass="awsl.intellij.ide.formatter.AwslFormatterBuilder"
 		/>
 		<lang.commenter
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.formatter.JssCommenter"
+			implementationClass="awsl.intellij.ide.formatter.JssCommenter"
 		/>
 		<lang.foldingBuilder
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.file_view.AwslFoldingBuilder"
+			implementationClass="awsl.intellij.ide.file_view.AwslFoldingBuilder"
 		/>
 		<lang.smartEnterProcessor
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.formatter.JssSmartEnter"
+			implementationClass="awsl.intellij.ide.formatter.JssSmartEnter"
 		/>
 		<!-- Document -->
-		<!--documentationProvider implementation="com.github.awsl_lang.ide.doc.JssDocumentationExtender"-->
+		<!--documentationProvider implementation="awsl.intellij.ide.doc.JssDocumentationExtender"-->
 		<psi.referenceContributor
-			implementation="com.github.awsl_lang.ide.doc.AwslReferenceContributor"
+			implementation="awsl.intellij.ide.doc.AwslReferenceContributor"
 		/>
 		<lang.documentationProvider
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.doc.AwslDocumentationProvider"
+			implementationClass="awsl.intellij.ide.doc.AwslDocumentationProvider"
 		/>
 
 		<lang.braceMatcher
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.matcher.JssBraceMatcher"
+			implementationClass="awsl.intellij.ide.matcher.JssBraceMatcher"
 		/>
 		<lang.quoteHandler
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.matcher.JssQuoteHandler"
+			implementationClass="awsl.intellij.ide.matcher.JssQuoteHandler"
 		/>
 
 		<indexPatternBuilder
-			implementation="com.github.awsl_lang.ide.todo.VomlTodoIndexPatternBuilder"
+			implementation="awsl.intellij.ide.todo.VomlTodoIndexPatternBuilder"
 		/>
 		<todoIndexer
 			filetype="AWSL"
-			implementationClass="com.github.awsl_lang.ide.todo.VomlTodoIndexer"
+			implementationClass="awsl.intellij.ide.todo.VomlTodoIndexer"
 		/>
 		<completion.contributor
 			language="AWSL"
-			implementationClass="com.github.awsl_lang.ide.completion.AwslCompletionContributor"
+			implementationClass="awsl.intellij.ide.completion.AwslCompletionContributor"
 		/>
 
-		<!--annotator language="JSS" implementationClass="com.github.awsl_lang.ide.annotator.LiteralChecker"-->
+		<!--annotator language="JSS" implementationClass="awsl.intellij.ide.annotator.LiteralChecker"-->
 
 		<langCodeStyleSettingsProvider
-			implementation="com.github.awsl_lang.ide.formatter.codeStyle.AwslCodeStyleSettingsProvider"
+			implementation="awsl.intellij.ide.formatter.codeStyle.AwslCodeStyleSettingsProvider"
 		/>
 
 	</extensions>
 	<actions>
-		<action id="NewJssFile" class="com.github.awsl_lang.ide.actions.JssCreateFile">
+		<action id="NewJssFile" class="awsl.intellij.ide.actions.JssCreateFile">
 			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewHtmlFile"/>
 		</action>
 		<action id="jss.JssConvertJson"
-		        class="com.github.awsl_lang.ide.actions.JssConvertJson"/>
+		        class="awsl.intellij.ide.actions.JssConvertJson"/>
 		<group id="jss.JssGenerator" popup="true" text="JssGenerator">
 			<reference ref="NewJssFile"/>
 			<reference ref="jss.JssConvertJson"/>
