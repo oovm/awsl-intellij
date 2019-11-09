@@ -12,22 +12,25 @@ import javax.swing.Icon
 class AwsFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, AwslLanguage.INSTANCE) {
     override fun getFileType(): FileType = AwsFileType.INSTANCE
 
-    override fun toString(): String = com.github.awsl_lang.AwslBundle.message("action.create_file")
+    override fun toString(): String = AwslBundle.message(AwsFileType.LanguageID)
 }
 
-class AwsFileType private constructor() : LanguageFileType(com.github.awsl_lang.AwslLanguage.INSTANCE) {
-    override fun getName(): String = "AWSL"
+class AwsFileType private constructor() : LanguageFileType(AwslLanguage.INSTANCE) {
+    override fun getName(): String = LanguageID
 
-    override fun getDisplayName(): String = com.github.awsl_lang.AwslBundle.message("filetype.awsl.display")
+    override fun getDisplayName(): String = LanguageID
 
-    override fun getDescription(): String = AwslBundle.message("filetype.awsl.description")
+    override fun getDescription(): String = Description
 
-    override fun getDefaultExtension(): String = "awsl;awc;aw;"
+    override fun getDefaultExtension(): String = LanguageExtension
 
     override fun getIcon(): Icon = AwslIconProvider.AwslFile
 
     companion object {
         @JvmStatic
         val INSTANCE = AwsFileType()
+        val Description = AwslBundle.message("filetype.aws.description");
+        const val LanguageID = "AWS"
+        const val LanguageExtension = "aws"
     }
 }

@@ -1,5 +1,5 @@
 <idea-plugin>
-	<id>com.github.voml.awsl_intellij</id>
+	<id>AWSL</id>
 	<name>AWSL Support</name>
 	<vendor>voml</vendor>
 
@@ -9,86 +9,86 @@
 	<!--    <depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>-->
 	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
-		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;aw;"
-		          implementationClass="com.github.voml.awsl_intellij.ide.file_view.AwslFileType"
+		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;"
+		          implementationClass="com.github.awsl_lang.ide.file_types.AwslFileType"
 		          fieldName="INSTANCE"
 		/>
-		<iconProvider implementation="com.github.voml.awsl_intellij.ide.file_view.AwslIconProvider"/>
-		<projectViewNestingRulesProvider implementation="com.github.voml.awsl_intellij.ide.file_view.AwslFileGroup"/>
+		<iconProvider implementation="com.github.awsl_lang.ide.file_view.AwslIconProvider"/>
+		<projectViewNestingRulesProvider implementation="com.github.awsl_lang.ide.file_view.AwslFileGroup"/>
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/AwslDefault.xml"/>
 		<additionalTextAttributes scheme="Darcula" file="colors/AwslDarcula.xml"/>
-		<colorSettingsPage implementation="com.github.voml.awsl_intellij.ide.highlight.AwslColorSettingsPage"/>
-		<highlightVisitor implementation="com.github.voml.awsl_intellij.ide.highlight.AwslHighlightVisitor"/>
+		<colorSettingsPage implementation="com.github.awsl_lang.ide.highlight.AwslHighlightSetting"/>
+		<highlightVisitor implementation="com.github.awsl_lang.ide.highlight.AwslHighlightVisitor"/>
 		<lang.syntaxHighlighter
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.highlight.AwslSyntaxHighlighter"
+			implementationClass="com.github.awsl_lang.ide.highlight.AwslHighlightToken"
 		/>
 		<!-- Formatter -->
 		<lang.parserDefinition
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.AwslParserDefinition"
+			implementationClass="com.github.awsl_lang.AwslParserDefinition"
 		/>
 		<lang.formatter
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssFormattingModelBuilder"
+			implementationClass="com.github.awsl_lang.ide.formatter.AwslFormatterBuilder"
 		/>
 		<lang.commenter
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssCommenter"
+			implementationClass="com.github.awsl_lang.ide.formatter.JssCommenter"
 		/>
 		<lang.foldingBuilder
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssFoldingBuilder"
+			implementationClass="com.github.awsl_lang.ide.file_view.AwslFoldingBuilder"
 		/>
 		<lang.smartEnterProcessor
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.formatter.JssSmartEnter"
+			implementationClass="com.github.awsl_lang.ide.formatter.JssSmartEnter"
 		/>
 		<!-- Document -->
-		<!--documentationProvider implementation="com.github.voml.awsl_intellij.ide.doc.JssDocumentationExtender"-->
+		<!--documentationProvider implementation="com.github.awsl_lang.ide.doc.JssDocumentationExtender"-->
 		<psi.referenceContributor
-			implementation="com.github.voml.awsl_intellij.ide.doc.AwslReferenceContributor"
+			implementation="com.github.awsl_lang.ide.doc.AwslReferenceContributor"
 		/>
 		<lang.documentationProvider
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.doc.JssDocumentationProvider"
+			implementationClass="com.github.awsl_lang.ide.doc.AwslDocumentationProvider"
 		/>
 
 		<lang.braceMatcher
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssBraceMatcher"
+			implementationClass="com.github.awsl_lang.ide.matcher.JssBraceMatcher"
 		/>
 		<lang.quoteHandler
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.matcher.JssQuoteHandler"
+			implementationClass="com.github.awsl_lang.ide.matcher.JssQuoteHandler"
 		/>
 
 		<indexPatternBuilder
-			implementation="com.github.voml.awsl_intellij.ide.todo.VomlTodoIndexPatternBuilder"
+			implementation="com.github.awsl_lang.ide.todo.VomlTodoIndexPatternBuilder"
 		/>
 		<todoIndexer
 			filetype="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.todo.VomlTodoIndexer"
+			implementationClass="com.github.awsl_lang.ide.todo.VomlTodoIndexer"
 		/>
 		<completion.contributor
 			language="AWSL"
-			implementationClass="com.github.voml.awsl_intellij.ide.completion.VomlOptionCompletionContributor"
+			implementationClass="com.github.awsl_lang.ide.completion.AwslCompletionContributor"
 		/>
 
-		<!--annotator language="JSS" implementationClass="com.github.voml.awsl_intellij.ide.annotator.LiteralChecker"-->
+		<!--annotator language="JSS" implementationClass="com.github.awsl_lang.ide.annotator.LiteralChecker"-->
 
 		<langCodeStyleSettingsProvider
-			implementation="com.github.voml.awsl_intellij.ide.codeStyle.VomlLanguageCodeStyleSettingsProvider"
+			implementation="com.github.awsl_lang.ide.formatter.codeStyle.AwslCodeStyleSettingsProvider"
 		/>
 
 	</extensions>
 	<actions>
-		<action id="NewJssFile" class="com.github.voml.awsl_intellij.ide.actions.JssCreateFile">
+		<action id="NewJssFile" class="com.github.awsl_lang.ide.actions.JssCreateFile">
 			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewHtmlFile"/>
 		</action>
 		<action id="jss.JssConvertJson"
-		        class="com.github.voml.awsl_intellij.ide.actions.JssConvertJson"/>
+		        class="com.github.awsl_lang.ide.actions.JssConvertJson"/>
 		<group id="jss.JssGenerator" popup="true" text="JssGenerator">
 			<reference ref="NewJssFile"/>
 			<reference ref="jss.JssConvertJson"/>
