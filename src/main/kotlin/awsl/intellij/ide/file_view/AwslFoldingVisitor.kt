@@ -8,26 +8,28 @@ import org.apache.commons.lang.StringEscapeUtils
 
 class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>) : AwslRecursiveVisitor() {
     override fun visitHtmlText(o: AwslHtmlText) {
-        val text = when (val tag = o.htmlStartText.htmlTag) {
-            null -> "< fragment>"
-            else -> when (val name = tag.text) {
-                "script" -> "<\\${name}>"
-                else -> "< ${name}>"
-            }
+        val start = when (val tag = o.htmlStartText.htmlTag) {
+            null -> o.htmlStartText.firstChild.endOffset
+            else -> tag.endOffset
         }
-        fold(o, text)
+        // TODO: 应该只在末尾 `>` 换行的时候开启
+        // 折叠 html 内容
+//        descriptors += FoldingDescriptor(o.node,
+//            TextRange(o.htmlStartText.endOffset + 1, o.htmlEnd.startOffset - 1),
+//            null,
+//            "..."
+//        )
+        // 折叠整个 html
+        descriptors += FoldingDescriptor(o.node, TextRange(start, o.htmlEnd.lastChild.startOffset), null, "...")
         super.visitHtmlText(o)
     }
 
     override fun visitHtmlCode(o: AwslHtmlCode) {
-        val code = when (val tag = o.htmlStartCode.htmlTag) {
-            null -> "<\\fragment>"
-            else -> when (val name = tag.text) {
-                "raw", "style" -> "< ${name}>"
-                else -> "<\\${name}>"
-            }
+        val start = when (val tag = o.htmlStartCode.htmlTag) {
+            null -> o.htmlStartCode.firstChild.endOffset
+            else -> tag.endOffset
         }
-        fold(o, code)
+        descriptors += FoldingDescriptor(o.node, TextRange(start, o.htmlEnd.lastChild.startOffset), null, "...")
         super.visitHtmlCode(o)
     }
 
@@ -36,7 +38,6 @@ class AwslFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>
             null -> o.firstChild.endOffset
             else -> tag.endOffset
         }
-        // TODO: fix NPE !!
         descriptors += FoldingDescriptor(o.node, TextRange(start, o.lastChild.startOffset))
         super.visitHtmlSelfClose(o)
     }

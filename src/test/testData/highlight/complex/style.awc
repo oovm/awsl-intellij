@@ -1,5 +1,3 @@
-style 短指令
-
 < div
     //? style accepts a list of style abbreviations
     //? see more: [tailwindcss](https://tailwindcss.com/)
@@ -24,12 +22,15 @@ style 短指令
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 </div>
 
+// some scoped style
 < style>
 
 
 </style>
 
+// some global style
 < style global>
 
 
 </style>
+
