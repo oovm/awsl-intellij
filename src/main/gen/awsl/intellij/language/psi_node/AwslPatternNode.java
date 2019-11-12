@@ -2,9 +2,6 @@
 package awsl.intellij.language.psi_node;
 
 import java.util.List;
-
-import awsl.intellij.language.psi.AwslPattern;
-import awsl.intellij.language.psi.AwslVisitor;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;

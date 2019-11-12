@@ -256,7 +256,7 @@ HTML_TAG_BAD = hr
 }
 // 字符环境允许的字面量
 <HTML_CONTEXT> [^&<>{}\s]+ {
-    return HTML_STRING;
+    return HTML_STRING_TOKEN;
 }
 // HTML模板态: HTML_TEMPLATE ============================================================================================
 // 表达式转化 <\a>CODE_CONTEXT</a>
@@ -330,7 +330,7 @@ HTML_TAG_BAD = hr
     return HTML_ESCAPE_TOKEN;
 }
 <HTML_RAW_CONTEXT> [^&<>]+ {
-    return HTML_STRING;
+    return HTML_STRING_TOKEN;
 }
 // 数字解析 =============================================================================================================
 <YYINITIAL,CODE_CONTEXT, HTML_BEGIN, HTML_END> {INTEGER} {

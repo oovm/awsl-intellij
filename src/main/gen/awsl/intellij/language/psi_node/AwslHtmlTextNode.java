@@ -2,8 +2,6 @@
 package awsl.intellij.language.psi_node;
 
 import java.util.List;
-
-import awsl.intellij.language.psi.*;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
@@ -57,6 +55,12 @@ public class AwslHtmlTextNode extends AwslAstNode implements AwslHtmlText {
   @NotNull
   public AwslHtmlStartText getHtmlStartText() {
     return findNotNullChildByClass(AwslHtmlStartText.class);
+  }
+
+  @Override
+  @NotNull
+  public List<AwslHtmlString> getHtmlStringList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AwslHtmlString.class);
   }
 
   @Override

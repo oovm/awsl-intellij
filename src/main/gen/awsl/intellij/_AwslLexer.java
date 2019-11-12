@@ -1018,7 +1018,7 @@ public class _AwslLexer implements FlexLexer {
             // fall through
           case 69: break;
           case 24: 
-            { return HTML_STRING;
+            { return HTML_STRING_TOKEN;
             } 
             // fall through
           case 70: break;

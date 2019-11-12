@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static awsl.intellij.language.psi.AwslTypes.*;
-import awsl.intellij.ast.AwslAstNode;
+import awsl.intellij.language.mixin.AwslHtmlStringMixin;
 import awsl.intellij.language.psi.*;
 
-public class AwslBraceBlockNode extends AwslAstNode implements AwslBraceBlock {
+public class AwslHtmlStringNode extends AwslHtmlStringMixin implements AwslHtmlString {
 
-  public AwslBraceBlockNode(@NotNull ASTNode node) {
+  public AwslHtmlStringNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AwslVisitor visitor) {
-    visitor.visitBraceBlock(this);
+    visitor.visitHtmlString(this);
   }
 
   @Override

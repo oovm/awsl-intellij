@@ -23,6 +23,9 @@ public interface AwslHtmlText extends PsiElement {
   AwslHtmlStartText getHtmlStartText();
 
   @NotNull
+  List<AwslHtmlString> getHtmlStringList();
+
+  @NotNull
   List<AwslHtmlText> getHtmlTextList();
 
 }

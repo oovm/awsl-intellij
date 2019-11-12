@@ -43,7 +43,7 @@ class AwslHighlightToken : SyntaxHighlighterBase() {
             HTML_END_L, HTML_START_CODE_L, HTML_START_TEXT_L -> Color.HTML_BEGIN
             HTML_END_R, HTML_START_R, HTML_SELF_END_R -> Color.HTML_END
             HTML_TAG_SYMBOL -> Color.HTML_TAG
-            HTML_TEXT -> Color.HTML_TEXT
+            HTML_STRING -> Color.HTML_TEXT
             HTML_ESCAPE_TOKEN -> Color.HTML_ESCAPE
             // 注释
             COMMENT_LINE -> Color.LINE_COMMENT

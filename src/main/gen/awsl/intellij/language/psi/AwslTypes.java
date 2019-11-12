@@ -1,7 +1,6 @@
 // This is a generated file. Not intended for manual editing.
 package awsl.intellij.language.psi;
 
-import awsl.intellij.language.psi_node.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
@@ -23,6 +22,7 @@ public interface AwslTypes {
   IElementType HTML_SELF_CLOSE = new AwslElementType("HTML_SELF_CLOSE");
   IElementType HTML_START_CODE = new AwslElementType("HTML_START_CODE");
   IElementType HTML_START_TEXT = new AwslElementType("HTML_START_TEXT");
+  IElementType HTML_STRING = new AwslElementType("HTML_STRING");
   IElementType HTML_TAG = new AwslElementType("HTML_TAG");
   IElementType HTML_TEXT = new AwslElementType("HTML_TEXT");
   IElementType IF_STATEMENT = new AwslElementType("IF_STATEMENT");
@@ -61,7 +61,7 @@ public interface AwslTypes {
   IElementType HTML_START_CODE_L = new AwslTokenType("HTML_START_CODE_L");
   IElementType HTML_START_R = new AwslTokenType("HTML_START_R");
   IElementType HTML_START_TEXT_L = new AwslTokenType("HTML_START_TEXT_L");
-  IElementType HTML_STRING = new AwslTokenType("HTML_STRING");
+  IElementType HTML_STRING_TOKEN = new AwslTokenType("HTML_STRING_TOKEN");
   IElementType HTML_TAG_RAW = new AwslTokenType("HTML_TAG_RAW");
   IElementType HTML_TAG_SCRIPT = new AwslTokenType("HTML_TAG_SCRIPT");
   IElementType HTML_TAG_SYMBOL = new AwslTokenType("HTML_TAG_SYMBOL");
@@ -123,6 +123,9 @@ public interface AwslTypes {
       }
       else if (type == HTML_START_TEXT) {
         return new AwslHtmlStartTextNode(node);
+      }
+      else if (type == HTML_STRING) {
+        return new AwslHtmlStringNode(node);
       }
       else if (type == HTML_TAG) {
         return new AwslHtmlTagNode(node);

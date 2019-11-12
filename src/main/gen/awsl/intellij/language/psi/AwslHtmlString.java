@@ -5,9 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AwslDict extends PsiElement {
-
-  @NotNull
-  AwslBraceBlock getBraceBlock();
+public interface AwslHtmlString extends PsiElement {
 
 }
