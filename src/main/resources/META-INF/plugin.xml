@@ -6,7 +6,10 @@
 	<!-- Product and plugin compatibility requirements -->
 	<!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
-	<!--    <depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>-->
+<!--	<depends config-file="plugin-with-css.xml">org.jetbrains.css</depends>-->
+<!--	<depends config-file="plugin-with-sass.xml">org.jetbrains.plugins.sass</depends>-->
+	<depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>
+
 	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
 		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;"
@@ -15,6 +18,9 @@
 		/>
 		<iconProvider implementation="awsl.intellij.ide.file_view.AwslIconProvider"/>
 		<projectViewNestingRulesProvider implementation="awsl.intellij.ide.file_view.AwslFileGroup"/>
+
+		<!-- Injector -->
+		<multiHostInjector implementation="awsl.intellij.ide.highlight.AwsLanguageInjector"/>
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/AwslDefault.xml"/>
 		<additionalTextAttributes scheme="Darcula" file="colors/AwslDarcula.xml"/>
@@ -89,13 +95,13 @@
 		</action>
 		<action id="jss.JssConvertJson"
 		        class="awsl.intellij.ide.actions.JssConvertJson"/>
-<!--		<group id="jss.JssGenerator" popup="true" text="JssGenerator">-->
-<!--			<reference ref="NewJssFile"/>-->
-<!--			<reference ref="jss.JssConvertJson"/>-->
-<!--			<add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>-->
-<!--			<add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>-->
-<!--			<add-to-group group-id="EditorTabPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>-->
-<!--			<add-to-group group-id="ConsoleEditorPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>-->
-<!--		</group>-->
+		<!--		<group id="jss.JssGenerator" popup="true" text="JssGenerator">-->
+		<!--			<reference ref="NewJssFile"/>-->
+		<!--			<reference ref="jss.JssConvertJson"/>-->
+		<!--			<add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>-->
+		<!--			<add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>-->
+		<!--			<add-to-group group-id="EditorTabPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>-->
+		<!--			<add-to-group group-id="ConsoleEditorPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>-->
+		<!--		</group>-->
 	</actions>
 </idea-plugin>

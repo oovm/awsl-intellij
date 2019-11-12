@@ -30,7 +30,6 @@
 
 // some global style
 < style global>
-
-
+{a: 2, a: 2}\\\
 </style>
 

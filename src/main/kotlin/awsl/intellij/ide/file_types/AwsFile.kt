@@ -9,13 +9,13 @@ import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.psi.FileViewProvider
 import javax.swing.Icon
 
-class AwsFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, awsl.intellij.AwslLanguage.INSTANCE) {
+class AwsFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider,  AwslLanguage.INSTANCE) {
     override fun getFileType(): FileType = AwsFileType.INSTANCE
 
-    override fun toString(): String = awsl.intellij.AwslBundle.message(AwsFileType.LanguageID)
+    override fun toString(): String = AwslBundle.message(AwsFileType.LanguageID)
 }
 
-class AwsFileType private constructor() : LanguageFileType(awsl.intellij.AwslLanguage.INSTANCE) {
+class AwsFileType private constructor() : LanguageFileType(AwslLanguage.INSTANCE) {
     override fun getName(): String = LanguageID
 
     override fun getDisplayName(): String = LanguageID
@@ -29,7 +29,7 @@ class AwsFileType private constructor() : LanguageFileType(awsl.intellij.AwslLan
     companion object {
         @JvmStatic
         val INSTANCE = AwsFileType()
-        val Description = awsl.intellij.AwslBundle.message("filetype.aws.description");
+        val Description = AwslBundle.message("filetype.aws.description");
         const val LanguageID = "AWS"
         const val LanguageExtension = "aws"
     }
