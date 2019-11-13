@@ -106,7 +106,9 @@ generic_item ::= SYMBOL [generic];
 
 // =====================================================================================================================
 // <a>text</a>
-html_text ::= html_start_text html_text_inner* html_end;
+html_text ::= html_start_text html_text_inner* html_end  {
+    mixin="awsl.intellij.language.mixin.AwslHtmlTextMixin"
+};
 html_start_text ::= HTML_START_TEXT_L [html_inner] HTML_START_R;
 html_end ::= HTML_END_L [html_inner] HTML_END_R;
 private html_text_inner ::=
@@ -117,9 +119,7 @@ private html_text_inner ::=
   | html_text;
 // 用来折叠
 html_escape ::= HTML_ESCAPE_TOKEN;
-html_string ::= HTML_STRING_TOKEN {
-    mixin="awsl.intellij.language.mixin.AwslHtmlStringMixin"
-}
+html_string ::= HTML_STRING_TOKEN;
 // =====================================================================================================================
 // <\a>code</a>
 html_code ::= html_start_code code_statement* html_end;

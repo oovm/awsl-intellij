@@ -23,14 +23,12 @@ class AwsLanguageInjector : MultiHostInjector {
         while (child != null) {
             when (child) {
                 is AwslHtmlString -> {
-                    val range = child.textRange;
-                    val host = child as PsiLanguageInjectionHost;
                     registrar.startInjecting(JsonLanguage.INSTANCE)
                     registrar.addPlace(
                         null,
                         null,
-                        host,
-                        range
+                        context as PsiLanguageInjectionHost,
+                        child.textRange
                     )
                     registrar.doneInjecting()
                 }

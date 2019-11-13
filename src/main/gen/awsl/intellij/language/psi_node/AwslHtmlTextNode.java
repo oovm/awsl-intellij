@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static awsl.intellij.language.psi.AwslTypes.*;
-import awsl.intellij.ast.AwslAstNode;
+import awsl.intellij.language.mixin.AwslHtmlTextMixin;
 import awsl.intellij.language.psi.*;
 
-public class AwslHtmlTextNode extends AwslAstNode implements AwslHtmlText {
+public class AwslHtmlTextNode extends AwslHtmlTextMixin implements AwslHtmlText {
 
   public AwslHtmlTextNode(@NotNull ASTNode node) {
     super(node);
