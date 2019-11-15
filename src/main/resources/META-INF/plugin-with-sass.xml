@@ -1,6 +1,5 @@
 <idea-plugin>
-	<depends config-file="plugin-with-css.xml">org.jetbrains.css</depends>
-	<extensions defaultExtensionNs="com.intellij">
-		<!-- todo: goto definition and other fellows! -->
-	</extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- todo: goto definition and other fellows! -->
+    </extensions>
 </idea-plugin>

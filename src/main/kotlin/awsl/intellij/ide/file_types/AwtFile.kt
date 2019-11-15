@@ -9,18 +9,18 @@ import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.psi.FileViewProvider
 import javax.swing.Icon
 
-class AwtFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, awsl.intellij.AwslLanguage.INSTANCE) {
+class AwtFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, AwslLanguage.INSTANCE) {
     override fun getFileType(): FileType = AwtFileType.INSTANCE
 
-    override fun toString(): String = awsl.intellij.AwslBundle.message("action.create_file")
+    override fun toString(): String = AwslBundle.message("action.create_file")
 }
 
-class AwtFileType private constructor() : LanguageFileType(awsl.intellij.AwslLanguage.INSTANCE) {
+class AwtFileType private constructor() : LanguageFileType(AwslLanguage.INSTANCE) {
     override fun getName(): String = "AWT"
 
-    override fun getDisplayName(): String = awsl.intellij.AwslBundle.message("filetype.awt.display")
+    override fun getDisplayName(): String = AwslBundle.message("filetype.awt.display")
 
-    override fun getDescription(): String = awsl.intellij.AwslBundle.message("filetype.awt.description")
+    override fun getDescription(): String = AwslBundle.message("filetype.awt.description")
 
     override fun getDefaultExtension(): String = "awt"
 

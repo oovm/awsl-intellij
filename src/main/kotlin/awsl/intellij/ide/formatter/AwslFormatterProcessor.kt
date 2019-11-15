@@ -12,21 +12,21 @@ import com.intellij.util.DocumentUtil
 class AwslFormatterProcessor : PreFormatProcessor {
     override fun process(element: ASTNode, range: TextRange): TextRange {
         val rootPsi = element.psi
-        if (rootPsi.language !== awsl.intellij.AwslLanguage.INSTANCE) {
+        if (rootPsi.language !== AwslLanguage.INSTANCE) {
             return range
         }
         val settings = CodeStyle.getCustomSettings(
             rootPsi.containingFile,
             AwslCodeStyleSettings::class.java
         )
-        val psiDocumentManager = PsiDocumentManager.getInstance(rootPsi.project)
-        val document = psiDocumentManager.getDocument(rootPsi.containingFile) ?: return range
-        DocumentUtil.executeInBulk(document) {
-            psiDocumentManager.doPostponedOperationsAndUnblockDocument(document)
-            val visitor: PsiElementVisitor = AwslFormatterProcessorVisitor(document, settings)
-            rootPsi.accept(visitor)
-            psiDocumentManager.commitDocument(document)
-        }
+//        val psiDocumentManager = PsiDocumentManager.getInstance(rootPsi.project)
+//        val document = psiDocumentManager.getDocument(rootPsi.containingFile) ?: return range
+//        DocumentUtil.executeInBulk(document) {
+//            psiDocumentManager.doPostponedOperationsAndUnblockDocument(document)
+//            val visitor: PsiElementVisitor = AwslFormatterProcessorVisitor(document, settings)
+//            rootPsi.accept(visitor)
+//            psiDocumentManager.commitDocument(document)
+//        }
         return range
     }
 }

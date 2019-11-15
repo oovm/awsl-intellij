@@ -12,7 +12,7 @@ import javax.swing.Icon
 class AwsFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider,  AwslLanguage.INSTANCE) {
     override fun getFileType(): FileType = AwsFileType.INSTANCE
 
-    override fun toString(): String = AwslBundle.message(AwsFileType.LanguageID)
+    override fun toString(): String = AwsFileType.LanguageID
 }
 
 class AwsFileType private constructor() : LanguageFileType(AwslLanguage.INSTANCE) {

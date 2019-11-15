@@ -1,5 +1,6 @@
 package awsl.intellij.ide.highlight
 
+import awsl.intellij.AwslBundle
 import awsl.intellij.ide.file_view.AwslIconProvider
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
@@ -16,7 +17,7 @@ class AwslHighlightSetting : ColorSettingsPage {
 
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
 
-    override fun getDisplayName() = awsl.intellij.AwslBundle.message("filetype.name")
+    override fun getDisplayName() = AwslBundle.message("filetype.name")
 
     override fun getIcon() = AwslIconProvider.AwslFile
 
