@@ -6,10 +6,10 @@
 	<!-- Product and plugin compatibility requirements -->
 	<!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
-<!--	<depends config-file="plugin-with-css.xml">org.jetbrains.css</depends>-->
-<!--	<depends config-file="plugin-with-sass.xml">org.jetbrains.plugins.sass</depends>-->
+	<depends optional="true" config-file="plugin-with-css.xml">org.jetbrains.css</depends>
+	<depends optional="true" config-file="plugin-with-sass.xml">org.jetbrains.plugins.sass</depends>
+	<depends optional="true" config-file="plugin-with-fluent.xml">FluentLanguage</depends>
 	<depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>
-
 	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
 		<fileType name="AWSL" language="AWSL" extensions="awsl;awc;"
@@ -19,8 +19,7 @@
 		<iconProvider implementation="awsl.intellij.ide.file_view.AwslIconProvider"/>
 		<projectViewNestingRulesProvider implementation="awsl.intellij.ide.file_view.AwslFileGroup"/>
 
-		<!-- Injector -->
-		<multiHostInjector implementation="awsl.intellij.ide.highlight.AwsLanguageInjector"/>
+
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/AwslDefault.xml"/>
 		<additionalTextAttributes scheme="Darcula" file="colors/AwslDarcula.xml"/>

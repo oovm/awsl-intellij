@@ -1,4 +1,4 @@
-# voml-intellij
+# awsl-intellij
 
 <p align="center"><img src="https://raw.githubusercontent.com/oovm/LogoDesign/main/logos/jss/1x/title.png"/></p>
 

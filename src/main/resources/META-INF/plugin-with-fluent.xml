@@ -1,6 +1,6 @@
 <idea-plugin>
 	<extensions defaultExtensionNs="com.intellij">
 		<!-- Injector -->
-		<multiHostInjector implementation="awsl.intellij.ide.annotator.InjectorToAWS"/>
+		<multiHostInjector implementation="awsl.intellij.ide.annotator.InjectorToAWT"/>
 	</extensions>
 </idea-plugin>
