@@ -125,6 +125,10 @@ html_string ::= HTML_STRING_TOKEN;
 html_code ::= html_start_code code_statement* html_end;
 html_start_code ::= HTML_START_CODE_L [html_inner] HTML_START_R;
 // =====================================================================================================================
+component_statement ::= component_keyword SYMBOL
+component_keyword ::= "widget"|"component"
+// =====================================================================================================================
+
 fake binary_expr ::= expr + {
     methods=[
         left="/expr[0]"

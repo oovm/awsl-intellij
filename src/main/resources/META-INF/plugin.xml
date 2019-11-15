@@ -6,9 +6,8 @@
 	<!-- Product and plugin compatibility requirements -->
 	<!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
-	<depends optional="true" config-file="plugin-with-css.xml">org.jetbrains.css</depends>
-	<depends optional="true" config-file="plugin-with-sass.xml">org.jetbrains.plugins.sass</depends>
-	<depends optional="true" config-file="plugin-with-fluent.xml">FluentLanguage</depends>
+	<depends optional="true" config-file="plugin-with-aws.xml">org.jetbrains.plugins.sass</depends>
+	<depends optional="true" config-file="plugin-with-awt.xml">FluentLanguage</depends>
 	<depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>
 	<resource-bundle>messages.AwslBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
