@@ -1,0 +1,18 @@
+
+
+
+let a = import("", csv)
+
+let draw = plot(data) {
+	mark: Point,
+	encoding: {
+		x: {
+
+		}
+	}
+
+}
+
+export(draw)
+
+mark: Circle

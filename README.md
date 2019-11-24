@@ -1,15 +1,23 @@
-# awsl-intellij
+# AWSL Intellij
 
-<p align="center"><img src="https://raw.githubusercontent.com/oovm/LogoDesign/main/logos/jss/1x/title.png"/></p>
+[//]: # (<p align="center"><img src="https://raw.githubusercontent.com/oovm/LogoDesign/main/logos/jss/1x/title.png"/></p>)
 
 <!-- Plugin description -->
 
-Intellij plugin for [JSS](https://github.com/voml/jss), support all IDEs.
+Intellij plugin for [AWSL Language](https://github.com/oovm/awsl-language).
 
 ## Features
-- Syntax Highlight & Semantic Highlight
-- Braces Matcher & Smart Enter
-- Pretty format
+
+| Feature            | Progress | Implement                |
+|--------------------|----------|--------------------------|
+| Syntax Highlight   | ✅        | [AwslHighlightToken]()   |
+| Semantic Highlight | ✅        | [AwslHighlightVisitor]() |
+| Pretty format      | 🚧       | [AwslFormatterBuilder]() |
+| Block Folding      | 🚧       | [AwslFoldingVisitor]()   |
+| Braces Matcher     | ✅        |                          |
+| Smart Enter        | ✅        |                          |
+
+[Formatter]: [AwslFormatterProcessor](), [AwslFormatterBuilder]()
 
 ## License
 
